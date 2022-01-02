@@ -73,10 +73,20 @@ def main():
             print("No upcoming events found.")
             return
 
+        embed_content = [
+            "<ol>",
+        ]
+
         # Prints the start and name of the next 10 events
         for event in events:
             start = event["start"].get("dateTime", event["start"].get("date"))
             print(start, event["summary"])
+            embed_content.append(f"<li>{start} - {event['summary']}</li>")
+
+        embed_content.append("</ol>")
+        embed_file = open("events.html", "w")
+        embed_file.write("\n".join(embed_content))
+        embed_file.close()
 
     except HttpError as error:
         print("An error occurred: %s" % error)
