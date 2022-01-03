@@ -87,6 +87,8 @@ pyasn1-modules==0.2.8
     # via google-auth
 pyparsing==3.0.6
     # via httplib2
+python-dateutil==2.8.2
+    # via -r requirements.in
 pyyaml==6.0
     # via libcst
 requests==2.26.0
@@ -102,6 +104,7 @@ six==1.16.0
     #   google-auth
     #   google-auth-httplib2
     #   grpcio
+    #   python-dateutil
 typing-extensions==4.0.1
     # via
     #   libcst

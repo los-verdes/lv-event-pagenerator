@@ -18,4 +18,10 @@
       <iframe id="lv-events-embed" width="100%" src="https://pagenerator-w7r57drkgq-uk.a.run.app/events" scrolling="no"></iframe>
     </div>
     ```
+
 3. ???
+
+
+```
+/usr/local/Cellar/node/17.0.1/bin/sass style.scss | tee pagenerator/static/styles/style.css
+```

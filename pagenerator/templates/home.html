@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block container %}
+{{ calendar_events }}
+<main class="calendar-contain">
+
+  <section class="title-bar">
+    <span class="title-bar__month">
+      {{ month_abbr }} {{ the_year }}
+    </span>
+  </section>
+
+  <aside class="calendar__sidebar">
+    <div class="sidebar__nav">
+      <!-- Icons by Icons8 -->
+      <span class="sidebar__nav-item"><img class="icon icons8-Plus-Math" width="22px" height="22px"
+             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAWUlEQVRYR+2WMQoAIAgA9f+PrsWmEMQSEa7Z8rzEUmle2pxfABhvYFkPpQtJb7TEAGAAAxgoM3AO/v1YXoPPm4TtANHKy64AAAxgAANjDERB3bjXXzEA8w1s3k4WIU0YaEoAAAAASUVORK5CYII="></span>
+      <span class="sidebar__nav-item"><img class="icon icons8-Share" width="22px" height="22px"
+             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB+klEQVRYR+2W0VEdMQxFDxUQKoBUkFABUAFQAaGDUEFCBQkVABUAFRAqgFRAUgFQQTJnxprx2/V67f3h5+nnzfNK8vXVteQN3tk23nl/1gCWMrAD/AD2UwlvgTPgtbekSwB8AJ4Bf3Nz84+9IJYAuAJOgAfgKGNgD7gGvvSwsATAH2Ab2MpOKxsvgN9kodl6AHha6279tRyAa5ZFE4R6UBez1gogaM8T/gKO08JNJsjw+ZmAVEG0AMg3Pwf8/wRsDjK/AZ+TBr6lbxfA1xqCOQDS7um0A8BTa1L+fSBC/0u/lsfJ0mQ55gCE4KyplPaYJ1czVWHWAHidLoG/mfB6AIQgvTGnqXSj+BoAaTusBTegCRbusnKthNUABP157Rv2XHGxVd/XylAD8C+lmtNJDVQ0KH2KeaaSDxuL104hhsrnmIhh5bWMxmWHHMWXABjwODFsdhtAdMWXANSGzaSYMkpCvE3DqgQgar902DiW7ZKl+JEWSgBKCUITttvhO2Coh1r8qKeUAASFpWHTMu+jhKX4UQmnRFgaNp7Ufu9Aqpk+MYxyP9mTyZVnW+0a2vu9RrZSBeWLJ9qr31wTqKaf3+18ce0iRtr1s7WP3ow9TcauJr0CqpkbullMzqpzD4BIZHLBeOpPafF3OqWbCrLZlgBoTt7iuAawZuA/xAh3Ifk/Dm0AAAAASUVORK5CYII="></span>
+      <span class="sidebar__nav-item"><img class="icon icons8-Up" width="22px" height="22px"
+             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAxklEQVRYR+3VwQ2DMAyF4Z8NOkI36AodpZ2sjMAoHaWdoJWlIEXI4RHnwMWROAH2ZxuSiZPXdHJ+EjDagUcZ4Rwd5QjAkr9K4icQQkQBdfK1+BAiAvCShxG9gG3b6xGExtED8Gb+K6VbnNA3cRTQCl4DzNKNOALYC7oFdCMUQFXkAboQCvAGbkDrF2sBasQXuAIfb7NSgAtwB5bGTrcHWBFWhF3uUgC1wyqAen/4NExAdiA7kB3IDmQH5GGjHhg9DVV8eT8Bf2HqNiEP+isaAAAAAElFTkSuQmCC"></span>
+      <span class="sidebar__nav-item"><img class="icon icons8-Down" width="22px" height="22px"
+             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA4UlEQVRYR+2WgQnCMBBFXzdwBSdwBUfRyXQER3EUN1AOEgnxLrkkhYCkUFpI7/+Xf1fajcnHNtmfBTCawDu0sFunuzAYL4CVwEpgJbAS+P8EDsAZeBj/DbUELsAznKpE7WMkxSfgCtwVhRKAmN+AF3AM1x+JGkAUkUINwgKo1X1BagDyYElMA3Cbi7gHoASRAzSZtwBYEClAs3krgAYhQxbnI73XBrbrLdCK0p3m69bbYv79e2cgF9Agms17WpCCdPU830lvAlFHIORw93xvALO33oXRBLw+uw/hsHEUmJ7ABzErNiGyzfJcAAAAAElFTkSuQmCC"></span>
+    </div>
+    <ul class="sidebar__list">
+
+      {% for event in events %}
+      <li class="sidebar__list-item">
+
+        <span class="sidebar__heading">
+        {{ event.start.strftime('%b %d') }} - {{ event.summary }}
+        </span>
+        <br>
+        <span class="list-item__time">
+          🕓 {{ event.start.strftime('%I:%M %p') }} - {{ event.end.strftime('%I:%M %p') }}
+        </span>
+      </br>
+        {{ event.description|truncate(100, False, '...', 0) }}
+      </li>
+      {% endfor %}
+    </ul>
+    <!-- <li class="sidebar__list-item sidebar__list-item--complete"><span class="list-item__time">8.30</span> Team Meeting -->
+  </aside>
+
+
+  <section class="calendar__days">
+    <section class="calendar__top-bar">
+
+      {% for day in week_header %}
+      <span class="top-bar__days">{{ day }}</span>
+      {% endfor %}
+    </section>
+    {% for calendar_date_events_batch in calendar_date_events|batch(7) %}
+    <section class="calendar__week">
+      {% for calendar_date_event in calendar_date_events_batch %}
+
+      <div
+           class="calendar__day{% if not calendar_date_event.active %} inactive{% endif %}{% if calendar_date_event.verde %} verde{% endif %}">
+        <span class="calendar__date">{{ calendar_date_event.datetime.strftime('%d') }}</span>
+        <span class="calendar__task">{{ calendar_date_event.num_events }} </span>
+      </div>
+      {% endfor %}
+    </section>
+    {% endfor %}
+  </section>
+
+</main>
+
+{% endblock %}

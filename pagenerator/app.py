@@ -1,7 +1,10 @@
 #!/usr/bin/env python
+import calendar
 import datetime
 import os
-
+from collections import defaultdict
+from textwrap import dedent
+from dateutil.parser import parse
 import flask
 import google.auth
 from google.auth.transport.requests import Request
@@ -28,30 +31,83 @@ GCLOUD_AUTH_SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
 lv_events = None
 
 
+today = datetime.datetime.today()
+
+
+@app.route("/")
+def home():
+    calendar.setfirstweekday(calendar.SUNDAY)
+    events = get_events(calendar_id=app.config["CALENDAR_ID"])
+    the_date = datetime.datetime.today()
+    calendar_dates = list(calendar.Calendar().itermonthdates(today.year, today.month))
+    # events_dates = {e["start"] for e in events}
+    events_by_date = defaultdict(list)
+    for event in events:
+        events_by_date[event["start"].date()].append(event)
+    calendar_date_events = []
+    for calendar_date in calendar_dates:
+        events_on_date = events_by_date[calendar_date]
+        # breakpoint()
+        active = calendar_date.month == the_date.month
+        active &= calendar_date.year == the_date.year
+        verde = len(events_on_date) > 0
+        calendar_date_events.append(
+            dict(
+                datetime=calendar_date,
+                num_events=len(events_on_date) if verde else '-',
+                active=active,
+                verde=verde,
+                in_past=calendar_date < today.date(),
+                events=events,
+            )
+        )
+
+    #   {% for calendar_date_event in calendar_date_events if calendar_date_event.active %}
+    #   {% for event in calendar_date_event.events %}
+    return flask.render_template(
+        "home.html",
+        the_year=the_date.year,
+        the_month=the_date.month,
+        the_date=the_date,
+        month_abbr=calendar.month_name[today.month],
+        week_header=calendar.weekheader(3).split(),
+        calendar_dates=list(
+            calendar.Calendar().itermonthdates(today.year, today.month)
+        ),
+        calendar_date_events=calendar_date_events,
+        events=events,
+    )
+
+
 @app.route("/events")
 def events():
+    return flask.render_template(
+        "events.html", events=get_events(calendar_id=app.config["CALENDAR_ID"])
+    )
+
+
+def get_events(calendar_id):
     global lv_events
-    if lv_events is None:
-        if app.config["USE_OAUTH_CREDS"]:
-            credentials = load_local_creds()
-        else:
-            credentials, project = google.auth.default(GCLOUD_AUTH_SCOPES)
-        lv_events = get_events(
-            service=build("calendar", "v3", credentials=credentials),
-            calendar_id=app.config["CALENDAR_ID"],
-        )
-    return flask.render_template("events.html", events=lv_events)
-
-
-def get_events(service, calendar_id):
+    if lv_events is not None:
+        return lv_events
+    if app.config["USE_OAUTH_CREDS"]:
+        credentials = load_local_creds()
+    else:
+        credentials, project = google.auth.default(GCLOUD_AUTH_SCOPES)
     now = datetime.datetime.utcnow().isoformat() + "Z"  # 'Z' indicates UTC time
+    max_time = (
+        datetime.datetime.utcnow() + datetime.timedelta(days=365)
+    ).isoformat() + "Z"
     logger.info("Getting the upcoming 10 events")
+
+    service = build("calendar", "v3", credentials=credentials)
     events_result = (
         service.events()
         .list(
             calendarId=calendar_id,
             timeMin=now,
-            maxResults=10,
+            timeMax=max_time,
+            # maxResults=10,
             singleEvents=True,
             orderBy="startTime",
         )
@@ -64,7 +120,8 @@ def get_events(service, calendar_id):
 
     # Prints the start and name of the next 10 events
     for event in events:
-        event["start"] = event["start"].get("dateTime", event["start"].get("date"))
+        event["start"] = parse(event["start"].get("dateTime", event["start"].get("date")))
+        event["end"] = parse(event["end"].get("dateTime", event["end"].get("date")))
 
     return events
 
