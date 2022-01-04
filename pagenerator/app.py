@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import calendar
+
 import re
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, date
 import os
 from zoneinfo import ZoneInfo
 from collections import defaultdict
@@ -17,6 +18,11 @@ from logzero import logger, setup_logger
 import requests
 
 DEFAULT_CLUB_OPTA_ID = "15296"
+
+EVENT_CSS_CLASSES = {
+    "la murga": "lamurga-card",
+    "lv all teams": "losverdes-card",
+}
 TEAM_ABBREVIATIONS = {
     "Atlanta United": "atl",
     "Austin FC": "atx",
@@ -61,112 +67,45 @@ lv_events = None
 today = datetime.today()
 
 
-# Add routes for serving up our static Ember frontend
-# @app.route("/")
-# def root():
-#     return flask.send_from_directory("static", "index.html")
-
-
 @app.route("/")
 def home():
-    calendar.setfirstweekday(calendar.SUNDAY)
-    events = get_events(calendar_id=app.config["CALENDAR_ID"])
-    the_date = datetime.today()
-    calendar_dates = list(calendar.Calendar().itermonthdates(today.year, today.month))
-    # events_dates = {e["start"] for e in events}
-    events_by_date = defaultdict(list)
-    events_by_month = defaultdict(list)
-    for event in events:
-        event_date = event["start"].date()
-        # event_month = f"{event_date.month}-{event_date.year}"
-        event_month = event["start"].strftime("%B %Y")
-        events_by_date[event_date].append(event)
-        events_by_month[event_month].append(event)
-    calendar_date_events = []
-    for calendar_date in calendar_dates:
-        events_on_date = events_by_date[calendar_date]
-        # breakpoint()
-        active = calendar_date.month == the_date.month
-        active &= calendar_date.year == the_date.year
-        verde = len(events_on_date) > 0
-        calendar_date_events.append(
-            dict(
-                datetime=calendar_date,
-                num_events=len(events_on_date) if verde else "-",
-                active=active,
-                verde=verde,
-                in_past=calendar_date < today.date(),
-                events=events,
-            )
-        )
-    team_schedule = grab_schedule(today.year)
+    # team_schedule = grab_schedule(today.year)
+    # css_bits = []
+    # for slug, match in team_schedule.items():
+    #     css_class = f"event-{slug.split('-', 1)[0]}-card"
+    #     from textwrap import dedent
+    #     rgb_home = tuple(int(match['home']['backgroundColor'].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+    #     css_bits.append(
+    #         dedent(
+    #             f"""\
+    #             .{css_class}>.mdl-card__title {{
+    #                 background-image: linear-gradient(125deg, {match['away']['backgroundColor']}, {match['home']['backgroundColor']});
+    #             }}
+    #             .{css_class} mark {{
+    #                 padding: 2px;
+    #                 color: white;
+    #                 background-color: rgba({rgb_home[0]}, {rgb_home[1]}, {rgb_home[2]}, 0.75);
+    #             }}
+
+    #             """
+    #         )
+    #     )
+    # with open("bits.css", "w") as bits:
+    #     bits.write('\n'.join(css_bits))
     # breakpoint()
-    #   {% for calendar_date_event in calendar_date_events if calendar_date_event.active %}
-    #   {% for event in calendar_date_event.events %}
+    # logger.debug(f"{list(team_schedule.keys())=}")
+    events = get_events(
+        calendar_id=app.config["CALENDAR_ID"],
+        # team_schedule=team_schedule,
+        team_schedule=dict(),
+    )
     return flask.render_template(
         "home.html",
-        the_year=the_date.year,
-        the_month=the_date.month,
-        the_date=the_date,
-        month_abbr=calendar.month_name[today.month],
-        week_header=calendar.weekheader(3).split(),
-        calendar_dates=list(
-            calendar.Calendar().itermonthdates(today.year, today.month)
-        ),
-        calendar_date_events=calendar_date_events,
         events=events,
-        events_by_month=events_by_month,
     )
 
 
-EVENT_CSS_CLASSES = {
-    "la murga": "lamurga-card",
-    "lv all teams": "losverdes-card",
-}
-
-
-@app.route("/events")
-def events():
-    return flask.render_template(
-        "events.html", events=get_events(calendar_id=app.config["CALENDAR_ID"])
-    )
-
-
-def grab_schedule(
-    schedule_year,
-    base_domain="sportapi.austinfc.com/api",
-    club_opta_id=DEFAULT_CLUB_OPTA_ID,
-):
-    # if schedule_year is None:
-    #     schedule_year = date.today().year
-    matches = []
-    request_url = f"https://{base_domain}/matches"
-    logger.debug(
-        f"Sending request to {request_url} ({schedule_year=}, {club_opta_id=})"
-    )
-    response = requests.get(
-        url=request_url,
-        params=dict(
-            culture="en-us",
-            dateFrom=f"{schedule_year - 1}-12-31",
-            dateTo=f"{schedule_year}-12-31",
-            clubOptaId=club_opta_id,
-        ),
-    )
-    logger.debug(f"{response=}")
-    scheduled_matches = response.json()
-    logger.debug(f"{scheduled_matches=}")
-    # team_abbreviations = {}
-    # for scheduled_match in scheduled_matches:
-    #     scheduled_matches['away']['fullName']
-    return {m["slug"]: m for m in scheduled_matches}
-    return dict(
-        matches={m["slug"]: m for m in scheduled_matches},
-        # team_abbreviations=
-    )
-
-
-def get_events(calendar_id):
+def get_events(calendar_id, team_schedule):
     global lv_events
     if lv_events is not None:
         return lv_events
@@ -211,23 +150,124 @@ def get_events(calendar_id):
         if not event.get("location"):
             event["has_location"] = False
 
+        event["has_description"] = False
+        if event.get("description") is not None:
+            event["has_description"] = True
+            event["description_lines"] = event.get("description", "").split("\n")
+
         event["css_class"] = "event-card"
         for substr, css_class in EVENT_CSS_CLASSES.items():
             if substr in event["summary"].lower():
                 event["css_class"] = css_class
 
+        event["is_atxfc_match"] = False
         if summary_match := game_regexp.match(event["summary"]):
             groups = summary_match.groupdict()
-            opp_abbr = TEAM_ABBREVIATIONS.get(groups['opponent'], '-')
+            opp_abbr = TEAM_ABBREVIATIONS.get(groups["opponent"], "-")
+            match_date_str = event["start"].strftime("%m-%d-%Y")
             if groups["vsat"] == "vs":
-                event[
-                    "match_slug"
-                ] = f"atxvs{opp_abbr}-{event['start'].strftime('%M-%D-%Y')}"
+                event["match_slug"] = f"atxvs{opp_abbr}-{match_date_str}"
             else:
-                event[
-                    "match_slug"
-                ] = f"{opp_abbr}vsatx-{event['start'].strftime('%M-%D-%Y')}"
+                event["match_slug"] = f"{opp_abbr}vsatx-{match_date_str}"
+
+            if scheduled_match := team_schedule.get(event["match_slug"]):
+                event["is_atxfc_match"] = True
+                event["match_details"] = scheduled_match
+
+            event["css_class"] = f"event-{event['match_slug'].split('-', 1)[0]}-card"
     return events
+
+
+things = {
+    "optaId": 2259030,
+    "slug": "atxvscin-02-26-2022",
+    "leagueMatchTitle": "",
+    "home": {
+        "optaId": 15296,
+        "fullName": "Austin FC",
+        "slug": "austin-fc",
+        "shortName": "Austin",
+        "abbreviation": "ATX",
+        "backgroundColor": "#0BAC44",
+        "logoBWSlug": "webcomp_9a2edba8-e187-4e39-a434-140896f1e9b5",
+        "logoColorSlug": "webcomp_9fe50f89-c55f-47c7-b405-09d803fa5227",
+        "logoColorUrl": "https://images.mlssoccer.com/image/upload/{formatInstructions}/v1614970762/assets/logos/15296-austin-logo_dcqfgn.png",
+        "crestColorSlug": "webcomp_83f263dd-a78f-41ae-92ee-e48f68c9b575",
+    },
+    "away": {
+        "optaId": 11504,
+        "fullName": "FC Cincinnati",
+        "slug": "fc-cincinnati",
+        "shortName": "Cincinnati",
+        "abbreviation": "CIN",
+        "backgroundColor": "#003087",
+        "logoBWSlug": "webcomp_093edcd5-74d9-4da2-93f8-d464f7169dd4",
+        "logoColorSlug": "webcomp_553d2bce-a8cd-4cce-ada2-b6e07c74dc28",
+        "logoColorUrl": "https://images.mlssoccer.com/image/upload/{formatInstructions}/v1620997960/assets/logos/CIN-Logo-480px.png",
+        "crestColorSlug": "webcomp_41e2f018-d1fe-482e-bd36-9d2a02da24a0",
+    },
+    "venue": {
+        "venueOptaId": "15488",
+        "backgroundImageSlug": "",
+        "name": "Q2 Stadium",
+        "city": "Austin",
+    },
+    "season": {
+        "slug": "us-major-league-soccer-season-2022-2023",
+        "optaId": 2022,
+        "competitionId": 98,
+        "name": "Season 2022/2023",
+    },
+    "competition": {
+        "optaId": 98,
+        "name": "MLS Regular Season",
+        "slug": "mls-regular-season",
+        "shortName": "Regular Season",
+        "matchType": "Regular",
+        "logoLight": {"slug": ""},
+        "logoDark": {"slug": ""},
+        "blockHeaderName": "",
+        "mgmId": "",
+    },
+    "broadcasters": [
+        {
+            "broadcasterTypeLabel": "Streaming",
+            "broadcasterName": "MLS LIVE on ESPN+",
+            "broadcasterStreamingURL": "https://plus.espn.com/soccer",
+            "broadcasterType": "US Streaming",
+        },
+        {
+            "broadcasterTypeLabel": "Streaming",
+            "broadcasterName": "MLS LIVE on DAZN",
+            "broadcasterStreamingURL": "https://www.dazn.com/en-CA/l/major-league-soccer/",
+            "broadcasterType": "Canada Streaming",
+        },
+    ],
+    "sponsorImage": {
+        "assetUrl": "https://images.mlssoccer.com/image/upload/{formatInstructions}/v1623792033/assets/atx/Q2_IconOnly_wufazb.png"
+    },
+    "matchDate": "2022-02-26T23:00:00.0000000Z",
+    "thirdPartyTickets": {
+        "displayText": "Buy Tickets",
+        "accessibleText": "Buy Tickets",
+        "url": "https://seatgeek.com/fc-cincinnati-at-austin-fc-tickets/mls-mw/2022-02-26-5-pm/5582736?market=open&accountcredit=1&aid=15865&pid=austinfc&rid=211217&utm_medium=partnership&utm_source=austinfc_ticketing&utm_campaign=austinfc",
+        "openInNewTab": True,
+        "isVisible": False,
+    },
+    "promotionalSponsor": {
+        "displayText": "Presented by Q2",
+        "accessibleText": "Presented by Q2",
+        "url": "q2.com/",
+        "openInNewTab": True,
+        "isVisible": False,
+    },
+    "tags": [],
+    "homeClubBroadcasters": [],
+    "awayClubBroadcasters": [],
+    "clubBroadcasters": [],
+    "isTimeTbd": False,
+    "mgmId": "",
+}
 
 
 def parse_event_timestamp(event, timestamp_key):
@@ -238,6 +278,39 @@ def parse_event_timestamp(event, timestamp_key):
     parsed_dt = parsed_dt.replace(tzinfo=ZoneInfo("US/Central"))
     # parsed_dt.astimezone(ZoneInfo('US/Central'))
     return parsed_dt
+
+
+def grab_schedule(
+    schedule_year=None,
+    base_domain="sportapi.austinfc.com/api",
+    club_opta_id=DEFAULT_CLUB_OPTA_ID,
+):
+    if schedule_year is None:
+        schedule_year = date.today().year
+    request_url = f"https://{base_domain}/matches"
+    logger.debug(
+        f"Sending request to {request_url} ({schedule_year=}, {club_opta_id=})"
+    )
+    response = requests.get(
+        url=request_url,
+        params=dict(
+            culture="en-us",
+            dateFrom=f"{schedule_year - 1}-12-31",
+            dateTo=f"{schedule_year}-12-31",
+            clubOptaId=club_opta_id,
+        ),
+    )
+    # logger.debug(f"{response=}")
+    scheduled_matches = response.json()
+    # logger.debug(f"{scheduled_matches=}")
+    # team_abbreviations = {}
+    # for scheduled_match in scheduled_matches:
+    #     scheduled_matches['away']['fullName']
+    return {m["slug"]: m for m in scheduled_matches}
+    return dict(
+        matches={m["slug"]: m for m in scheduled_matches},
+        # team_abbreviations=
+    )
 
 
 def create_app():
