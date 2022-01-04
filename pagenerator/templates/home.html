@@ -1,58 +1,88 @@
 {% extends 'base.html' %}
 
+{% macro event_card(event) %}
+<div class="{{ event.css_class }} event-card mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title mdl-card--expand">
+        <h4>
+            <mark>{{ event.summary }}:</mark>
+            </br>
+            <mark><small>{{ event.start.strftime('%b %d') }}@ {{ event.start.strftime('%I:%M %p') }}</small></mark>
+        </h4>
+    </div>
+    <div class="mdl-card__supporting-text">
+        <details>
+            <summary id="calendar-details-{{event.id}}">Event Details</summary>
+            <ul class="mdl-list">
+
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">event</i>
+                        {{ event.start.strftime('%x') }}
+                    </span>
+                </li>
+
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">schedule</i>
+                        {{ event.start.strftime('%I:%M %p') }} - {{ event.end.strftime('%I:%M %p (%Z)') }}
+                    </span>
+                </li>
+                {% if event.has_location %}
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        {% if event.is_over_zoom %}
+                        <i class="material-icons mdl-list__item-icon">videocam</i>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                           href="{{event.location}}" target="_blank">
+                            Join Zoom Meeting
+                        </a>
+                        {% else %}
+                        <i class="material-icons mdl-list__item-icon">place</i>
+                        <a href="https://www.google.com/maps/search/{{ event.location }}">{{ event.location }}</a>
+                        {% endif %}
+                    </span>
+                </li>
+                {% endif %}
+
+                <li class="mdl-list__item mdl-list__item--three-line">
+                    <span class="mdl-list__item-text-body">
+                        <i class="material-icons mdl-list__item-icon">description</i>
+                        {{ event.description|truncate(100, False, '...', 0) }}
+                    </span>
+                </li>
+            </ul>
+        </details>
+
+        <div class="mdl-tooltip mdl-tooltip" for="calendar-details-{{event.id}}">
+            Click to expand event details :)
+        </div>
+    </div>
+    <div class="mdl-card__menu">
+        <button id="share-link-{{event.id}}" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">share</i>
+        </button>
+        <div class="mdl-tooltip mdl-tooltip" for="calendar-link-{{event.id}}">
+            maybe implement this here share button or something?
+        </div>
+        <a id="calendar-link-{{event.id}}" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+           href="{{event.htmlLink}}" target="_blank">
+            <i class="material-icons">launch</i>
+        </a>
+        <div class="mdl-tooltip mdl-tooltip" for="calendar-link-{{event.id}}">
+            View @ GCalendar
+        </div>
+    </div>
+</div>
+{% endmacro %}
 {% block container %}
-{{ calendar_events }}
-<main class="calendar-contain">
 
-  <section class="title-bar">
-    <span class="title-bar__month">
-      {{ month_abbr }} {{ the_year }}
-    </span>
-  </section>
-
-  <aside class="calendar__sidebar">
-    <ul class="sidebar__list">
-
-      {% for event in events %}
-      <li class="sidebar__list-item">
-
-        <span class="sidebar__heading">
-        {{ event.start.strftime('%b %d') }} - {{ event.summary }}
-        </span>
-        <br>
-        <span class="list-item__time">
-          🕓 {{ event.start.strftime('%I:%M %p') }} - {{ event.end.strftime('%I:%M %p') }}
-        </span>
-      </br>
-        {{ event.description|truncate(100, False, '...', 0) }}
-      </li>
-      {% endfor %}
-    </ul>
-    <!-- <li class="sidebar__list-item sidebar__list-item--complete"><span class="list-item__time">8.30</span> Team Meeting -->
-  </aside>
-
-
-  <section class="calendar__days">
-    <section class="calendar__top-bar">
-
-      {% for day in week_header %}
-      <span class="top-bar__days">{{ day }}</span>
-      {% endfor %}
-    </section>
-    {% for calendar_date_events_batch in calendar_date_events|batch(7) %}
-    <section class="calendar__week">
-      {% for calendar_date_event in calendar_date_events_batch %}
-
-      <div
-           class="calendar__day{% if not calendar_date_event.active %} inactive{% endif %}{% if calendar_date_event.verde %} verde{% endif %}">
-        <span class="calendar__date">{{ calendar_date_event.datetime.strftime('%d') }}</span>
-        <span class="calendar__task">{{ calendar_date_event.num_events }} </span>
-      </div>
-      {% endfor %}
-    </section>
+<div class="mdl-grid">
+    {% for event in events %}
+    <div class="mdl-cell mdl-cell--4-col">
+        {{ event_card(event) }}
+    </div>
     {% endfor %}
-  </section>
-
-</main>
+    <div class="mdl-layout-spacer"></div>
+</div>
 
 {% endblock %}
