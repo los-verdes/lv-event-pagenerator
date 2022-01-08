@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import base64
+import io
 import os
 import re
 from datetime import date, datetime, timedelta
 from urllib.parse import quote_plus
 from zoneinfo import ZoneInfo
-import io
+
 import flask
 import google.auth
 import requests
@@ -29,26 +30,31 @@ EVENT_CATEGORIES = {
 COLOR_ID_CATEGORIES = {
     "0": {
         "categories": ["misc"],
+        "cover_color": "#000000",
         "gcal_background": "#039be5",
         "gcal_name": None,
     },
     "1": {
         "categories": ["los-verdes"],
+        "cover_color": "#000000",
         "gcal_background": "#a4bdfc",
         "gcal_name": "lavender",
     },
     "2": {
         "categories": ["la-murga"],
+        "cover_color": "#000000",
         "gcal_background": "#7ae7bf",
         "gcal_name": "sage",
     },
     "3": {
         "categories": ["home-games"],
+        "cover_color": "#000000",
         "gcal_background": "#dbadff",
         "gcal_name": "grape",
     },
     "4": {
         "categories": ["away-games"],
+        "cover_color": "#000000",
         "gcal_background": "#ff887c",
         "gcal_name": "flamingo",
     },
@@ -217,7 +223,7 @@ def get_attachment(attachment):
         return fh.getbuffer()
     except HttpError as error:
         # TODO(developer) - Handle errors from drive API.
-        print(f"An error occurred: {error}")
+        logger.exception(f"An error occurred: {error}")
 
 
 def get_events(calendar_id, team_schedule, time_min, time_max):
@@ -286,11 +292,12 @@ def get_events(calendar_id, team_schedule, time_min, time_max):
             for attachment in attachments:
                 if attachment["mimeType"].startswith("image/"):
                     logger.debug(f"{attachment=}")
-                    fh = get_attachment(attachment)
                     event["cover_image_filename"] = attachment["title"]
-                    event[
-                        "cover_image_base64"
-                    ] = f"data:{attachment['mimeType']};base64,{base64.b64encode(fh).decode()}"
+                    fh = get_attachment(attachment)
+                    if fh is not None:
+                        event[
+                            "cover_image_base64"
+                        ] = f"data:{attachment['mimeType']};base64,{base64.b64encode(fh).decode()}"
             logger.debug(f"{event['summary']}:\n{attachments=}")
         event["is_atxfc_match"] = False
         if summary_match := game_regexp.match(event["summary"]):

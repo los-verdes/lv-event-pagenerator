@@ -5,7 +5,7 @@
 <div class="mdl-cell mdl-cell--4-col" data-category="{{ event.categories | join(' ') }}">
     <div
         class="mdl-card mdl-shadow--2dp event-card {{ event.categories | join(' ') }}{% if 'match_slug' in event %} event-{{ event.match_slug }}-card{% endif %}">
-        <div class="mdl-card__title mdl-card--expand"{% if event.cover_image_base64 %}style="background: {{ event.gcal_background }} url({{ url_for('static', filename=event.cover_image_filename) }}) center / cover;"{% endif %}>
+        <div class="mdl-card__title mdl-card--expand"{% if event.cover_image_base64 %}style="background: {{ event.cover_color }} url({{ url_for('static', filename=event.cover_image_filename) }}) center / cover;"{% endif %}>
             <h4>
                 <mark>{{ event.summary }}</mark>
                 </br>
