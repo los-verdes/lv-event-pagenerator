@@ -115,7 +115,10 @@ app.config.update(
 # app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
 
 # So we can read calendar entries and such:
-GCLOUD_AUTH_SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
+GCLOUD_AUTH_SCOPES = [
+    "https://www.googleapis.com/auth/calendar.readonly",
+    "https://www.googleapis.com/auth/drive.readonly",
+]
 
 # Lazy caching by way of global var:
 lv_events = None
