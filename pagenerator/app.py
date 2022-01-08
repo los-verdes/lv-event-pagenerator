@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import calendar
-
+import itertools
 import re
 from datetime import datetime, timezone, timedelta, date
 import os
@@ -16,12 +16,13 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from logzero import logger, setup_logger
 import requests
+from flask_assets import Environment, Bundle
 
 DEFAULT_CLUB_OPTA_ID = "15296"
 
-EVENT_CSS_CLASSES = {
-    "la murga": "lamurga-card",
-    "lv all teams": "losverdes-card",
+EVENT_CATEGORIES = {
+    "la murga": "la-murga",
+    "lv all teams": "los-verdes",
 }
 TEAM_ABBREVIATIONS = {
     "Atlanta United": "atl",
@@ -36,6 +37,7 @@ TEAM_ABBREVIATIONS = {
     "Inter Miami CF": "mia",
     "LA Galaxy": "la",
     "Los Angeles Football Club": "lafc",
+    "LAFC": "lafc",
     "Minnesota United": "min",
     "Nashville SC": "nsh",
     "New York Red Bulls": "rbny",
@@ -51,6 +53,16 @@ setup_logger(name=__name__)
 
 
 app = flask.Flask(__name__)
+
+assets = Environment(app)  # create an Environment instance
+bundles = {  # define nested Bundle
+    "style": Bundle(
+        "scss/style.scss",
+        filters="pyscss",
+        output="style.css",
+    )
+}
+assets.register(bundles)
 app.config.update(
     DEPLOYMENT_ID=os.getenv("WAYPOINT_DEPLOYMENT_ID", "IDK"),
     CALENDAR_ID=os.getenv("CALENDAR_ID", "information@losverdesatx.org"),
@@ -99,9 +111,25 @@ def home():
         # team_schedule=team_schedule,
         team_schedule=dict(),
     )
+    # categories = {c for c in itertools.chain.from_iterable(e['css_classes'] for e in events)}
+    # categories = list(EVENT_CSS_CLASSES.keys()) + ["away games", "home games"]
+    default_categories = [
+        "los-verdes",
+        "la-murga",
+        "home-games",
+        "away-games",
+    ]
+    event_categories = set()
+    for event in events:
+        event_categories |= set(event["categories"])
+    all_categories = set(default_categories) | event_categories
+    empty_categories = set(all_categories) - set(event_categories)
     return flask.render_template(
         "home.html",
         events=events,
+        default_categories=default_categories,
+        additional_categories=list(event_categories - set(default_categories)),
+        empty_categories=empty_categories,
     )
 
 
@@ -131,6 +159,8 @@ def get_events(calendar_id, team_schedule):
         .execute()
     )
     events = events_result.get("items", [])
+    colors_result = service.colors().get().execute()
+    logger.debug(f"{colors_result=}")
 
     if not events:
         return []
@@ -139,6 +169,9 @@ def get_events(calendar_id, team_schedule):
     game_regexp = re.compile(r"Austin FC (?P<vsat>vs|at) (?P<opponent>.*)")
 
     for event in events:
+        event["categories"] = ["misc"]
+        event["css_classes"] = ["event-card"]
+
         for key in ["start", "end"]:
             event[key] = parse_event_timestamp(event, key)
 
@@ -155,10 +188,11 @@ def get_events(calendar_id, team_schedule):
             event["has_description"] = True
             event["description_lines"] = event.get("description", "").split("\n")
 
-        event["css_class"] = "event-card"
-        for substr, css_class in EVENT_CSS_CLASSES.items():
+        for substr, category in EVENT_CATEGORIES.items():
             if substr in event["summary"].lower():
-                event["css_class"] = css_class
+                css_class = f"{category}-card"
+                event["css_classes"].append(css_class)
+                event["categories"] = [category]
 
         event["is_atxfc_match"] = False
         if summary_match := game_regexp.match(event["summary"]):
@@ -167,17 +201,66 @@ def get_events(calendar_id, team_schedule):
             match_date_str = event["start"].strftime("%m-%d-%Y")
             if groups["vsat"] == "vs":
                 event["match_slug"] = f"atxvs{opp_abbr}-{match_date_str}"
+                event["css_classes"].append("event-home-game-card")
+                event["categories"] = ["home-games"]
             else:
                 event["match_slug"] = f"{opp_abbr}vsatx-{match_date_str}"
+                event["css_classes"].append("event-away-game-card")
+                event["categories"] = ["away-games"]
 
+            event["css_classes"].append(
+                f"event-{event['match_slug'].split('-', 1)[0]}-card"
+            )
             if scheduled_match := team_schedule.get(event["match_slug"]):
                 event["is_atxfc_match"] = True
                 event["match_details"] = scheduled_match
 
-            event["css_class"] = f"event-{event['match_slug'].split('-', 1)[0]}-card"
     return events
 
 
+colors_result = {
+    "kind": "calendar#colors",
+    "updated": "2012-02-14T00:00:00.000Z",
+    "calendar": {
+        "1": {"background": "#ac725e", "foreground": "#1d1d1d"},
+        "2": {"background": "#d06b64", "foreground": "#1d1d1d"},
+        "3": {"background": "#f83a22", "foreground": "#1d1d1d"},
+        "4": {"background": "#fa573c", "foreground": "#1d1d1d"},
+        "5": {"background": "#ff7537", "foreground": "#1d1d1d"},
+        "6": {"background": "#ffad46", "foreground": "#1d1d1d"},
+        "7": {"background": "#42d692", "foreground": "#1d1d1d"},
+        "8": {"background": "#16a765", "foreground": "#1d1d1d"},
+        "9": {"background": "#7bd148", "foreground": "#1d1d1d"},
+        "10": {"background": "#b3dc6c", "foreground": "#1d1d1d"},
+        "11": {"background": "#fbe983", "foreground": "#1d1d1d"},
+        "12": {"background": "#fad165", "foreground": "#1d1d1d"},
+        "13": {"background": "#92e1c0", "foreground": "#1d1d1d"},
+        "14": {"background": "#9fe1e7", "foreground": "#1d1d1d"},
+        "15": {"background": "#9fc6e7", "foreground": "#1d1d1d"},
+        "16": {"background": "#4986e7", "foreground": "#1d1d1d"},
+        "17": {"background": "#9a9cff", "foreground": "#1d1d1d"},
+        "18": {"background": "#b99aff", "foreground": "#1d1d1d"},
+        "19": {"background": "#c2c2c2", "foreground": "#1d1d1d"},
+        "20": {"background": "#cabdbf", "foreground": "#1d1d1d"},
+        "21": {"background": "#cca6ac", "foreground": "#1d1d1d"},
+        "22": {"background": "#f691b2", "foreground": "#1d1d1d"},
+        "23": {"background": "#cd74e6", "foreground": "#1d1d1d"},
+        "24": {"background": "#a47ae2", "foreground": "#1d1d1d"},
+    },
+    "event": {
+        "1": {"background": "#a4bdfc", "foreground": "#1d1d1d"},
+        "2": {"background": "#7ae7bf", "foreground": "#1d1d1d"},
+        "3": {"background": "#dbadff", "foreground": "#1d1d1d"},
+        "4": {"background": "#ff887c", "foreground": "#1d1d1d"},
+        "5": {"background": "#fbd75b", "foreground": "#1d1d1d"},
+        "6": {"background": "#ffb878", "foreground": "#1d1d1d"},
+        "7": {"background": "#46d6db", "foreground": "#1d1d1d"},
+        "8": {"background": "#e1e1e1", "foreground": "#1d1d1d"},
+        "9": {"background": "#5484ed", "foreground": "#1d1d1d"},
+        "10": {"background": "#51b749", "foreground": "#1d1d1d"},
+        "11": {"background": "#dc2127", "foreground": "#1d1d1d"},
+    },
+}
 things = {
     "optaId": 2259030,
     "slug": "atxvscin-02-26-2022",

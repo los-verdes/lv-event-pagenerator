@@ -1,433 +1,431 @@
-/* body {
-    background-color: black;
-} */
+.event-atxvspor-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #004812, #0bac44); }
+  .event-atxvspor-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvssj-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0051ba, #0bac44); }
+  .event-atxvssj-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsdc-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #212121, #0bac44); }
+  .event-atxvsdc-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvshou-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #101820, #0bac44); }
+  .event-atxvshou-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsrsl-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #001e61, #0bac44); }
+  .event-atxvsrsl-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvslafc-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #212121, #0bac44); }
+  .event-atxvslafc-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsla-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #004b87, #0bac44); }
+  .event-atxvsla-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsmtl-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #212121, #0bac44); }
+  .event-atxvsmtl-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsclt-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0085ca, #0bac44); }
+  .event-atxvsclt-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvscol-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #8a2432, #0bac44); }
+  .event-atxvscol-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsatl-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #9d2235, #0bac44); }
+  .event-atxvsatl-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsdal-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #c6093b, #0bac44); }
+  .event-atxvsdal-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsskc-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0c2340, #0bac44); }
+  .event-atxvsskc-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsmin-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #737b82, #0bac44); }
+  .event-atxvsmin-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsnsh-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #201547, #0bac44); }
+  .event-atxvsnsh-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvssea-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #64a608, #0bac44); }
+  .event-atxvssea-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsvan-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #002244, #0bac44); }
+  .event-atxvsvan-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvscin-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #003087, #0bac44); }
+  .event-atxvscin-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsmia-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #212322, #0bac44); }
+  .event-atxvsmia-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsorl-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #61259e, #0bac44); }
+  .event-atxvsorl-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-atxvsrbny-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #ba0c2f, #0bac44); }
+  .event-atxvsrbny-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(11, 172, 68, 0.75); }
+
+.event-porvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #004812); }
+  .event-porvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(0, 72, 18, 0.75); }
+
+.event-sjvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #0051ba); }
+  .event-sjvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(0, 81, 186, 0.75); }
+
+.event-dcvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #212121); }
+  .event-dcvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(33, 33, 33, 0.75); }
+
+.event-houvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #101820); }
+  .event-houvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(16, 24, 32, 0.75); }
+
+.event-rslvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #001e61); }
+  .event-rslvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(0, 30, 97, 0.75); }
+
+.event-lafcvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #212121); }
+  .event-lafcvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(33, 33, 33, 0.75); }
+
+.event-lavsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #004b87); }
+  .event-lavsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(0, 75, 135, 0.75); }
+
+.event-mtlvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #212121); }
+  .event-mtlvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(33, 33, 33, 0.75); }
+
+.event-cltvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #0085ca); }
+  .event-cltvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(0, 133, 202, 0.75); }
+
+.event-colvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #8a2432); }
+  .event-colvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(138, 36, 50, 0.75); }
+
+.event-atlvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #9d2235); }
+  .event-atlvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(157, 34, 53, 0.75); }
+
+.event-dalvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #c6093b); }
+  .event-dalvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(198, 9, 59, 0.75); }
+
+.event-skcvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #0c2340); }
+  .event-skcvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(12, 35, 64, 0.75); }
+
+.event-minvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #737b82); }
+  .event-minvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(115, 123, 130, 0.75); }
+
+.event-nshvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #201547); }
+  .event-nshvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(32, 21, 71, 0.75); }
+
+.event-seavsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #64a608); }
+  .event-seavsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(100, 166, 8, 0.75); }
+
+.event-vanvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #002244); }
+  .event-vanvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(0, 34, 68, 0.75); }
+
+.event-cinvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #003087); }
+  .event-cinvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(0, 48, 135, 0.75); }
+
+.event-miavsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #212322); }
+  .event-miavsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(33, 35, 34, 0.75); }
+
+.event-orlvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #61259e); }
+  .event-orlvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(97, 37, 158, 0.75); }
+
+.event-rbnyvsatx-card > .mdl-card__title {
+  background-image: linear-gradient(125deg, #0bac44, #ba0c2f); }
+  .event-rbnyvsatx-card > .mdl-card__title mark {
+    padding: 2px;
+    color: white;
+    background-color: rgba(186, 12, 47, 0.75); }
 
 mark {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-
-.month-card {
-    /* background: rgb(97, 97, 97); */
-    color: #fff;
-}
-
-summary {
-    cursor: pointer;
-}
-
-.event-card.mdl-card {
-    /* background: rgb(97, 97, 97); */
-    /* width: 512px; */
-    width: 100%;
-    /* color: white; */
-    /* margin: auto; */
-}
-
-.event-card small {
-    opacity: 1;
-    font-size: medium;
-}
-
-.event-card>.mdl-card__title {
-    /* color: #fff; */
-    height: 176px;
-}
-
-.event-card>.mdl-card__menu {
-    /* color: #fff; */
-}
-
-.event-card .mdl-list__item {
-    padding: 0;
-}
-
-.event-card .expandable-content {
-    display: none;
-    overflow: hidden;
-}
-
-.event-card a {
-    color: black;
-}
-
-.event-card>.mdl-card__actions {
-    display: flex;
-    box-sizing: border-box;
-    align-items: center;
-}
-
-.event-card>.mdl-card__actions>.material-icons {
-    padding-right: 10px;
-}
-
-.event-card .mdl-list__item-primary-content .mdl-list__item-icon {
-    margin-right: 5px;
-}
-
-.lamurga-card>.mdl-card__title {
-    background: black url('./la_murga.png') center / cover;
-}
-
-.lamurga-card small {
-    color: #fff;
-}
-
-.lamurga-card mark {
-    background-color: rgba(0, 177, 64, 0.9);
-    color: rgb(255, 255, 255);
-}
-
-.losverdes-card>.mdl-card__title {
-    background: black url('./los_verdes.png') center / cover;
-}
-
-.losverdes-card mark {
-    background-color: rgba(0, 177, 64, 0.9);
-    color: rgb(255, 255, 255);
-}
-
-
-/* .mdl-list__text {
-    overflow: hidden;
-    word-wrap: break-word;
-} */
-.event-atxvscin-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #003087, #0BAC44);
-}
-.event-atxvscin-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-atxvsmia-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #212322, #0BAC44);
-}
-.event-atxvsmia-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-porvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #004812);
-}
-.event-porvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(0, 72, 18, 0.75);
-}
-
-
-.event-atxvssea-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #64A608, #0BAC44);
-}
-.event-atxvssea-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-sjvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #0051BA);
-}
-.event-sjvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(0, 81, 186, 0.75);
-}
-
-
-.event-atxvsmin-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #737B82, #0BAC44);
-}
-.event-atxvsmin-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-dcvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #212121);
-}
-.event-dcvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(33, 33, 33, 0.75);
-}
-
-
-.event-atxvsvan-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #002244, #0BAC44);
-}
-.event-atxvsvan-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-houvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #101820);
-}
-.event-houvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(16, 24, 32, 0.75);
-}
-
-
-.event-atxvsla-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #004B87, #0BAC44);
-}
-.event-atxvsla-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-rslvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #001E61);
-}
-.event-rslvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(0, 30, 97, 0.75);
-}
-
-
-.event-lafcvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #212121);
-}
-.event-lafcvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(33, 33, 33, 0.75);
-}
-
-
-.event-atxvsorl-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #61259E, #0BAC44);
-}
-.event-atxvsorl-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-lavsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #004B87);
-}
-.event-lavsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(0, 75, 135, 0.75);
-}
-
-
-.event-mtlvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #212121);
-}
-.event-mtlvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(33, 33, 33, 0.75);
-}
-
-
-.event-atxvsdal-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #C6093B, #0BAC44);
-}
-.event-atxvsdal-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-cltvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #0085ca);
-}
-.event-cltvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(0, 133, 202, 0.75);
-}
-
-
-.event-colvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #8A2432);
-}
-.event-colvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(138, 36, 50, 0.75);
-}
-
-
-.event-atlvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #9D2235);
-}
-.event-atlvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(157, 34, 53, 0.75);
-}
-
-
-.event-atxvshou-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #101820, #0BAC44);
-}
-.event-atxvshou-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-dalvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #C6093B);
-}
-.event-dalvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(198, 9, 59, 0.75);
-}
-
-
-.event-atxvsrbny-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #BA0C2F, #0BAC44);
-}
-.event-atxvsrbny-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-skcvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #0C2340);
-}
-.event-skcvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(12, 35, 64, 0.75);
-}
-
-
-.event-atxvssj-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0051BA, #0BAC44);
-}
-.event-atxvssj-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-atxvsskc-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0C2340, #0BAC44);
-}
-.event-atxvsskc-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-minvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #737B82);
-}
-.event-minvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(115, 123, 130, 0.75);
-}
-
-
-.event-atxvslafc-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #212121, #0BAC44);
-}
-.event-atxvslafc-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-atxvspor-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #004812, #0BAC44);
-}
-.event-atxvspor-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-nshvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #201547);
-}
-.event-nshvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(32, 21, 71, 0.75);
-}
-
-
-.event-seavsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #64A608);
-}
-.event-seavsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(100, 166, 8, 0.75);
-}
-
-
-.event-atxvsrsl-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #001E61, #0BAC44);
-}
-.event-atxvsrsl-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-atxvsnsh-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #201547, #0BAC44);
-}
-.event-atxvsnsh-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
-
-
-.event-vanvsatx-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #0BAC44, #002244);
-}
-.event-vanvsatx-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(0, 34, 68, 0.75);
-}
-
-
-.event-atxvscol-card>.mdl-card__title {
-    background-image: linear-gradient(125deg, #8A2432, #0BAC44);
-}
-.event-atxvscol-card mark {
-    padding: 2px;
-    color: whit;
-    background-color: rgba(11, 172, 68, 0.75);
-}
+  background-color: transparent; }
 
+  .month-card {
+    color: #fff; }
+
+    summary {
+      cursor: pointer; }
+
+      .event-card.mdl-card {
+        width: 100%; }
+
+        .event-card small {
+          opacity: 1;
+          font-size: medium; }
+
+          .event-card > .mdl-card__title {
+            height: 176px; }
+
+            .event-card .mdl-list__item {
+              padding: 0; }
+
+              .event-card .expandable-content {
+                display: none;
+                overflow: hidden; }
+
+                .event-card a {
+                  color: black; }
+
+                  .event-card > .mdl-card__actions {
+                    display: flex;
+                    box-sizing: border-box;
+                    align-items: center; }
+
+                    .event-card > .mdl-card__actions > .material-icons {
+                      padding-right: 10px; }
+
+                      .event-card .mdl-list__item-primary-content .mdl-list__item-icon {
+                        margin-right: 5px; }
+
+                        .la-murga-card > .mdl-card__title {
+                          background: black url("./la_murga.png") center / cover; }
+
+                          .la-murga-card small {
+                            color: #fff; }
+
+                            .la-murga-card mark {
+                              background-color: rgba(0, 177, 64, 0.9);
+                              color: white; }
+
+                              .los-verdes-card > .mdl-card__title {
+                                background: black url("./los_verdes.png") center / cover; }
+
+                                .los-verdes-card mark {
+                                  background-color: rgba(0, 177, 64, 0.9);
+                                  color: white; }
+
+                                  input[type="radio"] {
+                                    position: absolute;
+                                    left: -9999px; }
+
+                                    .filters {
+                                      text-align: center;
+                                      margin-bottom: 2rem; }
+
+                                      .filters * {
+                                        display: inline-block; }
+
+                                        .filters label {
+                                          cursor: pointer;
+                                          transition: all 0.1s; }
+
+                                          .filters label:hover {
+                                            background: #0bac44;
+                                            color: var("--white"); }
+
+                                            .empty-event-card {
+                                              width: 100%; }
+
+                                              [value="All"]:checked ~ .event-cards [data-category] {
+                                                display: block; }
+
+                                                [value="All"]:checked ~ .empty-cards [data-category] {
+                                                  display: none; }
+
+                                                  [value="away-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="away-games"]) {
+                                                    display: none; }
+
+                                                    [value="away-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="away-games"]) {
+                                                      display: none; }
+
+                                                      [value="los-verdes"]:checked ~ .event-cards .mdl-cell:not([data-category~="los-verdes"]) {
+                                                        display: none; }
+
+                                                        [value="los-verdes"]:checked ~ .empty-cards .mdl-cell:not([data-category~="los-verdes"]) {
+                                                          display: none; }
+
+                                                          [value="home-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="home-games"]) {
+                                                            display: none; }
+
+                                                            [value="home-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="home-games"]) {
+                                                              display: none; }
+
+                                                              [value="la-murga"]:checked ~ .event-cards .mdl-cell:not([data-category~="la-murga"]) {
+                                                                display: none; }
+
+                                                                [value="la-murga"]:checked ~ .empty-cards .mdl-cell:not([data-category~="la-murga"]) {
+                                                                  display: none; }
+
+                                                                  [value="misc"]:checked ~ .event-cards .mdl-cell:not([data-category~="misc"]) {
+                                                                    display: none; }
+
+                                                                    [value="misc"]:checked ~ .empty-cards .mdl-cell:not([data-category~="misc"]) {
+                                                                      display: none; }
+
+                                                                      [value="All"]:checked ~ .filters [for="All"] {
+                                                                        background: #0bac44; }
+
+                                                                        [value="away-games"]:checked ~ .filters [for="away-games"] {
+                                                                          background: #0bac44;
+                                                                          color: white; }
+
+                                                                          [value="los-verdes"]:checked ~ .filters [for="los-verdes"] {
+                                                                            background: #0bac44;
+                                                                            color: white; }
+
+                                                                            [value="home-games"]:checked ~ .filters [for="home-games"] {
+                                                                              background: #0bac44;
+                                                                              color: white; }
+
+                                                                              [value="la-murga"]:checked ~ .filters [for="la-murga"] {
+                                                                                background: #0bac44;
+                                                                                color: white; }
+
+                                                                                [value="misc"]:checked ~ .filters [for="misc"] {
+                                                                                  background: #0bac44;
+                                                                                  color: white; }
