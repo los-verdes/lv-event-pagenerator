@@ -19,14 +19,50 @@
 <body>
 
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">Events</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link" href="" target="_blank">
+            <i class="material-icons">event</i>
+            &nbsp;
+            Add to Google Calendar
+          </a>
+        </nav>
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Events</span>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="{{ cal_id_href }}" target="_blank"><b>calendar ID</b>:
+          {{ calendar_id | truncate(25) }}
+        </a>
+        <span class="mdl-navigation__link disabled">
+          <b># events loaded</b>:
+          <br>
+          {{ events|length }}
+        </span>
+        <span class="mdl-navigation__link">
+          <b>date range</b>:
+          <br>
+          {{ events_time_min.strftime('%x') }}
+          to
+          {{ events_time_max.strftime('%x') }}
+        </span>
+      </nav>
+    </div>
     <main class="mdl-layout__content">
       <div class="page-content">
         {% block container %}{% endblock %}
       </div>
     </main>
-    <footer class="mdl-mega-footer">
-      {% block eg_footer %}{% endblock %}
-    </footer>
+    <!-- <footer class="mdl-mega-footer">
+      {% block footer %}{% endblock %}
+    </footer> -->
   </div>
 </body>
 

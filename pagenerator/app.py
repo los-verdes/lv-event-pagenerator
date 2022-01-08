@@ -25,6 +25,41 @@ EVENT_CATEGORIES = {
     "la murga": "la-murga",
     "lv all teams": "los-verdes",
 }
+
+COLOR_ID_CATEGORIES = {
+    "0": {
+        "categories": ["misc"],
+        "gcal_background": None,
+        "gcal_name": None,
+    },
+    "1": {
+        "categories": ["los-verdes"],
+        "gcal_background": "#a4bdfc",
+        "gcal_name": "lavender",
+    },
+    "2": {
+        "categories": ["la-murga"],
+        "gcal_background": "#7ae7bf",
+        "gcal_name": "sage",
+    },
+    "3": {
+        "categories": ["home-games"],
+        "gcal_background": "#dbadff",
+        "gcal_name": "grape",
+    },
+    "4": {
+        "categories": ["away-games"],
+        "gcal_background": "#ff887c",
+        "gcal_name": "flamingo",
+    },
+    "5": {"gcal_background": "#fbd75b", "gcal_foreground": "#1d1d1d"},
+    "6": {"gcal_background": "#ffb878", "gcal_foreground": "#1d1d1d"},
+    "7": {"gcal_background": "#46d6db", "gcal_foreground": "#1d1d1d"},
+    "8": {"gcal_background": "#e1e1e1", "gcal_foreground": "#1d1d1d"},
+    "9": {"gcal_background": "#5484ed", "gcal_foreground": "#1d1d1d"},
+    "10": {"gcal_background": "#51b749", "gcal_foreground": "#1d1d1d"},
+    "11": {"gcal_background": "#dc2127", "gcal_foreground": "#1d1d1d"},
+}
 TEAM_ABBREVIATIONS = {
     "Atlanta United": "atl",
     "Austin FC": "atx",
@@ -71,7 +106,7 @@ app.config.update(
 )
 
 # Reference: https://stackoverflow.com/a/33486003
-app.jinja_env.filters['quote_plus'] = lambda u: quote_plus(u)
+# app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
 
 # So we can read calendar entries and such:
 GCLOUD_AUTH_SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
@@ -133,10 +168,13 @@ def home():
         event_categories |= set(event["categories"])
     all_categories = set(default_categories) | event_categories
     empty_categories = set(all_categories) - set(event_categories)
+    calendar_cid = get_calender_cid(app.config["CALENDAR_ID"])
     return flask.render_template(
         "home.html",
         calendar_id=app.config["CALENDAR_ID"],
-        calendar_cid=get_calender_cid(app.config["CALENDAR_ID"]),
+        cal_id_href=f"https://calendar.google.com/calendar/embed?src={quote_plus(app.config['CALENDAR_ID'])}",
+        calendar_cid=calendar_cid,
+        cal_cid_href=f"https://calendar.google.com/calendar/u/0?cid={ calendar_cid }",
         events=events,
         default_categories=default_categories,
         additional_categories=list(event_categories - set(default_categories)),
@@ -145,10 +183,11 @@ def home():
         events_time_max=parse(events_time_max).replace(tzinfo=ZoneInfo("US/Central")),
     )
 
+
 def get_calender_cid(calendar_id):
-    calendar_id_bytes = calendar_id.encode('utf-8')
+    calendar_id_bytes = calendar_id.encode("utf-8")
     cid_base64 = base64.b64encode(calendar_id_bytes)
-    cid = cid_base64.decode().rstrip('=')
+    cid = cid_base64.decode().rstrip("=")
     return cid
 
 
@@ -177,8 +216,8 @@ def get_events(calendar_id, team_schedule, time_min, time_max):
         .execute()
     )
     events = events_result.get("items", [])
-    colors_result = service.colors().get().execute()
-    logger.debug(f"{colors_result=}")
+    # colors_result = service.colors().get().execute()
+    # logger.debug(f"{colors_result=}")
 
     if not events:
         return []
@@ -187,8 +226,11 @@ def get_events(calendar_id, team_schedule, time_min, time_max):
     game_regexp = re.compile(r"Austin FC (?P<vsat>vs|at) (?P<opponent>.*)")
 
     for event in events:
-        event["categories"] = ["misc"]
-        event["css_classes"] = ["event-card"]
+        event["color_id"] = event.get("colorId", "0")
+        event.update(COLOR_ID_CATEGORIES[event["color_id"]])
+        # logger.debug(f'{event["color_id"]=} ({type(event["color_id"])})')
+        # event["categories"] = ["misc"]
+        # event["css_classes"] = ["event-card"]
 
         for key in ["start", "end"]:
             event[key] = parse_event_timestamp(event, key)
@@ -206,11 +248,11 @@ def get_events(calendar_id, team_schedule, time_min, time_max):
             event["has_description"] = True
             event["description_lines"] = event.get("description", "").split("\n")
 
-        for substr, category in EVENT_CATEGORIES.items():
-            if substr in event["summary"].lower():
-                css_class = f"{category}-card"
-                event["css_classes"].append(css_class)
-                event["categories"] = [category]
+        # for substr, category in EVENT_CATEGORIES.items():
+        #     if substr in event["summary"].lower():
+        #         css_class = f"{category}-card"
+        #         event["css_classes"].append(css_class)
+        #         event["categories"] = [category]
 
         event["is_atxfc_match"] = False
         if summary_match := game_regexp.match(event["summary"]):
@@ -218,17 +260,19 @@ def get_events(calendar_id, team_schedule, time_min, time_max):
             opp_abbr = TEAM_ABBREVIATIONS.get(groups["opponent"], "-")
             match_date_str = event["start"].strftime("%m-%d-%Y")
             if groups["vsat"] == "vs":
-                event["match_slug"] = f"atxvs{opp_abbr}-{match_date_str}"
-                event["css_classes"].append("event-home-game-card")
-                event["categories"] = ["home-games"]
+                # event["match_slug"] = f"atxvs{opp_abbr}-{match_date_str}"
+                event["match_slug"] = f"atxvs{opp_abbr}"
+                # event["css_classes"].append("event-home-game-card")
+                # event["categories"] = ["home-games"]
             else:
-                event["match_slug"] = f"{opp_abbr}vsatx-{match_date_str}"
-                event["css_classes"].append("event-away-game-card")
-                event["categories"] = ["away-games"]
+                # event["match_slug"] = f"{opp_abbr}vsatx-{match_date_str}"
+                event["match_slug"] = f"{opp_abbr}vsatx"
+                # event["css_classes"].append("event-away-game-card")
+                # event["categories"] = ["away-games"]
 
-            event["css_classes"].append(
-                f"event-{event['match_slug'].split('-', 1)[0]}-card"
-            )
+            # event["css_classes"].append(
+            #     f"event-{event['match_slug'].split('-', 1)[0]}-card"
+            # )
             if scheduled_match := team_schedule.get(event["match_slug"]):
                 event["is_atxfc_match"] = True
                 event["match_details"] = scheduled_match
@@ -240,43 +284,43 @@ colors_result = {
     "kind": "calendar#colors",
     "updated": "2012-02-14T00:00:00.000Z",
     "calendar": {
-        "1": {"background": "#ac725e", "foreground": "#1d1d1d"},
-        "2": {"background": "#d06b64", "foreground": "#1d1d1d"},
-        "3": {"background": "#f83a22", "foreground": "#1d1d1d"},
-        "4": {"background": "#fa573c", "foreground": "#1d1d1d"},
-        "5": {"background": "#ff7537", "foreground": "#1d1d1d"},
-        "6": {"background": "#ffad46", "foreground": "#1d1d1d"},
-        "7": {"background": "#42d692", "foreground": "#1d1d1d"},
-        "8": {"background": "#16a765", "foreground": "#1d1d1d"},
-        "9": {"background": "#7bd148", "foreground": "#1d1d1d"},
-        "10": {"background": "#b3dc6c", "foreground": "#1d1d1d"},
-        "11": {"background": "#fbe983", "foreground": "#1d1d1d"},
-        "12": {"background": "#fad165", "foreground": "#1d1d1d"},
-        "13": {"background": "#92e1c0", "foreground": "#1d1d1d"},
-        "14": {"background": "#9fe1e7", "foreground": "#1d1d1d"},
-        "15": {"background": "#9fc6e7", "foreground": "#1d1d1d"},
-        "16": {"background": "#4986e7", "foreground": "#1d1d1d"},
-        "17": {"background": "#9a9cff", "foreground": "#1d1d1d"},
-        "18": {"background": "#b99aff", "foreground": "#1d1d1d"},
-        "19": {"background": "#c2c2c2", "foreground": "#1d1d1d"},
-        "20": {"background": "#cabdbf", "foreground": "#1d1d1d"},
-        "21": {"background": "#cca6ac", "foreground": "#1d1d1d"},
-        "22": {"background": "#f691b2", "foreground": "#1d1d1d"},
-        "23": {"background": "#cd74e6", "foreground": "#1d1d1d"},
-        "24": {"background": "#a47ae2", "foreground": "#1d1d1d"},
+        "1": {"gcal_background": "#ac725e", "gcal_foreground": "#1d1d1d"},
+        "2": {"gcal_background": "#d06b64", "gcal_foreground": "#1d1d1d"},
+        "3": {"gcal_background": "#f83a22", "gcal_foreground": "#1d1d1d"},
+        "4": {"gcal_background": "#fa573c", "gcal_foreground": "#1d1d1d"},
+        "5": {"gcal_background": "#ff7537", "gcal_foreground": "#1d1d1d"},
+        "6": {"gcal_background": "#ffad46", "gcal_foreground": "#1d1d1d"},
+        "7": {"gcal_background": "#42d692", "gcal_foreground": "#1d1d1d"},
+        "8": {"gcal_background": "#16a765", "gcal_foreground": "#1d1d1d"},
+        "9": {"gcal_background": "#7bd148", "gcal_foreground": "#1d1d1d"},
+        "10": {"gcal_background": "#b3dc6c", "gcal_foreground": "#1d1d1d"},
+        "11": {"gcal_background": "#fbe983", "gcal_foreground": "#1d1d1d"},
+        "12": {"gcal_background": "#fad165", "gcal_foreground": "#1d1d1d"},
+        "13": {"gcal_background": "#92e1c0", "gcal_foreground": "#1d1d1d"},
+        "14": {"gcal_background": "#9fe1e7", "gcal_foreground": "#1d1d1d"},
+        "15": {"gcal_background": "#9fc6e7", "gcal_foreground": "#1d1d1d"},
+        "16": {"gcal_background": "#4986e7", "gcal_foreground": "#1d1d1d"},
+        "17": {"gcal_background": "#9a9cff", "gcal_foreground": "#1d1d1d"},
+        "18": {"gcal_background": "#b99aff", "gcal_foreground": "#1d1d1d"},
+        "19": {"gcal_background": "#c2c2c2", "gcal_foreground": "#1d1d1d"},
+        "20": {"gcal_background": "#cabdbf", "gcal_foreground": "#1d1d1d"},
+        "21": {"gcal_background": "#cca6ac", "gcal_foreground": "#1d1d1d"},
+        "22": {"gcal_background": "#f691b2", "gcal_foreground": "#1d1d1d"},
+        "23": {"gcal_background": "#cd74e6", "gcal_foreground": "#1d1d1d"},
+        "24": {"gcal_background": "#a47ae2", "gcal_foreground": "#1d1d1d"},
     },
     "event": {
-        "1": {"background": "#a4bdfc", "foreground": "#1d1d1d"},
-        "2": {"background": "#7ae7bf", "foreground": "#1d1d1d"},
-        "3": {"background": "#dbadff", "foreground": "#1d1d1d"},
-        "4": {"background": "#ff887c", "foreground": "#1d1d1d"},
-        "5": {"background": "#fbd75b", "foreground": "#1d1d1d"},
-        "6": {"background": "#ffb878", "foreground": "#1d1d1d"},
-        "7": {"background": "#46d6db", "foreground": "#1d1d1d"},
-        "8": {"background": "#e1e1e1", "foreground": "#1d1d1d"},
-        "9": {"background": "#5484ed", "foreground": "#1d1d1d"},
-        "10": {"background": "#51b749", "foreground": "#1d1d1d"},
-        "11": {"background": "#dc2127", "foreground": "#1d1d1d"},
+        "1": {"gcal_background": "#a4bdfc", "gcal_foreground": "#1d1d1d"},
+        "2": {"gcal_background": "#7ae7bf", "gcal_foreground": "#1d1d1d"},
+        "3": {"gcal_background": "#dbadff", "gcal_foreground": "#1d1d1d"},
+        "4": {"gcal_background": "#ff887c", "gcal_foreground": "#1d1d1d"},
+        "5": {"gcal_background": "#fbd75b", "gcal_foreground": "#1d1d1d"},
+        "6": {"gcal_background": "#ffb878", "gcal_foreground": "#1d1d1d"},
+        "7": {"gcal_background": "#46d6db", "gcal_foreground": "#1d1d1d"},
+        "8": {"gcal_background": "#e1e1e1", "gcal_foreground": "#1d1d1d"},
+        "9": {"gcal_background": "#5484ed", "gcal_foreground": "#1d1d1d"},
+        "10": {"gcal_background": "#51b749", "gcal_foreground": "#1d1d1d"},
+        "11": {"gcal_background": "#dc2127", "gcal_foreground": "#1d1d1d"},
     },
 }
 things = {

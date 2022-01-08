@@ -21,7 +21,7 @@ app "pagenerator" {
       port = 8080
 
       static_environment = {
-        CALENDAR_ID = "information@losverdesatx.org"
+        CALENDAR_ID = "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
         WAYPOINT_CEB_DISABLE = "true"
       }
 
