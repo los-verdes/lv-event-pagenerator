@@ -332,101 +332,105 @@ mark {
                       .event-card .mdl-list__item-primary-content .mdl-list__item-icon {
                         margin-right: 5px; }
 
-                        .la-murge > .mdl-card__title {
-                          background: black url("./la_murga.png") center / cover; }
+                        .event-card mark {
+                          background-color: rgba(0, 177, 64, 0.9);
+                          color: white; }
 
-                          .la-murge small {
-                            color: #fff; }
+                          .la-murge > .mdl-card__title {
+                            background: black url("./la_murga.png") center / cover; }
 
-                            .la-murge mark {
-                              background-color: rgba(0, 177, 64, 0.9);
-                              color: white; }
+                            .la-murge small {
+                              color: #fff; }
 
-                              .los-verdes > .mdl-card__title {
-                                background: black url("./los_verdes.png") center / cover; }
+                              .la-murge mark {
+                                background-color: rgba(0, 177, 64, 0.9);
+                                color: white; }
 
-                                .los-verdes mark {
-                                  background-color: rgba(0, 177, 64, 0.9);
-                                  color: white; }
+                                .los-verdes > .mdl-card__title {
+                                  background: black url("./los_verdes.png") center / cover; }
 
-                                  input[type="radio"] {
-                                    position: absolute;
-                                    left: -9999px; }
+                                  .los-verdes mark {
+                                    background-color: rgba(0, 177, 64, 0.9);
+                                    color: white; }
 
-                                    .filters {
-                                      text-align: center;
-                                      margin-bottom: 2rem; }
+                                    input[type="radio"] {
+                                      position: absolute;
+                                      left: -9999px; }
 
-                                      .filters * {
-                                        display: inline-block; }
+                                      .filters {
+                                        text-align: center;
+                                        margin-bottom: 2rem; }
 
-                                        .filters label {
-                                          cursor: pointer;
-                                          transition: all 0.1s; }
+                                        .filters * {
+                                          display: inline-block; }
 
-                                          .filters label:hover {
-                                            background: #0bac44;
-                                            color: var("--white"); }
+                                          .filters label {
+                                            cursor: pointer;
+                                            transition: all 0.1s; }
 
-                                            .empty-event-card {
-                                              width: 100%; }
+                                            .filters label:hover {
+                                              background: #0bac44;
+                                              color: var("--white"); }
 
-                                              [value="all"]:checked ~ .event-cards [data-category] {
-                                                display: block; }
+                                              .empty-event-card {
+                                                width: 100%; }
 
-                                                [value="all"]:checked ~ .empty-cards [data-category] {
-                                                  display: none; }
+                                                [value="all"]:checked ~ .event-cards [data-category] {
+                                                  display: block; }
 
-                                                  [value="away-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="away-games"]) {
+                                                  [value="all"]:checked ~ .empty-cards [data-category] {
                                                     display: none; }
 
-                                                    [value="away-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="away-games"]) {
+                                                    [value="away-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="away-games"]) {
                                                       display: none; }
 
-                                                      [value="los-verdes"]:checked ~ .event-cards .mdl-cell:not([data-category~="los-verdes"]) {
+                                                      [value="away-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="away-games"]) {
                                                         display: none; }
 
-                                                        [value="los-verdes"]:checked ~ .empty-cards .mdl-cell:not([data-category~="los-verdes"]) {
+                                                        [value="los-verdes"]:checked ~ .event-cards .mdl-cell:not([data-category~="los-verdes"]) {
                                                           display: none; }
 
-                                                          [value="home-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="home-games"]) {
+                                                          [value="los-verdes"]:checked ~ .empty-cards .mdl-cell:not([data-category~="los-verdes"]) {
                                                             display: none; }
 
-                                                            [value="home-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="home-games"]) {
+                                                            [value="home-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="home-games"]) {
                                                               display: none; }
 
-                                                              [value="la-murga"]:checked ~ .event-cards .mdl-cell:not([data-category~="la-murga"]) {
+                                                              [value="home-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="home-games"]) {
                                                                 display: none; }
 
-                                                                [value="la-murga"]:checked ~ .empty-cards .mdl-cell:not([data-category~="la-murga"]) {
+                                                                [value="la-murga"]:checked ~ .event-cards .mdl-cell:not([data-category~="la-murga"]) {
                                                                   display: none; }
 
-                                                                  [value="misc"]:checked ~ .event-cards .mdl-cell:not([data-category~="misc"]) {
+                                                                  [value="la-murga"]:checked ~ .empty-cards .mdl-cell:not([data-category~="la-murga"]) {
                                                                     display: none; }
 
-                                                                    [value="misc"]:checked ~ .empty-cards .mdl-cell:not([data-category~="misc"]) {
+                                                                    [value="misc"]:checked ~ .event-cards .mdl-cell:not([data-category~="misc"]) {
                                                                       display: none; }
 
-                                                                      [value="all"]:checked ~ .filters [for="all"] {
-                                                                        background: #0bac44;
-                                                                        color: white; }
+                                                                      [value="misc"]:checked ~ .empty-cards .mdl-cell:not([data-category~="misc"]) {
+                                                                        display: none; }
 
-                                                                        [value="away-games"]:checked ~ .filters [for="away-games"] {
+                                                                        [value="all"]:checked ~ .filters [for="all"] {
                                                                           background: #0bac44;
                                                                           color: white; }
 
-                                                                          [value="los-verdes"]:checked ~ .filters [for="los-verdes"] {
+                                                                          [value="away-games"]:checked ~ .filters [for="away-games"] {
                                                                             background: #0bac44;
                                                                             color: white; }
 
-                                                                            [value="home-games"]:checked ~ .filters [for="home-games"] {
+                                                                            [value="los-verdes"]:checked ~ .filters [for="los-verdes"] {
                                                                               background: #0bac44;
                                                                               color: white; }
 
-                                                                              [value="la-murga"]:checked ~ .filters [for="la-murga"] {
+                                                                              [value="home-games"]:checked ~ .filters [for="home-games"] {
                                                                                 background: #0bac44;
                                                                                 color: white; }
 
-                                                                                [value="misc"]:checked ~ .filters [for="misc"] {
+                                                                                [value="la-murga"]:checked ~ .filters [for="la-murga"] {
                                                                                   background: #0bac44;
                                                                                   color: white; }
+
+                                                                                  [value="misc"]:checked ~ .filters [for="misc"] {
+                                                                                    background: #0bac44;
+                                                                                    color: white; }

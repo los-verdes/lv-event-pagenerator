@@ -105,6 +105,10 @@ summary {
 .event-card .mdl-list__item-primary-content .mdl-list__item-icon {
   margin-right: 5px;
 }
+.event-card mark {
+  background-color: rgba(0, 177, 64, 0.9);
+  color: rgb(255, 255, 255);
+}
 
 .la-murge > .mdl-card__title {
   background: black url("./la_murga.png") center / cover;

@@ -1,23 +1,23 @@
 #!/usr/bin/env python
-import calendar
-import itertools
-import re
-from datetime import datetime, timezone, timedelta, date
-import os
-from zoneinfo import ZoneInfo
-from collections import defaultdict
 import base64
+import os
+import re
+from datetime import date, datetime, timedelta
+from urllib.parse import quote_plus
+from zoneinfo import ZoneInfo
+import io
 import flask
 import google.auth
+import requests
 from dateutil.parser import parse
+from flask_assets import Bundle, Environment
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaIoBaseDownload
 from logzero import logger, setup_logger
-import requests
-from flask_assets import Environment, Bundle
-from urllib.parse import quote_plus
 
 DEFAULT_CLUB_OPTA_ID = "15296"
 
@@ -29,7 +29,7 @@ EVENT_CATEGORIES = {
 COLOR_ID_CATEGORIES = {
     "0": {
         "categories": ["misc"],
-        "gcal_background": None,
+        "gcal_background": "#039be5",
         "gcal_name": None,
     },
     "1": {
@@ -87,7 +87,7 @@ TEAM_ABBREVIATIONS = {
 }
 setup_logger(name=__name__)
 
-
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 app = flask.Flask(__name__)
 
 assets = Environment(app)  # create an Environment instance
@@ -191,6 +191,35 @@ def get_calender_cid(calendar_id):
     return cid
 
 
+def get_attachment(attachment):
+    attachment_local_path = os.path.join(BASE_DIR, "static", attachment["title"])
+    if os.path.exists(attachment_local_path):
+        with open(attachment_local_path, "rb") as fh:
+            return fh.read()
+
+    if app.config["USE_OAUTH_CREDS"]:
+        credentials = load_local_creds()
+    else:
+        credentials, project = google.auth.default(GCLOUD_AUTH_SCOPES)
+    try:
+        service = build("drive", "v3", credentials=credentials)
+
+        request = service.files().get_media(fileId=attachment["fileId"])
+        fh = io.BytesIO()
+        downloader = MediaIoBaseDownload(fh, request)
+        done = False
+        while done is False:
+            status, done = downloader.next_chunk()
+            print("Download %d%%." % int(status.progress() * 100))
+
+        with open(attachment_local_path, "wb") as f:
+            f.write(fh.getbuffer())
+        return fh.getbuffer()
+    except HttpError as error:
+        # TODO(developer) - Handle errors from drive API.
+        print(f"An error occurred: {error}")
+
+
 def get_events(calendar_id, team_schedule, time_min, time_max):
     global lv_events
     if lv_events is not None:
@@ -228,7 +257,7 @@ def get_events(calendar_id, team_schedule, time_min, time_max):
     for event in events:
         event["color_id"] = event.get("colorId", "0")
         event.update(COLOR_ID_CATEGORIES[event["color_id"]])
-        # logger.debug(f'{event["color_id"]=} ({type(event["color_id"])})')
+        # logger.debug(f'{event["color_id"]=} ({type(event["color_id"])}) {event.get("colorId", "0")=}')
         # event["categories"] = ["misc"]
         # event["css_classes"] = ["event-card"]
 
@@ -253,7 +282,16 @@ def get_events(calendar_id, team_schedule, time_min, time_max):
         #         css_class = f"{category}-card"
         #         event["css_classes"].append(css_class)
         #         event["categories"] = [category]
-
+        if attachments := event.get("attachments"):
+            for attachment in attachments:
+                if attachment["mimeType"].startswith("image/"):
+                    logger.debug(f"{attachment=}")
+                    fh = get_attachment(attachment)
+                    event["cover_image_filename"] = attachment["title"]
+                    event[
+                        "cover_image_base64"
+                    ] = f"data:{attachment['mimeType']};base64,{base64.b64encode(fh).decode()}"
+            logger.debug(f"{event['summary']}:\n{attachments=}")
         event["is_atxfc_match"] = False
         if summary_match := game_regexp.match(event["summary"]):
             groups = summary_match.groupdict()
