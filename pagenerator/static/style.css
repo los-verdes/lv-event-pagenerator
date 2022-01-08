@@ -371,10 +371,10 @@ mark {
                                             .empty-event-card {
                                               width: 100%; }
 
-                                              [value="All"]:checked ~ .event-cards [data-category] {
+                                              [value="all"]:checked ~ .event-cards [data-category] {
                                                 display: block; }
 
-                                                [value="All"]:checked ~ .empty-cards [data-category] {
+                                                [value="all"]:checked ~ .empty-cards [data-category] {
                                                   display: none; }
 
                                                   [value="away-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="away-games"]) {
@@ -407,8 +407,9 @@ mark {
                                                                     [value="misc"]:checked ~ .empty-cards .mdl-cell:not([data-category~="misc"]) {
                                                                       display: none; }
 
-                                                                      [value="All"]:checked ~ .filters [for="All"] {
-                                                                        background: #0bac44; }
+                                                                      [value="all"]:checked ~ .filters [for="all"] {
+                                                                        background: #0bac44;
+                                                                        color: white; }
 
                                                                         [value="away-games"]:checked ~ .filters [for="away-games"] {
                                                                           background: #0bac44;

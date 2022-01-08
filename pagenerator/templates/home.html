@@ -35,7 +35,7 @@
                             {% if event.is_over_zoom %}
                             <i class="material-icons mdl-list__item-icon">videocam</i>
                             <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
-                               href="{{event.location}}" target="_blank">
+                                href="{{event.location}}" target="_blank">
                                 Join Zoom Meeting
                             </a>
                             {% else %}
@@ -66,7 +66,7 @@
         </div>
         <div class="mdl-card__menu">
             <a id="calendar-link-{{event.id}}" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
-               href="{{event.htmlLink}}" target="_blank">
+                href="{{event.htmlLink}}" target="_blank">
                 <i class="material-icons">launch</i>
             </a>
             <div class="mdl-tooltip mdl-tooltip" for="calendar-link-{{event.id}}">
@@ -76,19 +76,16 @@
     </div>
 </div>
 {% endmacro %}
-{% block header_nav %}
-hi
-{% endblock %}
 
 {% block container %}
-<input type="radio" id="All" name="categories" value="All" checked>
+<input type="radio" id="all" name="categories" value="all" checked>
 {% for category in default_categories + additional_categories %}
 <input type="radio" id="{{ category }}" name="categories" value="{{ category }}">
 {% endfor %}
 <ol class="filters">
     <li>
-        <label class="mdl-chip" for="All">
-            <span class="mdl-chip__text">All</span>
+        <label class="mdl-chip" for="all">
+            <span class="mdl-chip__text">all</span>
         </label>
     </li>
     {% for category in default_categories + additional_categories %}
@@ -100,10 +97,11 @@ hi
     {% endfor %}
 </ol>
 <div class="mdl-grid event-cards">
+    <div class="mdl-layout-spacer"></div>
     {% for event in events %}
     {{ event_card(event) }}
     {% endfor %}
-    <!-- <div class="mdl-layout-spacer"></div> -->
+    <div class="mdl-layout-spacer"></div>
 </div>
 
 <div class="mdl-grid empty-cards">
@@ -113,7 +111,7 @@ hi
         <div class="empty-event-card mdl-card mdl-shadow--2dp">
             <div class="mdl-card__title mdl-card--expand">
                 <h4>
-                    No events found for category: <b>{{ empty_category }}</b>
+                    No upcoming events for <b>{{ empty_category }}</b>
                 </h4>
             </div>
         </div>
@@ -127,4 +125,86 @@ hi
     <span class="mdl-chip__text">{{ category }}</span>
 </button>
 {% endfor %}
+{% endblock %}
+
+{% block footer %}
+<div class="mdl-mega-footer__left-section">
+    <ul class="mdl-mega-footer__link-list">
+        <li><span><b>{{ events|length }}</b> events loaded</span></li>
+        <li>
+            <span>
+                <b>date range:</b> {{ events_time_min.strftime('%x') }} - {{ events_time_max.strftime('%x') }}
+            </span>
+        </li>
+        <!-- <li><span><b>source calendar:</b> {{ calendar_id }}</span></li> -->
+        <li><a href="https://calendar.google.com/calendar/embed?src={{ calendar_id | quote_plus }}"
+                target="_blank"><b>source
+                    calendar:</b> {{ calendar_id }}</span></li>
+    </ul>
+</div>
+<div class="mdl-mega-footer__right-section">
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+        href="https://calendar.google.com/calendar/u/0?cid={{ calendar_cid }}" target="_blank">
+        <i class="material-icons">event</i>
+        &nbsp;
+        Add to Google Calendar
+    </a>
+</div>
+{% endblock %}
+{% block footer %}
+<div class="mdl-mega-footer__top-section">
+    <div class="mdl-mega-footer__left-section">
+        <ul class="mdl-mega-footer__link-list">
+            <li><span><b>{{ events|length }}</b> events loaded</span></li>
+            <li>
+                <span>
+                    <b>date range:</b> {{ events_time_min.strftime('%x') }} - {{ events_time_max.strftime('%x') }}
+                </span>
+            </li>
+            <!-- <li><span><b>source calendar:</b> {{ calendar_id }}</span></li> -->
+            <li><a href="https://calendar.google.com/calendar/embed?src={{ calendar_id | quote_plus }}"><b>source
+                        calendar:</b> {{ calendar_id }}</span></li>
+        </ul>
+    </div>
+    <div class="mdl-mega-footer__right-section">
+        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+            href="https://calendar.google.com/calendar/u/0?cid={{ calendar_cid }}" target="_blank">
+            <i class="material-icons">event</i>
+            &nbsp;
+            Add to Google Calendar
+        </a>
+    </div>
+</div>
+<div class="mdl-mega-footer__middle-section">
+    <div class="mdl-mega-footer__drop-down-section">
+    </div>
+</div>
+<!-- <div class="mdl-mega-footer__bottom-section">
+    <div class="mdl-logo"><b>{{ events|length }}</b> events loaded</div>
+    <ul class="mdl-mega-footer__link-list">
+    </ul>
+</div> -->
+{% endblock %}
+{% block footerr %}
+<div class="mdl-mini-footer__left-section">
+</div>
+<div class="mdl-mini-footer__right-section">
+    <ul class="mdl-mega-footer__link-list">
+        <li>
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                href="https://calendar.google.com/calendar/u/0?cid={{ calendar_cid }}">
+                <i class="material-icons">event</i>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                Add to Google Calendar
+            </a>
+        </li>
+        <!-- <li><a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+               href="https://calendar.google.com/calendar/u/0?cid={{ calendar_cid }}"><b>Source calendar ID:</b>
+                {{ calendar_id }}</span></li> -->
+        <!-- <li><span><b>Source calendar CID:</b> {{ calendar_cid }}</span></li> -->
+
+    </ul>
+</div>
 {% endblock %}

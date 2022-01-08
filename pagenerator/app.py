@@ -6,7 +6,7 @@ from datetime import datetime, timezone, timedelta, date
 import os
 from zoneinfo import ZoneInfo
 from collections import defaultdict
-
+import base64
 import flask
 import google.auth
 from dateutil.parser import parse
@@ -17,6 +17,7 @@ from googleapiclient.discovery import build
 from logzero import logger, setup_logger
 import requests
 from flask_assets import Environment, Bundle
+from urllib.parse import quote_plus
 
 DEFAULT_CLUB_OPTA_ID = "15296"
 
@@ -69,6 +70,9 @@ app.config.update(
     USE_OAUTH_CREDS=os.getenv("USE_OAUTH_CREDS", False),
 )
 
+# Reference: https://stackoverflow.com/a/33486003
+app.jinja_env.filters['quote_plus'] = lambda u: quote_plus(u)
+
 # So we can read calendar entries and such:
 GCLOUD_AUTH_SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
 
@@ -106,10 +110,15 @@ def home():
     #     bits.write('\n'.join(css_bits))
     # breakpoint()
     # logger.debug(f"{list(team_schedule.keys())=}")
+    now = datetime.utcnow().isoformat() + "Z"  # 'Z' indicates UTC time
+    events_time_min = now
+    events_time_max = (datetime.utcnow() + timedelta(days=365)).isoformat() + "Z"
     events = get_events(
         calendar_id=app.config["CALENDAR_ID"],
         # team_schedule=team_schedule,
         team_schedule=dict(),
+        time_min=events_time_min,
+        time_max=events_time_max,
     )
     # categories = {c for c in itertools.chain.from_iterable(e['css_classes'] for e in events)}
     # categories = list(EVENT_CSS_CLASSES.keys()) + ["away games", "home games"]
@@ -126,14 +135,24 @@ def home():
     empty_categories = set(all_categories) - set(event_categories)
     return flask.render_template(
         "home.html",
+        calendar_id=app.config["CALENDAR_ID"],
+        calendar_cid=get_calender_cid(app.config["CALENDAR_ID"]),
         events=events,
         default_categories=default_categories,
         additional_categories=list(event_categories - set(default_categories)),
         empty_categories=empty_categories,
+        events_time_min=parse(events_time_min).replace(tzinfo=ZoneInfo("US/Central")),
+        events_time_max=parse(events_time_max).replace(tzinfo=ZoneInfo("US/Central")),
     )
 
+def get_calender_cid(calendar_id):
+    calendar_id_bytes = calendar_id.encode('utf-8')
+    cid_base64 = base64.b64encode(calendar_id_bytes)
+    cid = cid_base64.decode().rstrip('=')
+    return cid
 
-def get_events(calendar_id, team_schedule):
+
+def get_events(calendar_id, team_schedule, time_min, time_max):
     global lv_events
     if lv_events is not None:
         return lv_events
@@ -141,17 +160,16 @@ def get_events(calendar_id, team_schedule):
         credentials = load_local_creds()
     else:
         credentials, project = google.auth.default(GCLOUD_AUTH_SCOPES)
-    now = datetime.utcnow().isoformat() + "Z"  # 'Z' indicates UTC time
-    max_time = (datetime.utcnow() + timedelta(days=365)).isoformat() + "Z"
-    logger.info("Getting the upcoming 10 events")
+
+    logger.info("Getting the all events from {{ time_min }} to {{ time_max }}...")
 
     service = build("calendar", "v3", credentials=credentials)
     events_result = (
         service.events()
         .list(
             calendarId=calendar_id,
-            timeMin=now,
-            timeMax=max_time,
+            timeMin=time_min,
+            timeMax=time_max,
             # maxResults=10,
             singleEvents=True,
             orderBy="startTime",

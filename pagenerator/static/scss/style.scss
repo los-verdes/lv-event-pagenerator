@@ -171,11 +171,11 @@ input[type="radio"] {
   width: 100%;
 }
 
-[value="All"]:checked ~ .event-cards [data-category] {
+[value="all"]:checked ~ .event-cards [data-category] {
   display: block;
 }
 
-[value="All"]:checked ~ .empty-cards [data-category] {
+[value="all"]:checked ~ .empty-cards [data-category] {
   display: none;
 }
 
@@ -190,8 +190,9 @@ $categories: away-games, los-verdes, home-games, la-murga, misc;
   }
 }
 
-[value="All"]:checked ~ .filters [for="All"] {
+[value="all"]:checked ~ .filters [for="all"] {
   background: $bright-verde;
+  color: white;
 }
 @each $category in $categories {
   [value="$category"]:checked ~ .filters [for="$category"] {
@@ -200,6 +201,6 @@ $categories: away-games, los-verdes, home-games, la-murga, misc;
   }
 }
 
-// [value="All"]:checked + label {
+// [value="all"]:checked + label {
 //   background: $bright-verde;
 // }

@@ -19,23 +19,14 @@
 <body>
 
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <!-- Title -->
-        <span class="mdl-layout-title mdl-layout--large-screen-only">Upcoming Events</span>
-        <!-- Add spacer, to align navigation to the right -->
-        <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
-        <nav class="mdl-navigation">
-
-          {% block header_nav %}{% endblock %}
-        </nav>
-      </div>
-    </header>
     <main class="mdl-layout__content">
       <div class="page-content">
         {% block container %}{% endblock %}
+      </div>
     </main>
+    <footer class="mdl-mega-footer">
+      {% block eg_footer %}{% endblock %}
+    </footer>
   </div>
 </body>
 
