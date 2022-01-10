@@ -41,7 +41,7 @@ data "archive_file" "webhook_function" {
   type             = "zip"
   output_file_mode = "0666"
   output_path      = "${path.module}/webhook_function.zip"
-  source_dir       = "${path.module}/../pagenerator/"
+  source_dir       = "${path.module}/../events_page/"
 }
 
 
@@ -77,7 +77,7 @@ resource "google_cloudfunctions_function" "webhook" {
   entry_point           = "process_events_push_notification"
 
   environment_variables = {
-    PAGENERATOR_SECRET_NAME = google_secret_manager_secret_version.event_page_key.name
+    EVENTS_PAGE_SECRET_NAME = google_secret_manager_secret_version.event_page_key.name
   }
   build_environment_variables = {
     GOOGLE_FUNCTION_SOURCE = "webhook.py"

@@ -18,7 +18,7 @@ from logzero import logger
 
 
 DEFAULT_SECRET_NAME = os.getenv(
-    "PAGENERATOR_SECRET_NAME",
+    "EVENTS_PAGE_SECRET_NAME",
     "projects/538480189659/secrets/lv-events-page/versions/latest",
 )
 
@@ -126,7 +126,7 @@ def load_local_creds(scopes):
 
 
 def build_service(service_name, version, scopes):
-    if os.getenv("PAGENERATOR_USE_OAUTH_CREDS"):
+    if os.getenv("EVENTS_PAGE_USE_OAUTH_CREDS"):
         credentials = load_local_creds(scopes)
     else:
         credentials, project = google.auth.default(scopes)

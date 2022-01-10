@@ -1,4 +1,4 @@
-# lv-event-pagenerator
+# lv-events-page
 
 ## Deployment
 
