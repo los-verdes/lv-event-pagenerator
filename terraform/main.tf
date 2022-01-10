@@ -41,7 +41,7 @@ data "archive_file" "webhook_function" {
   type             = "zip"
   output_file_mode = "0666"
   output_path      = "${path.module}/webhook_function.zip"
-  source_dir       = "${path.module}/../webhook/"
+  source_dir       = "${path.module}/../pagenerator/"
 }
 
 
@@ -66,11 +66,11 @@ resource "google_cloudfunctions_function" "webhook" {
   source_archive_bucket = google_storage_bucket.bucket.name
   source_archive_object = google_storage_bucket_object.archive.name
   trigger_http          = true
-  entry_point           = "process_push_notification"
+  entry_point           = "process_drive_push_notification"
 
-  # build_environment_variables = {
-  #   GOOGLE_FUNCTION_SOURCE = "webhook.py"
-  # }
+  build_environment_variables = {
+    GOOGLE_FUNCTION_SOURCE = "webhook.py"
+  }
 }
 
 resource "google_cloudfunctions_function_iam_member" "allow_all" {

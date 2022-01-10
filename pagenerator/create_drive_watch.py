@@ -1,23 +1,17 @@
 #!/usr/bin/env python
 import json
 import logging
-import os
 import time
-import uuid
-import base64
-from datetime import datetime, timedelta
+from datetime import datetime
+
 import google.auth
-from google.oauth2 import service_account
 import logzero
-from dateutil.parser import parse
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google.cloud.secretmanager import SecretManagerServiceClient
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from logzero import logger
 
-from google.cloud.secretmanager import SecretManagerServiceClient
-from pagenerator.google_utils import build_service, get_file_id
+from pagenerator.google_utils import read_secret
 
 # Based on: https://medium.com/swlh/google-drive-push-notification-b62e2e2b3df4
 
@@ -33,7 +27,7 @@ DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctio
 DEFAULT_SETTINGS_FILE_ID = "1jJjp94KgQ7NtI0ds5SzpNKG3s2Y96dO8"
 
 
-def ensure_changes_watch(service, channel_id, web_hook_address, expiration=None):
+def ensure_changes_watch(service, channel_id, web_hook_address, token, expiration=None):
     drive_id = service.files().get(fileId=DEFAULT_SETTINGS_FILE_ID).execute()["id"]
     logger.debug(
         f"Ensure GDrive watch ({expiration=}) ({drive_id=}) changes is in-place now..."
@@ -54,6 +48,7 @@ def ensure_changes_watch(service, channel_id, web_hook_address, expiration=None)
             type="web_hook",
             id=channel_id,
             address=web_hook_address,
+            token=token,
             # expiration=expiration,
         ),
     )
@@ -69,7 +64,7 @@ def ensure_changes_watch(service, channel_id, web_hook_address, expiration=None)
     return response
 
 
-def ensure_file_watch(service, channel_id, web_hook_address, file_id, expiration=None):
+def ensure_file_watch(service, channel_id, web_hook_address, file_id, token, expiration=None):
     logger.debug(
         f"Ensure GDrive watch ({expiration=}) for {file_id=} is in-place now..."
     )
@@ -80,6 +75,7 @@ def ensure_file_watch(service, channel_id, web_hook_address, file_id, expiration
             type="web_hook",
             id=channel_id,
             address=web_hook_address,
+            token=token,
             # expiration=expiration,
         ),
     )
@@ -148,12 +144,12 @@ if __name__ == "__main__":
     credentials, project = google.auth.default(GCLOUD_AUTH_SCOPES)
     client = SecretManagerServiceClient(credentials=credentials)
 
-    secret_name = "projects/538480189659/secrets/event-page-key/versions/latest"
-    response = client.access_secret_version(request={"name": secret_name})
-    payload = response.payload.data.decode("UTF-8")
-    service_account_info = json.loads(base64.b64decode(payload).decode())
+    sa_key_secret_name = "projects/538480189659/secrets/event-page-key/versions/latest"
+    service_account_info = json.loads(read_secret(client, sa_key_secret_name))
     sa_credentials = service_account.Credentials.from_service_account_info(service_account_info)
     # breakpoint()
+    token_secret_name = "projects/538480189659/secrets/webhook-token/versions/latest"
+    token = read_secret(client, token_secret_name)
 
     channel_id = args.channel_id  # str(uuid.uuid4())
     logger.debug(f"Using {channel_id=}...")
@@ -164,6 +160,7 @@ if __name__ == "__main__":
             channel_id=channel_id,
             web_hook_address=args.web_hook_address,
             file_id=file_id,
+            token=token,
             expiration=expiration,
         )
     else:
@@ -174,6 +171,7 @@ if __name__ == "__main__":
             service=drive_service,
             channel_id=channel_id,
             web_hook_address=args.web_hook_address,
+            token=token,
             expiration=expiration,
         )
 

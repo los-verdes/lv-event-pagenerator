@@ -17,7 +17,7 @@ uri_regexp = re.compile(
 )
 
 
-def process_push_notification(request):
+def process_drive_push_notification(request):
     """Responds to any HTTP request.
     Args:
         request (flask.Request): HTTP request object.
@@ -50,7 +50,7 @@ def process_push_notification(request):
         )
         changes_page_token = uri_params["pageToken"][0]
         print(f"{changes_page_token=}")
-        list_resp = drive.changes().list(pageToken=changes_page_token).execute()
+        list_resp = drive.changes().list(pageToken=changes_page_token, pageSize=1).execute()
         print(f"{list_resp=}")
         breakpoint()
     #     return "uh oh"
@@ -179,25 +179,25 @@ def local_invocation():
         def headers(self):
             return self._headers
 
-    # print(f"{process_push_notification(MockRequest({}, example_headers['changes']))}")
-    # print(f"{process_push_notification(MockRequest({}, example_headers['file']))}")
-    channels = [
-        dict(id="43c93f06-43e6-49a6-b025-d2a7b361da15", resource_id="6DstUkjlE0PK0ewGPgOeFnqa-Po"),
-        dict(id="49e36c4f-db10-472d-bd4a-671ad8160b01", resource_id="7aUp_6s8FLSeyTAud1QTxiHujBU"),
-        dict(id="79488884-63f3-4a60-bae3-162894ab1005", resource_id="7aUp_6s8FLSeyTAud1QTxiHujBU"),
-        dict(id="ccac5a6d-aa33-4652-aeb5-3bd0044f9c0f", resource_id="7aUp_6s8FLSeyTAud1QTxiHujBU"),
-        dict(id="d4d1124d-3f5e-459f-be1f-14c07baf8464", resource_id="6DstUkjlE0PK0ewGPgOeFnqa-Po"),
-        dict(id="26863d48-e828-45d2-a50d-07079c65eb16", resource_id="6DstUkjlE0PK0ewGPgOeFnqa-Po"),
-        # dict(id="", resource_id=""),
-        # dict(id="", resource_id=""),
-    ]
-    drive = build_service(
-        service_name="drive",
-        version="v3",
-        scopes=GCLOUD_AUTH_SCOPES,
-    )
-    for channel in channels:
-        print(drive.channels().stop(body=dict(id=channel["id"], resourceId=channel["resource_id"])).execute())
+    print(f"{process_drive_push_notification(MockRequest({}, example_headers['changes']))}")
+    # print(f"{process_drive_push_notification(MockRequest({}, example_headers['file']))}")
+    # channels = [
+    #     # dict(id="43c93f06-43e6-49a6-b025-d2a7b361da15", resource_id="6DstUkjlE0PK0ewGPgOeFnqa-Po"),
+    #     # dict(id="49e36c4f-db10-472d-bd4a-671ad8160b01", resource_id="7aUp_6s8FLSeyTAud1QTxiHujBU"),
+    #     # dict(id="79488884-63f3-4a60-bae3-162894ab1005", resource_id="7aUp_6s8FLSeyTAud1QTxiHujBU"),
+    #     # dict(id="ccac5a6d-aa33-4652-aeb5-3bd0044f9c0f", resource_id="7aUp_6s8FLSeyTAud1QTxiHujBU"),
+    #     # dict(id="d4d1124d-3f5e-459f-be1f-14c07baf8464", resource_id="6DstUkjlE0PK0ewGPgOeFnqa-Po"),
+    #     # dict(id="26863d48-e828-45d2-a50d-07079c65eb16", resource_id="6DstUkjlE0PK0ewGPgOeFnqa-Po"),
+    #     dict(id="fb331dbc-a6b6-476e-a2fb-4715ca8e45c9", resource_id="6DstUkjlE0PK0ewGPgOeFnqa-Po"),
+    #     dict(id="e10ac58d-2cbc-431e-ba84-e69acd14ad53", resource_id="6DstUkjlE0PK0ewGPgOeFnqa-Po"),
+    # ]
+    # drive = build_service(
+    #     service_name="drive",
+    #     version="v3",
+    #     scopes=GCLOUD_AUTH_SCOPES,
+    # )
+    # for channel in channels:
+    #     print(drive.channels().stop(body=dict(id=channel["id"], resourceId=channel["resource_id"])).execute())
 
 
 if __name__ == "__main__":

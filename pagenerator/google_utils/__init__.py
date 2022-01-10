@@ -2,6 +2,7 @@
 import io
 import os
 
+import base64
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -14,6 +15,11 @@ from google.oauth2.credentials import Credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
+def read_secret(client, secret_name):
+
+    response = client.access_secret_version(request={"name": secret_name})
+    payload = response.payload.data.decode("UTF-8")
+    return base64.b64decode(payload).decode().trim()
 
 def load_local_creds(scopes):
     creds = None
