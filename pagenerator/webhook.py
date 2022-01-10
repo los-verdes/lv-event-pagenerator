@@ -3,16 +3,9 @@ import os
 import re
 from urllib.parse import parse_qs, urlparse
 
-# import yaml
 from logzero import logger
 
-from google_utils import build_service  # , get_file_id
-from google_utils import read_secret
-
-GCLOUD_AUTH_SCOPES = [
-    "https://www.googleapis.com/auth/drive.readonly",
-    "https://www.googleapis.com/auth/drive",
-]
+from google_utils import GCLOUD_AUTH_SCOPES, build_service, read_secret
 
 uri_regexp = re.compile(
     r"https://www.googleapis.com/drive/v3/files/(?P<file_id>[^?]+).*"
@@ -33,6 +26,7 @@ def parse_push(req_headers):
     print(f"{push['resource_id']=} {push['resource_state']=} {push.get('changed')=}")
     print(f"{push['resource_uri']=}")
     print(f"{bool(push.get('channel_token') == WEBHOOK_TOKEN)=}")
+    assert push.get("channel_token") == WEBHOOK_TOKEN, "channel token mismatch 💥🚨"
     return push
 
 
@@ -71,7 +65,17 @@ def process_drive_push_notification(request):
         changes_page_token = uri_params["pageToken"][0]
         # print(f"{changes_page_token=}")
         list_resp = (
-            drive.changes().list(pageToken=changes_page_token, pageSize=1).execute()
+            drive.changes()
+            .list(
+                pageToken=changes_page_token,
+                pageSize=1,
+                supportsAllDrives=True,
+                includeRemoved=True,
+                includePermissionsForView=True,
+                includeItemsFromAllDrives=True,
+                includeCorpusRemovals=True,
+            )
+            .execute()
         )
         # print(f"{list_resp=}")
         change = list_resp["changes"][0]
@@ -81,35 +85,12 @@ def process_drive_push_notification(request):
                 version="v3",
                 scopes=GCLOUD_AUTH_SCOPES,
             )
-            file_resp = drive.files().get(fileId=file_id)
+            file_resp = drive.files().get(fileId=file_id).execute()
             logger.debug(f"{file_resp=}")
             print(f"{file_resp=}")
-        # breakpoint()
-    #     return "uh oh"
     return "idk"
 
-    # if uri_matches:
-    #     print(f"{uri_matches.groupdict().get('file_id')=}")
-    #     if file_id := uri_matches.groupdict().get("file_id"):
-    #         drive = build_service(
-    #             service_name="drive",
-    #             version="v3",
-    #             scopes=GCLOUD_AUTH_SCOPES,
-    #         )
-    #         file_resp = drive.files().get(fileId=file_id)
-    #         logger.debug(f"{file_resp=}")
-    #         print(f"{file_resp=}")
-    # settings_fd = get_file_id(
-    #     drive=drive,
-    #     file_id=file_id,
-    # )
-    # settings_fd.seek(0)
-    # settings = yaml.load(settings_fd, Loader=yaml.Loader)
-    # print(f"{settings=}")
-
-    # print(f"{json.dumps(request_json)}")
-    # print("hi")
-    # return "Settings updates persisted! Diff is..."
+    return "Settings updates persisted! Diff is..."
 
 
 def local_invocation():
@@ -132,9 +113,7 @@ def local_invocation():
         "examples/incoming_drive_changes_webhook.json", "r", encoding="utf-8"
     ) as f:
         example_headers = json.load(f)
-    print(
-        f"{process_drive_push_notification(MockRequest({}, example_headers))}"
-    )
+    print(f"{process_drive_push_notification(MockRequest({}, example_headers))}")
 
 
 if __name__ == "__main__":

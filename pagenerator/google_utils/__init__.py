@@ -4,6 +4,7 @@ import json
 import os
 
 import google.auth
+import yaml
 from google.auth.transport.requests import Request
 from google.cloud.secretmanager import SecretManagerServiceClient
 from google.oauth2.credentials import Credentials
@@ -13,7 +14,30 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
 from logzero import logger
 
+
+GCLOUD_AUTH_SCOPES = [
+    "https://www.googleapis.com/auth/drive.readonly",
+]
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+
+
+def load_settings_from_drive(file_id):
+    drive = build_service(
+        service_name="drive",
+        version="v3",
+        scopes=GCLOUD_AUTH_SCOPES,
+    )
+    file_resp = drive.files().get(fileId=file_id)
+    logger.debug(f"{file_resp=}")
+    print(f"{file_resp=}")
+    settings_fd = get_file_id(
+        drive=drive,
+        file_id=file_id,
+    )
+    settings_fd.seek(0)
+    settings = yaml.load(settings_fd, Loader=yaml.Loader)
+    print(f"{settings=}")
+    return settings
 
 
 def read_secret(secret_name):

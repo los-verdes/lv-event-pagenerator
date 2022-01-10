@@ -10,7 +10,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from logzero import logger
 
-from google_utils import build_service, read_secret
+from google_utils import read_secret
 
 # Based on: https://medium.com/swlh/google-drive-push-notification-b62e2e2b3df4
 
@@ -63,12 +63,25 @@ def ensure_changes_watch(service, channel_id, web_hook_address, token, expiratio
     return response
 
 
-def ensure_file_watch(service, channel_id, web_hook_address, file_id, token, expiration=None):
+def ensure_file_watch(
+    service,
+    channel_id,
+    web_hook_address,
+    file_id,
+    token,
+    expiration=None,
+    store_response=True,
+):
     logger.debug(
         f"Ensure GDrive watch ({expiration=}) for {file_id=} is in-place now..."
     )
     request = service.files().watch(
         fileId=file_id,
+        supportsAllDrives=True,
+        includeRemoved=True,
+        includePermissionsForView=True,
+        includeItemsFromAllDrives=True,
+        includeCorpusRemovals=True,
         body=dict(
             kind="api#channel",
             type="web_hook",
@@ -87,6 +100,11 @@ def ensure_file_watch(service, channel_id, web_hook_address, file_id, token, exp
         f"Watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
     )
 
+    if store_response:
+        resp_output_path = f"{response['id']}.json"
+        logger.info(f"Writing response data to: {resp_output_path}")
+        with open(resp_output_path, "w", encoding="utf-8") as f:
+            json.dump(response, f, ensure_ascii=False, indent=4)
     return response
 
 
@@ -113,13 +131,13 @@ if __name__ == "__main__":
         # default=DEFAULT_SETTINGS_FILE_ID,
         default="lv-events-page-drive-changes",
     )
-    parser.add_argument(
-        "-f",
-        "--file-id",
-        help="ID of the GDrive file to watch",
-        # default=DEFAULT_SETTINGS_FILE_ID,
-        default=None,
-    )
+    # parser.add_argument(
+    #     "-f",
+    #     "--file-id",
+    #     help="ID of the GDrive file to watch",
+    #     # default=DEFAULT_SETTINGS_FILE_ID,
+    #     default=None,
+    # )
     parser.add_argument(
         "-e",
         "--expiration-in-days",
@@ -140,10 +158,14 @@ if __name__ == "__main__":
         expiration_seconds = current_seconds + added_seconds
         expiration = round(expiration_seconds * 1000)
 
-    event_page_secret_name = "projects/538480189659/secrets/lv-events-page/versions/latest"
+    event_page_secret_name = (
+        "projects/538480189659/secrets/lv-events-page/versions/latest"
+    )
     secrets = read_secret(event_page_secret_name)
     service_account_info = json.loads(base64.b64decode(secrets["service_account_key"]))
-    sa_credentials = service_account.Credentials.from_service_account_info(service_account_info)
+    sa_credentials = service_account.Credentials.from_service_account_info(
+        service_account_info
+    )
     # breakpoint()
     # token_secret_name = "projects/538480189659/secrets/webhook-token/versions/latest"
     # token = read_secret(client, token_secret_name)
@@ -152,36 +174,23 @@ if __name__ == "__main__":
     channel_id = args.channel_id  # str(uuid.uuid4())
     logger.debug(f"Using {channel_id=}...")
     drive_service = build("drive", "v3", credentials=sa_credentials)
-    if file_id := args.file_id:
-        response = ensure_file_watch(
-            service=drive_service,
-            channel_id=channel_id,
-            web_hook_address=args.web_hook_address,
-            file_id=file_id,
-            token=token,
-            expiration=expiration,
-        )
-    else:
-        logger.debug(
-            f"Ensure GDrive watch ({expiration=}) for {file_id=} is in-place now..."
-        )
-        response = ensure_changes_watch(
-            service=drive_service,
-            channel_id=channel_id,
-            web_hook_address=args.web_hook_address,
-            token=token,
-            expiration=expiration,
-        )
+    logger.debug(f"Ensure GDrive watch ({expiration=}) for changes is in-place now...")
+    response = ensure_changes_watch(
+        service=drive_service,
+        channel_id=channel_id,
+        web_hook_address=args.web_hook_address,
+        token=token,
+        expiration=expiration,
+    )
 
-    resp_output_path = f"{response['id']}.json"
-    logger.info(f"Writing response data to: {resp_output_path}")
-    with open(resp_output_path, "w", encoding="utf-8") as f:
-        json.dump(response, f, ensure_ascii=False, indent=4)
-
-    channels = [
-        dict(id="lv-events-page-webhook", resource_id="hWpl0OlfRWVAbo8DFtMBa_f0hUM"),
-    ]
-    for channel in channels:
-        print(drive_service.channels().stop(body=dict(id=channel["id"], resourceId=channel["resource_id"])).execute())
+    # channels = [
+    #     dict(id="lv-events-page-drive-changes", resource_id="hWpl0OlfRWVAbo8DFtMBa_f0hUM"),
+    # ]
+    # for channel in channels:
+    #     print(
+    #         drive_service.channels()
+    #         .stop(body=dict(id=channel["id"], resourceId=channel["resource_id"]))
+    #         .execute()
+    #     )
 
     breakpoint()
