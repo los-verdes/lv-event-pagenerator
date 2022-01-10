@@ -1,0 +1,5 @@
+$team_colors: (
+  {% for team_abbreviation, hex_color in team_colors.items() %}
+  "{{ team_abbreviation }}": {{ hex_color }},
+  {% endfor %}
+);

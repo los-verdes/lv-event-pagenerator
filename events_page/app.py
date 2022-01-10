@@ -11,22 +11,35 @@ from flask_assets import Bundle, Environment
 from logzero import logger, setup_logger
 from google_utils import calendar, drive, load_credentials
 
+from webassets.filter import get_filter
+
+# from flask_scss import Scss
+# import sass
 
 # from pydrive2.auth import GoogleAuth
 setup_logger(name=__name__)
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 app = flask.Flask(__name__)
+# Scss(app)
 
+libsass = get_filter(
+    "libsass",
+    as_output=True,
+    style="compressed",
+)
 assets = Environment(app)  # create an Environment instance
 bundles = {  # define nested Bundle
     "style": Bundle(
-        "scss/style.scss",
-        filters="pyscss",
+        "scss/*.scss",
+        filters=(libsass),
         output="style.css",
     )
 }
 assets.register(bundles)
+
+# TODO: set to some rando public calendar instead for the generic usecase?
+DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
 
 # Reference: https://stackoverflow.com/a/33486003
 # app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
@@ -46,6 +59,7 @@ def events():
     events_time_min = now
     events_time_max = (datetime.utcnow() + timedelta(days=365)).isoformat() + "Z"
     source_calendar_id = app.config["source_calendar_id"]
+    image_files_by_id = app.config["IMAGE_FILES_BY_ID"]
     calendar_service = calendar.build_service(SERVICE_ACCOUNT_CREDENTIALS)
     events = calendar.get_events(
         service=calendar_service,
@@ -53,7 +67,7 @@ def events():
         time_min=events_time_min,
         time_max=events_time_max,
         categories_by_color_id=app.config["categories_by_color_id"],
-        mls_team_abbreviations=app.config["mls_team_abbreviations"],
+        mls_teams=app.config["mls_teams"],
     )
     # categories = {c for c in itertools.chain.from_iterable(e['css_classes'] for e in events)}
     # categories = list(EVENT_CSS_CLASSES.keys()) + ["away games", "home games"]
@@ -99,10 +113,33 @@ def events():
 
 
 def create_app():
+    # TODO: do this default settings thing better?
+    default_settings = dict(
+        source_calendar_id=DEFAULT_CALENDAR_ID,
+        categories_by_color_id=dict(),
+        mls_teams=dict(),
+    )
+    app.config.update(default_settings)
+
     drive_service = drive.build_service(SERVICE_ACCOUNT_CREDENTIALS)
     settings = drive.load_settings(drive_service)
+
     app.config.update(settings)
-    drive.download_all_images(drive_service)
+    image_files = drive.download_all_images(drive_service)
+    app.config["IMAGE_FILES_BY_ID"] = {f["id"] for f in image_files}
+    with app.app_context():
+        vars_scss = flask.render_template(
+            "_vars.scss.j2",
+            team_colors={k: v["color"] for k, v in settings["mls_teams"].items()},
+        )
+        logger.debug(f"{vars_scss=}")
+
+        with open(os.path.join(BASE_DIR, "static", "scss", "_vars.scss"), "w") as f:
+            f.write(vars_scss)
+    # logger.debug(f"{settings.keys()=}")
+    # combined = {k: dict(color=v, name={v: k for k, v in settings['mls_team_abbreviations'].items()}.get(k)) for k, v in settings['mls_team_colors'].items()}
+    # breakpoint()
+
     return app
 
 
@@ -111,7 +148,7 @@ if __name__ == "__main__":
 
     for logger_name in ["google_utils.drive"]:
         logging.getLogger(logger_name).setLevel(logging.INFO)
-    create_app()
+    app = create_app()
     app.run(
         host="0.0.0.0",
         # debug=False,

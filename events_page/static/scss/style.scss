@@ -106,32 +106,7 @@ $categories: away-games, los-verdes, home-games, la-murga, misc;
 // [value="all"]:checked + label {
 //   background: $bright-verde;
 // }
-
-$team-colors: (
-  "por": #004812,
-  "sj": #0051ba,
-  "dc": #212121,
-  "hou": #101820,
-  "rsl": #001e61,
-  "lafc": #212121,
-  "la": #004b87,
-  "mtl": #212121,
-  "clt": #0085ca,
-  "col": #8a2432,
-  "atl": #9d2235,
-  "dal": #c6093b,
-  "skc": #0c2340,
-  "min": #737b82,
-  "nsh": #201547,
-  "sea": #64a608,
-  "van": #002244,
-  "cin": #003087,
-  "mia": #212322,
-  "orl": #61259e,
-  "rbny": #ba0c2f,
-);
-
-@each $team, $color in $team-colors {
+@each $team, $color in $team_colors {
   .event-card-atxvs#{$team} > .mdl-card__title {
     // background-image: linear-gradient((random(50) + 100)+deg, $color, $bright-verde);
     background-image: linear-gradient(125deg, $color, $bright-verde);
@@ -144,7 +119,7 @@ $team-colors: (
   }
 }
 
-@each $team, $color in $team-colors {
+@each $team, $color in $team_colors {
   .event-card-#{$team}vsatx > .mdl-card__title {
     // background-image: linear-gradient((random(50) + 100)+deg, $bright-verde, $color);
     background-image: linear-gradient(125deg, $bright-verde, $color);

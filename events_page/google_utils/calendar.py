@@ -6,11 +6,12 @@ from zoneinfo import ZoneInfo
 
 from googleapiclient.discovery import build
 from dateutil.parser import parse
+
 # from logzero import logger
 from logzero import setup_logger
 
 
-from google_utils import build_service, load_credentials
+from google_utils import load_credentials
 from google_utils.drive import get_local_path_for_file
 
 CALENDAR_RO_SCOPE = "https://www.googleapis.com/auth/calendar.readonly"
@@ -39,12 +40,12 @@ def get_events(
     time_min,
     time_max,
     categories_by_color_id,
-    mls_team_abbreviations,
+    mls_teams,
 ):
     global lv_events
     if lv_events is not None:
         return lv_events
-
+    mls_team_abbrs_by_name = {v['name']: k for k, v in mls_teams.items()}
     logger.info(f"Getting the all events from {time_min} to {time_max}...")
 
     events_result = (
@@ -96,7 +97,7 @@ def get_events(
 
         if summary_match := game_regexp.match(event["summary"]):
             groups = summary_match.groupdict()
-            opp_abbr = mls_team_abbreviations.get(groups["opponent"], "-")
+            opp_abbr = mls_team_abbrs_by_name.get(groups["opponent"], "-")
             if groups["vsat"] == "vs":
                 event["match_slug"] = f"atxvs{opp_abbr}"
             else:
