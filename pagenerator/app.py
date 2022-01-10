@@ -9,8 +9,8 @@ from flask_assets import Bundle, Environment
 from logzero import setup_logger
 
 from google_utils.calendar import get_calender_cid, get_events
-from google_utils.drive import list_files
-from google_utils import load_credentials, get_pydrive_client
+from google_utils.drive import list_files, build_drive_service, get_event_page_folder
+from google_utils import load_credentials
 # from pydrive2.auth import GoogleAuth
 setup_logger(name=__name__)
 
@@ -113,7 +113,10 @@ def create_app():
 
 
 if __name__ == "__main__":
-    list_files(drive=get_pydrive_client())
+    get_event_page_folder(
+        drive=build_drive_service(),
+        # parent_folder="root",
+    )
     create_app()
     app.run(
         host="0.0.0.0",

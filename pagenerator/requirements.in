@@ -4,7 +4,6 @@ google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
 google-cloud-secret-manager
-PyDrive2
 gunicorn
 logzero
 pyscss
