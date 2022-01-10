@@ -43,3 +43,17 @@ I think the easiest arrangement is to use event "colors" for selecting the categ
 | 9         | Blueberry  | #3f51b5  | ???                | http://losverdesatx.org/images/some_image.png |
 | 10        | Basil      | #0b8043  | ???                | http://losverdesatx.org/images/some_image.png |
 | 11        | Tomato     | #d60000  | misc               | http://losverdesatx.org/images/some_image.png |
+
+```shellsession
+%▶ python -m pdb -c continue ./scripts/create_drive_watch.py -e 1
+[D 220109 18:09:24 create_drive_watch:2] Using channel_id='lv-events-page-webhook'...
+[D 220109 18:09:24 create_drive_watch:2] Ensure GDrive watch (expiration=1641859762404) for file_id=None is in-place now...
+[D 220109 18:09:24 create_drive_watch:38] Ensure GDrive watch (expiration=1641859762404) (drive_id='1jJjp94KgQ7NtI0ds5SzpNKG3s2Y96dO8') changes is in-place now...
+[D 220109 18:09:25 create_drive_watch:43] page_token_resp={'kind': 'drive#startPageToken', 'startPageToken': '2'}
+[D 220109 18:09:25 create_drive_watch:62] response={'kind': 'api#channel', 'id': 'lv-events-page-webhook', 'resourceId': 'hWpl0OlfRWVAbo8DFtMBa_f0hUM', 'resourceUri': 'https://www.googleapis.com/drive/v3/changes?alt=json&includeCorpusRemovals=false&includeItemsFromAllDrives=false&includeRemoved=true&includeTeamDriveItems=false&pageSize=100&pageToken=2&restrictToMyDrive=false&spaces=drive&supportsAllDrives=false&supportsTeamDrives=false&alt=json', 'expiration': '1641776965000'}
+[D 220109 18:09:25 create_drive_watch:65] Watch (id: lv-events-page-webhook) created! Expires: 01/09/22 19:09:25
+[I 220109 18:09:25 create_drive_watch:2] Writing response data to: lv-events-page-webhook.json
+--Return--
+> /Users/jeffwecan/workspace/lv-event-pagenerator/scripts/create_drive_watch.py(2)<module>()->None
+-> import json
+```
