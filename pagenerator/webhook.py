@@ -1,17 +1,19 @@
 #!/usr/bin/env python
+import logging
 import os
 import re
-from urllib.parse import parse_qs, urlparse
 
+import logzero
 from logzero import logger
 
-from google_utils import GCLOUD_AUTH_SCOPES, build_service, read_secret
+from google_utils import read_secret
 
 uri_regexp = re.compile(
     r"https://www.googleapis.com/drive/v3/files/(?P<file_id>[^?]+).*"
 )
 
 WEBHOOK_TOKEN = None
+logzero.loglevel(logging.INFO)
 
 
 def parse_push(req_headers):
@@ -20,11 +22,13 @@ def parse_push(req_headers):
         for h in req_headers
         if h[0].lower().startswith("x-goog")
     }
-    print(
+    logger.debug(
         f"{push['channel_id']=} {push['message_number']=} {push.get('channel_expiration')=}"
     )
-    print(f"{push['resource_id']=} {push['resource_state']=} {push['resource_uri']=}")
-    print(f"{bool(push.get('channel_token') == WEBHOOK_TOKEN)=}")
+    logger.debug(
+        f"{push['resource_id']=} {push['resource_state']=} {push['resource_uri']=}"
+    )
+    logger.debug(f"{bool(push.get('channel_token') == WEBHOOK_TOKEN)=}")
     assert push.get("channel_token") == WEBHOOK_TOKEN, "channel token mismatch 💥🚨"
     return push
 
@@ -48,7 +52,7 @@ def process_events_push_notification(request):
     """
     ensure_token_loaded()
     push = parse_push(req_headers=request.headers)
-
+    logger.info(f"push received: {push=}")
     return "idk"
 
 
@@ -67,12 +71,15 @@ def local_invocation():
 
     import json
 
+    logzero.loglevel(logging.DEBUG)
     example_headers = []
     with open(
-        "examples/incoming_drive_changes_webhook.json", "r", encoding="utf-8"
+        "examples/event_changes_webhook_headers.json", "r", encoding="utf-8"
     ) as f:
         example_headers = json.load(f)
-    print(f"{process_events_push_notification(MockRequest({}, example_headers))}")
+    logger.debug(
+        f"{process_events_push_notification(MockRequest({}, example_headers))}"
+    )
 
 
 if __name__ == "__main__":

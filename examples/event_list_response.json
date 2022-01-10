@@ -1,0 +1,2365 @@
+[
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283635126180000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20220127T020000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjAxMjdUMDIwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:26:03.090Z",
+    "summary": "LV All Teams Meeting testt",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-01-26T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-01-26T21:30:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-01-26T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283357771078000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20220127T020000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIwMTI3VDAyMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T21:54:45.539Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-01-26T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-01-26T21:30:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-01-26T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20220224T020000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjAyMjRUMDIwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-02-23T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-02-23T21:30:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-02-23T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20220224T020000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIwMjI0VDAyMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-02-23T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-02-23T21:30:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-02-23T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347617422000\"",
+    "id": "41rm3qeqmgq723sqlv3epq56qf",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NDFybTNxZXFtZ3E3MjNzcWx2M2VwcTU2cWYgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:08.711Z",
+    "summary": "Austin FC vs FC Cincinnati",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-02-26T17:00:00-06:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-02-26T20:00:00-06:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "41rm3qeqmgq723sqlv3epq56qf@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347622366000\"",
+    "id": "1hkgafi5qt67a610k57nvbrp28",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MWhrZ2FmaTVxdDY3YTYxMGs1N252YnJwMjggMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:11.183Z",
+    "summary": "Austin FC vs Inter Miami CF",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-03-06T15:00:00-06:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-03-06T18:00:00-06:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "1hkgafi5qt67a610k57nvbrp28@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347771470000\"",
+    "id": "3n2hldkdrdpskm0dq36su9ldin",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=M24yaGxka2RyZHBza20wZHEzNnN1OWxkaW4gMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:25.735Z",
+    "summary": "Austin FC at Portland Timbers",
+    "location": "Providence Park, Portland, OR",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-03-12T21:00:00-06:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-03-13T00:00:00-06:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "3n2hldkdrdpskm0dq36su9ldin@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347625724000\"",
+    "id": "7j6v6qq51dahdtm6s2rkfk9gb9",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=N2o2djZxcTUxZGFoZHRtNnMycmtmazlnYjkgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:12.862Z",
+    "summary": "Austin FC vs Seattle Sounders FC",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-03-20T15:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-03-20T18:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "7j6v6qq51dahdtm6s2rkfk9gb9@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20220331T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjAzMzFUMDEwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-03-30T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-03-30T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-03-30T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283358650430000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20220331T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIwMzMxVDAxMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T22:02:05.215Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-03-30T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-03-30T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-03-30T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1kn75kcrW87cf3ovFdeWPmkBpcNwhOliN&authuser=0",
+        "title": "pumpkin-ham.gif",
+        "mimeType": "image/gif",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/gif",
+        "fileId": "1kn75kcrW87cf3ovFdeWPmkBpcNwhOliN"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347775232000\"",
+    "id": "1o2sq11tn4sv964s9kj6rb5np1",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MW8yc3ExMXRuNHN2OTY0czlrajZyYjVucDEgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:27.616Z",
+    "summary": "Austin FC at San Jose Earthquakes",
+    "location": "PayPal Park, San Jose",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-04-02T18:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-04-02T21:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "1o2sq11tn4sv964s9kj6rb5np1@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283350895738000\"",
+    "id": "3tu77blthbevg4tivjhf417i9l",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=M3R1NzdibHRoYmV2ZzR0aXZqaGY0MTdpOWwgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:57:27.869Z",
+    "summary": "US Open Cup (3rd Round Draw)",
+    "description": "Announcement of when/where/who Austin FC will face in US Open Cup. Knockout match will be sometime between April 19-21.\n\nhttps://en.wikipedia.org/wiki/2022_U.S._Open_Cup",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "date": "2022-04-08"
+    },
+    "end": {
+      "date": "2022-04-09"
+    },
+    "transparency": "transparent",
+    "iCalUID": "3tu77blthbevg4tivjhf417i9l@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": false
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1ktGmn9MIVebrRsSwtlkihwQUPqgIyjBx&authuser=0",
+        "title": "gold_cup.jpeg",
+        "mimeType": "image/jpeg",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/jpeg",
+        "fileId": "1ktGmn9MIVebrRsSwtlkihwQUPqgIyjBx"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347663326000\"",
+    "id": "724dkmeefs1kuv6s9774ndag7g",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NzI0ZGttZWVmczFrdXY2czk3NzRuZGFnN2cgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:31.663Z",
+    "summary": "Austin FC vs Minnesota United",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-04-10T18:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-04-10T21:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "724dkmeefs1kuv6s9774ndag7g@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347790594000\"",
+    "id": "0gfg39dhe8sd8203sbva7epqse",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MGdmZzM5ZGhlOHNkODIwM3NidmE3ZXBxc2UgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:35.297Z",
+    "summary": "Austin FC at D.C. United",
+    "location": "Audi Field, Washington DC",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-04-16T18:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-04-16T21:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "0gfg39dhe8sd8203sbva7epqse@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347667728000\"",
+    "id": "08b5443qfdmn336a5ch8mdb9v1",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MDhiNTQ0M3FmZG1uMzM2YTVjaDhtZGI5djEgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:33.864Z",
+    "summary": "Austin FC vs Vancouver Whitecaps FC",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-04-23T19:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-04-23T22:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "08b5443qfdmn336a5ch8mdb9v1@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20220428T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjA0MjhUMDEwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-04-27T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-04-27T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-04-27T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20220428T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIwNDI4VDAxMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-04-27T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-04-27T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-04-27T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347793862000\"",
+    "id": "6o5i1gfolak0fgai9lor0vgo16",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Nm81aTFnZm9sYWswZmdhaTlsb3IwdmdvMTYgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:36.931Z",
+    "summary": "Austin FC at Houston Dynamo FC",
+    "location": "PNC Stadium, Houston, TX",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-04-30T12:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-04-30T15:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "6o5i1gfolak0fgai9lor0vgo16@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347670924000\"",
+    "id": "4l92f8i5dplfnooei2jcg87542",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NGw5MmY4aTVkcGxmbm9vZWkyamNnODc1NDIgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:35.462Z",
+    "summary": "Austin FC vs LA Galaxy",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-05-08T18:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-05-08T21:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "4l92f8i5dplfnooei2jcg87542@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347797362000\"",
+    "id": "7d90j6vtke7rhua85m3js5p2rm",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=N2Q5MGo2dnRrZTdyaHVhODVtM2pzNXAycm0gMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:38.681Z",
+    "summary": "Austin FC at Real Salt Lake",
+    "location": "Rio Tinto Stadium, 9256 South State Street, Sandy, UT",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-05-14T20:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-05-14T23:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "7d90j6vtke7rhua85m3js5p2rm@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347800322000\"",
+    "id": "0g1rgs0v4uah2tg7gf43fh3huo",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MGcxcmdzMHY0dWFoMnRnN2dmNDNmaDNodW8gMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:40.161Z",
+    "summary": "Austin FC at LAFC",
+    "location": "Banc of California Stadium, Los Angeles",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-05-18T21:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-05-19T00:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "0g1rgs0v4uah2tg7gf43fh3huo@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347674046000\"",
+    "id": "049rqj0776khih56o8hpuf8bng",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MDQ5cnFqMDc3NmtoaWg1Nm84aHB1ZjhibmcgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:37.023Z",
+    "summary": "Austin FC vs Orlando City",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-05-22T19:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-05-22T22:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "049rqj0776khih56o8hpuf8bng@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20220526T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjA1MjZUMDEwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-05-25T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-05-25T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-05-25T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20220526T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIwNTI2VDAxMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-05-25T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-05-25T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-05-25T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347810666000\"",
+    "id": "6gjj16rn1455mgen8hkgmqoobb",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NmdqajE2cm4xNDU1bWdlbjhoa2dtcW9vYmIgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:45.333Z",
+    "summary": "Austin FC at LA Galaxy",
+    "location": "Dignity Health Sports Park, Carson",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "date": "2022-05-29"
+    },
+    "end": {
+      "date": "2022-05-30"
+    },
+    "iCalUID": "6gjj16rn1455mgen8hkgmqoobb@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": false
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283348079048000\"",
+    "id": "17nivk4u7om259gdl18050qr3r",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MTduaXZrNHU3b20yNTlnZGwxODA1MHFyM3IgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:33:59.524Z",
+    "summary": "Austin FC at CF Montr\u00e9al",
+    "location": "Stade Saputo, Montreal",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-06-18T18:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-06-18T21:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "17nivk4u7om259gdl18050qr3r@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347676826000\"",
+    "id": "493ncjpgi6r0dt47karkateqj6",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NDkzbmNqcGdpNnIwZHQ0N2thcmthdGVxajYgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:38.413Z",
+    "summary": "Austin FC vs FC Dallas",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-06-25T20:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-06-25T23:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "493ncjpgi6r0dt47karkateqj6@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20220630T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjA2MzBUMDEwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-06-29T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-06-29T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-06-29T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20220630T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIwNjMwVDAxMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-06-29T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-06-29T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-06-29T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347818082000\"",
+    "id": "2l2eql2ci479n1gcep403j2995",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MmwyZXFsMmNpNDc5bjFnY2VwNDAzajI5OTUgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:49.041Z",
+    "summary": "Austin FC at Charlotte FC",
+    "location": "Bank of America Stadium, 800 S Mint St, Charlotte, NC, 28202",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-06-30T18:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-06-30T21:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "2l2eql2ci479n1gcep403j2995@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347823790000\"",
+    "id": "0o663ll3j4dmtcioj31o4rgvt2",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MG82NjNsbDNqNGRtdGNpb2ozMW80cmd2dDIgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:51.895Z",
+    "summary": "Austin FC at Colorado Rapids",
+    "location": "Dick's Sporting Goods Park, Commerce City, CO",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-07-04T20:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-07-04T23:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "0o663ll3j4dmtcioj31o4rgvt2@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347827058000\"",
+    "id": "33836kcku8svlk0a7u4q38meel",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MzM4MzZrY2t1OHN2bGswYTd1NHEzOG1lZWwgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:53.529Z",
+    "summary": "Austin FC at Atlanta United",
+    "location": "Mercedes-Benz Stadium, 1 AMB Drive NW, Atlanta, Georgia, 30313",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-07-09T18:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-07-09T21:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "33836kcku8svlk0a7u4q38meel@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347680198000\"",
+    "id": "340opdgfo79i0p1tv9l8q5qqg8",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MzQwb3BkZ2ZvNzlpMHAxdHY5bDhxNXFxZzggMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:40.099Z",
+    "summary": "Austin FC vs Houston Dynamo FC",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-07-12T20:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-07-12T23:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "340opdgfo79i0p1tv9l8q5qqg8@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347829992000\"",
+    "id": "68emh0cftjh1to5kbmcm3lf5df",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NjhlbWgwY2Z0amgxdG81a2JtY20zbGY1ZGYgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:54.996Z",
+    "summary": "Austin FC at FC Dallas",
+    "location": "Toyota Stadium, Frisco, TX",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-07-16T20:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-07-16T23:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "68emh0cftjh1to5kbmcm3lf5df@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347683900000\"",
+    "id": "540qv94ln1f5dn47crd5e6u5b6",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NTQwcXY5NGxuMWY1ZG40N2NyZDVlNnU1YjYgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:41.950Z",
+    "summary": "Austin FC vs New York Red Bulls",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-07-24T19:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-07-24T22:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "540qv94ln1f5dn47crd5e6u5b6@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20220728T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjA3MjhUMDEwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-07-27T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-07-27T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-07-27T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20220728T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIwNzI4VDAxMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-07-27T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-07-27T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-07-27T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347833462000\"",
+    "id": "1t9qqflkspgcene4rqgmn59f68",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MXQ5cXFmbGtzcGdjZW5lNHJxZ21uNTlmNjggMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:56.731Z",
+    "summary": "Austin FC at Sporting Kansas City",
+    "location": "Children's Mercy Park, One Sporting Way, Kansas City, KS, 66111",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-07-30T19:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-07-30T22:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "1t9qqflkspgcene4rqgmn59f68@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347687476000\"",
+    "id": "3t2e585jdfsjpveev5jl85r9gm",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=M3QyZTU4NWpkZnNqcHZlZXY1amw4NXI5Z20gMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:43.738Z",
+    "summary": "Austin FC vs San Jose Earthquakes",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-08-06T20:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-08-06T23:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "3t2e585jdfsjpveev5jl85r9gm@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347691486000\"",
+    "id": "2tgvg4io68bi57qt8trtv9ifba",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MnRndmc0aW82OGJpNTdxdDh0cnR2OWlmYmEgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:45.743Z",
+    "summary": "Austin FC vs Sporting Kansas City",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-08-13T20:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-08-13T23:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "2tgvg4io68bi57qt8trtv9ifba@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347839148000\"",
+    "id": "0guh36c2qvp45bu8s0674kso2e",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MGd1aDM2YzJxdnA0NWJ1OHMwNjc0a3NvMmUgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:31:59.574Z",
+    "summary": "Austin FC at Minnesota United",
+    "location": "Allianz Field, Minnesota",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-08-20T19:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-08-20T22:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "0guh36c2qvp45bu8s0674kso2e@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347936320000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vn_20220901T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5fMjAyMjA5MDFUMDEwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:32:48.160Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-08-24T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-08-24T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vn",
+    "originalStartTime": {
+      "dateTime": "2022-08-31T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vn@google.com",
+    "sequence": 5,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347695450000\"",
+    "id": "5ot824mk1igjdo5h18jh16m7kq",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NW90ODI0bWsxaWdqZG81aDE4amgxNm03a3EgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:47.725Z",
+    "summary": "Austin FC vs LAFC",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-08-26T19:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-08-26T22:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "5ot824mk1igjdo5h18jh16m7kq@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347698934000\"",
+    "id": "2akn2im492rq7d6ev8p5u6ot8b",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MmFrbjJpbTQ5MnJxN2Q2ZXY4cDV1Nm90OGIgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:49.467Z",
+    "summary": "Austin FC vs Portland Timbers",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-08-31T20:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-08-31T23:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "2akn2im492rq7d6ev8p5u6ot8b@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20220901T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjA5MDFUMDEwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-08-31T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-08-31T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-08-31T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20220901T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIwOTAxVDAxMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-08-31T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-08-31T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-08-31T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347842376000\"",
+    "id": "0vqhgc9q26j2p41jt11cbpfdkm",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MHZxaGdjOXEyNmoycDQxanQxMWNicGZka20gMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:32:01.188Z",
+    "summary": "Austin FC at Nashville SC",
+    "location": "TBD",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-09-03T19:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-09-03T22:30:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "0vqhgc9q26j2p41jt11cbpfdkm@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283357618140000\"",
+    "id": "5245o7bnvmfd3mftb9ln813bfm_20220909",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NTI0NW83Ym52bWZkM21mdGI5bG44MTNiZm1fMjAyMjA5MDkgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T21:53:29.070Z",
+    "summary": "Stadium Groundbreaking Anniversary",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "date": "2022-09-09"
+    },
+    "end": {
+      "date": "2022-09-10"
+    },
+    "recurringEventId": "5245o7bnvmfd3mftb9ln813bfm",
+    "originalStartTime": {
+      "date": "2022-09-09"
+    },
+    "transparency": "transparent",
+    "iCalUID": "5245o7bnvmfd3mftb9ln813bfm@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": false
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=14Ejo1_AhNKjz6vJ1iljGOnEGOL2GqX6D&authuser=0",
+        "title": "mckalla_construction.jpeg",
+        "mimeType": "image/jpeg",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/jpeg",
+        "fileId": "14Ejo1_AhNKjz6vJ1iljGOnEGOL2GqX6D"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347849890000\"",
+    "id": "595l1hlpknit6bp0a8p6f2p0m6",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NTk1bDFobHBrbml0NmJwMGE4cDZmMnAwbTYgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:32:04.945Z",
+    "summary": "Austin FC at Seattle Sounders FC",
+    "location": "Lumen Field, Seattle",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-09-10T19:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-09-10T22:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "595l1hlpknit6bp0a8p6f2p0m6@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347702496000\"",
+    "id": "4ue9co7dft08fue3983mf2db8q",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NHVlOWNvN2RmdDA4ZnVlMzk4M21mMmRiOHEgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:51.248Z",
+    "summary": "Austin FC vs Real Salt Lake",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "date": "2022-09-14"
+    },
+    "end": {
+      "date": "2022-09-15"
+    },
+    "iCalUID": "4ue9co7dft08fue3983mf2db8q@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": false
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347705818000\"",
+    "id": "35t0bigcjspi6ji1iqn4mvk995",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MzV0MGJpZ2Nqc3BpNmppMWlxbjRtdms5OTUgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:52.909Z",
+    "summary": "Austin FC vs Nashville SC",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-09-17T20:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-09-17T23:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "35t0bigcjspi6ji1iqn4mvk995@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20220929T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjA5MjlUMDEwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-09-28T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-09-28T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-09-28T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20220929T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIwOTI5VDAxMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-09-28T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-09-28T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-09-28T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347852952000\"",
+    "id": "13k906ec8gv63s357d12f416mt",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MTNrOTA2ZWM4Z3Y2M3MzNTdkMTJmNDE2bXQgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:32:06.476Z",
+    "summary": "Austin FC at Vancouver Whitecaps FC",
+    "location": "BC Place, Vancouver",
+    "colorId": "4",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-10-01T21:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-10-02T00:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "13k906ec8gv63s357d12f416mt@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283347710172000\"",
+    "id": "2nudtlfn1lhgsvg41n0g976egf",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mm51ZHRsZm4xbGhnc3ZnNDFuMGc5NzZlZ2YgMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T20:30:55.086Z",
+    "summary": "Austin FC vs Colorado Rapids",
+    "location": "Q2 Stadium, 10414 McKalla Place, Austin, 78758",
+    "colorId": "3",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-10-09T16:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2022-10-09T19:00:00-05:00",
+      "timeZone": "UTC"
+    },
+    "iCalUID": "2nudtlfn1lhgsvg41n0g976egf@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20221027T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjEwMjdUMDEwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-10-26T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-10-26T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-10-26T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20221027T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIxMDI3VDAxMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-10-26T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-10-26T21:30:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-10-26T20:00:00-05:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20221201T020000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjEyMDFUMDIwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-11-30T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-11-30T21:30:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-11-30T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20221201T020000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIxMjAxVDAyMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-11-30T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-11-30T21:30:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-11-30T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283634202708000\"",
+    "id": "2g6rhl3uou85c832s0ume8hh3f_20221229T020000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mmc2cmhsM3VvdTg1YzgzMnMwdW1lOGhoM2ZfMjAyMjEyMjlUMDIwMDAwWiAydXJlaTJxdjBlZHNzY243MWlhbXJpMG9rNEBn",
+    "created": "2022-01-10T12:18:21.000Z",
+    "updated": "2022-01-10T12:18:21.354Z",
+    "summary": "LV All Teams Meeting test",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-12-28T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-12-28T21:30:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "2g6rhl3uou85c832s0ume8hh3f",
+    "originalStartTime": {
+      "dateTime": "2022-12-28T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "2g6rhl3uou85c832s0ume8hh3f@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "attachments": [
+      {
+        "fileUrl": "https://drive.google.com/open?id=1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1&authuser=0",
+        "title": "pringconaughey.png",
+        "mimeType": "image/png",
+        "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/image/png",
+        "fileId": "1Iw28rZtxxc7V6WHPiWATAKodWNiZaLT1"
+      }
+    ],
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3283340813178000\"",
+    "id": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000_20221229T020000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDRucmxqcDF1c2lnN3ExOG1sdjBoZmQwdm5yMjAyMTA4MjZUMDEwMDAwXzIwMjIxMjI5VDAyMDAwMFogMnVyZWkycXYwZWRzc2NuNzFpYW1yaTBvazRAZw",
+    "created": "2022-01-08T18:25:52.000Z",
+    "updated": "2022-01-08T19:33:26.589Z",
+    "summary": "LV All Teams Meeting",
+    "description": "Los Verdes is inviting you to a scheduled Zoom meeting.\n\nTopic: All Teams Meeting\nTime: Aug 25, 2021 08:00 PM Central Time (US and Canada)\n        Every month on the Last Wed, 16 occurrence(s)\n\nJoin Zoom Meeting\nhttps://us02web.zoom.us/j/84652771261?pwd=dU9SRXBmcTJZK2lDakZWbW5nVGd4QT09\n\nMeeting ID: 846 5277 1261\nPasscode: 679892\nOne tap mobile\n+13462487799,,84652771261#,,,,*679892# US (Houston)\n+16699006833,,84652771261#,,,,*679892# US (San Jose)\n\nDial by your location\n        +1 346 248 7799 US (Houston)\n        +1 669 900 6833 US (San Jose)\n        +1 253 215 8782 US (Tacoma)\n        +1 408 638 0968 US (San Jose)\n        +1 646 876 9923 US (New York)\n        +1 301 715 8592 US (Washington DC)\n        +1 312 626 6799 US (Chicago)\nMeeting ID: 846 5277 1261\nPasscode: 679892\nFind your local number: https://us02web.zoom.us/u/kcQzTGlSwr",
+    "location": "https://us02web.zoom.us/j/82666725168?pwd=TkJPMHJsQTY5U3JScWR2bVF1cFdtdz09",
+    "colorId": "1",
+    "creator": {
+      "email": "jeff.hogan1@gmail.com"
+    },
+    "organizer": {
+      "email": "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com",
+      "displayName": "[COPY] Los Verdes (Public)",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2022-12-28T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "end": {
+      "dateTime": "2022-12-28T21:30:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "recurringEventId": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000",
+    "originalStartTime": {
+      "dateTime": "2022-12-28T20:00:00-06:00",
+      "timeZone": "America/Chicago"
+    },
+    "iCalUID": "l4nrljp1usig7q18mlv0hfd0vnr20210826T010000@google.com",
+    "sequence": 4,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  }
+]
