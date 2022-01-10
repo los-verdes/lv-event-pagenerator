@@ -1,0 +1,113 @@
+---
+
+source_calendar_id: 2urei2qv0edsscn71iamri0ok4@group.calendar.google.com
+
+# .la-murge > .mdl-card__title {
+#   background: black url("./la_murga.png") center / cover;
+# }
+
+# .la-murge small {
+#   color: #fff;
+# }
+
+# .la-murge mark {
+#   background-color: rgba(0, 177, 64, 0.9);
+#   color: rgb(255, 255, 255);
+# }
+
+# .los-verdes > .mdl-card__title {
+#   background: black url("./los_verdes.png") center / cover;
+# }
+
+# .los-verdes mark {
+#   background-color: rgba(0, 177, 64, 0.9);
+#   color: rgb(255, 255, 255);
+# }
+
+# .mdl-layout__drawer {
+#   width: 420px;
+# }
+
+
+categories_by_color_id:
+  "default":
+    categories:
+      - misc
+    cover_color: "#000000"
+    gcal_background: "#039be5"
+    gcal_name: null
+  "1":
+    categories:
+      - los-verdes
+    cover_color: "#000000"
+    gcal_background: "#a4bdfc"
+    gcal_name: lavender
+    always_shown_in_filters: true
+  "2":
+    categories:
+      - la-murga
+    cover_color: "#000000"
+    gcal_background: "#7ae7bf"
+    gcal_name: sage
+    always_shown_in_filters: true
+  "3":
+    categories:
+      - home-games
+      - cat-games
+    cover_color: "#000000"
+    gcal_background: "#dbadff"
+    gcal_name: grape
+    always_shown_in_filters: true
+  "4":
+    categories:
+      - away-games
+    cover_color: "#000000"
+    gcal_background: "#ff887c"
+    gcal_name: flamingo
+    always_shown_in_filters: true
+  "5":
+    gcal_background: "#fbd75b"
+    gcal_foreground: "#1d1d1d"
+  "6":
+    gcal_background: "#ffb878"
+    gcal_foreground: "#1d1d1d"
+  "7":
+    gcal_background: "#46d6db"
+    gcal_foreground: "#1d1d1d"
+  "8":
+    gcal_background: "#e1e1e1"
+    gcal_foreground: "#1d1d1d"
+  "9":
+    gcal_background: "#5484ed"
+    gcal_foreground: "#1d1d1d"
+  "10":
+    gcal_background: "#51b749"
+    gcal_foreground: "#1d1d1d"
+  "11":
+    gcal_background: "#dc2127"
+    gcal_foreground: "#1d1d1d"
+
+mls_team_abbreviations:
+  Atlanta United: atl
+  Austin FC: atx
+  "CF Montr\xE9al": mtl
+  Charlotte FC: clt
+  Colorado Rapids: col
+  D.C. United: dc
+  FC Cincinnati: cin
+  FC Dallas: dal
+  Houston Dynamo FC: hou
+  Inter Miami CF: mia
+  LA Galaxy: la
+  Los Angeles Football Club: lafc
+  LAFC: lafc
+  Minnesota United: min
+  Nashville SC: nsh
+  New York Red Bulls: rbny
+  Orlando City: orl
+  Portland Timbers: por
+  Real Salt Lake: rsl
+  San Jose Earthquakes: sj
+  Seattle Sounders FC: sea
+  Sporting Kansas City: skc
+  Vancouver Whitecaps FC: van

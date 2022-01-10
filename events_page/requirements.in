@@ -8,5 +8,5 @@ gunicorn
 logzero
 pyscss
 python-dateutil
-pyyaml
+ruamel.yaml
 requests

@@ -1,436 +1,393 @@
-.event-atxvspor-card > .mdl-card__title {
-  background-image: linear-gradient(125deg, #004812, #0bac44); }
-  .event-atxvspor-card > .mdl-card__title mark {
-    padding: 2px;
-    color: white;
-    background-color: rgba(11, 172, 68, 0.75); }
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+  padding-left: 4px;
+  padding-right: 4px; }
 
-.event-atxvssj-card > .mdl-card__title {
+  .event-card.mdl-card {
+    width: 100%; }
+    .event-card.mdl-card > .mdl-card__title {
+      height: 176px; }
+      .event-card.mdl-card .expandable-content {
+        display: none;
+        overflow: hidden; }
+        .event-card.mdl-card .mdl-list__item {
+          padding: 0; }
+          .event-card.mdl-card mark {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white; }
+            .event-card.mdl-card small {
+              opacity: 1;
+              font-size: medium; }
+              .event-card.mdl-card summary {
+                cursor: pointer; }
+
+.page-content input[type="radio"] {
+  position: absolute;
+  left: -9999px; }
+  .page-content .filters {
+    text-align: center;
+    margin-bottom: 2rem; }
+    .page-content .filters * {
+      display: inline-block; }
+      .page-content .filters label {
+        cursor: pointer;
+        transition: all 0.1s; }
+        .page-content .filters label:hover {
+          background: #0bac44;
+          color: var("--white"); }
+
+.empty-event-card {
+  width: 100%; }
+
+  [value="all"]:checked ~ .event-cards [data-category] {
+    display: block; }
+
+    [value="all"]:checked ~ .empty-cards [data-category] {
+      display: none; }
+
+      [value="away-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="away-games"]) {
+        display: none; }
+
+        [value="away-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="away-games"]) {
+          display: none; }
+
+          [value="los-verdes"]:checked ~ .event-cards .mdl-cell:not([data-category~="los-verdes"]) {
+            display: none; }
+
+            [value="los-verdes"]:checked ~ .empty-cards .mdl-cell:not([data-category~="los-verdes"]) {
+              display: none; }
+
+              [value="home-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="home-games"]) {
+                display: none; }
+
+                [value="home-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="home-games"]) {
+                  display: none; }
+
+                  [value="la-murga"]:checked ~ .event-cards .mdl-cell:not([data-category~="la-murga"]) {
+                    display: none; }
+
+                    [value="la-murga"]:checked ~ .empty-cards .mdl-cell:not([data-category~="la-murga"]) {
+                      display: none; }
+
+                      [value="misc"]:checked ~ .event-cards .mdl-cell:not([data-category~="misc"]) {
+                        display: none; }
+
+                        [value="misc"]:checked ~ .empty-cards .mdl-cell:not([data-category~="misc"]) {
+                          display: none; }
+
+                          [value="all"]:checked ~ .filters [for="all"] {
+                            background: #0bac44;
+                            color: white; }
+
+                            [value="away-games"]:checked ~ .filters [for="away-games"] {
+                              background: #0bac44;
+                              color: white; }
+
+                              [value="los-verdes"]:checked ~ .filters [for="los-verdes"] {
+                                background: #0bac44;
+                                color: white; }
+
+                                [value="home-games"]:checked ~ .filters [for="home-games"] {
+                                  background: #0bac44;
+                                  color: white; }
+
+                                  [value="la-murga"]:checked ~ .filters [for="la-murga"] {
+                                    background: #0bac44;
+                                    color: white; }
+
+                                    [value="misc"]:checked ~ .filters [for="misc"] {
+                                      background: #0bac44;
+                                      color: white; }
+
+                                      .event-card-atxvspor > .mdl-card__title {
+                                        background-image: linear-gradient(125deg, #004812, #0bac44); }
+                                        .event-card-atxvspor > .mdl-card__title mark {
+                                          padding: 2px;
+                                          color: white;
+                                          background-color: rgba(11, 172, 68, 0.75); }
+
+.event-card-atxvssj > .mdl-card__title {
   background-image: linear-gradient(125deg, #0051ba, #0bac44); }
-  .event-atxvssj-card > .mdl-card__title mark {
+  .event-card-atxvssj > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsdc-card > .mdl-card__title {
+.event-card-atxvsdc > .mdl-card__title {
   background-image: linear-gradient(125deg, #212121, #0bac44); }
-  .event-atxvsdc-card > .mdl-card__title mark {
+  .event-card-atxvsdc > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvshou-card > .mdl-card__title {
+.event-card-atxvshou > .mdl-card__title {
   background-image: linear-gradient(125deg, #101820, #0bac44); }
-  .event-atxvshou-card > .mdl-card__title mark {
+  .event-card-atxvshou > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsrsl-card > .mdl-card__title {
+.event-card-atxvsrsl > .mdl-card__title {
   background-image: linear-gradient(125deg, #001e61, #0bac44); }
-  .event-atxvsrsl-card > .mdl-card__title mark {
+  .event-card-atxvsrsl > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvslafc-card > .mdl-card__title {
+.event-card-atxvslafc > .mdl-card__title {
   background-image: linear-gradient(125deg, #212121, #0bac44); }
-  .event-atxvslafc-card > .mdl-card__title mark {
+  .event-card-atxvslafc > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsla-card > .mdl-card__title {
+.event-card-atxvsla > .mdl-card__title {
   background-image: linear-gradient(125deg, #004b87, #0bac44); }
-  .event-atxvsla-card > .mdl-card__title mark {
+  .event-card-atxvsla > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsmtl-card > .mdl-card__title {
+.event-card-atxvsmtl > .mdl-card__title {
   background-image: linear-gradient(125deg, #212121, #0bac44); }
-  .event-atxvsmtl-card > .mdl-card__title mark {
+  .event-card-atxvsmtl > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsclt-card > .mdl-card__title {
+.event-card-atxvsclt > .mdl-card__title {
   background-image: linear-gradient(125deg, #0085ca, #0bac44); }
-  .event-atxvsclt-card > .mdl-card__title mark {
+  .event-card-atxvsclt > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvscol-card > .mdl-card__title {
+.event-card-atxvscol > .mdl-card__title {
   background-image: linear-gradient(125deg, #8a2432, #0bac44); }
-  .event-atxvscol-card > .mdl-card__title mark {
+  .event-card-atxvscol > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsatl-card > .mdl-card__title {
+.event-card-atxvsatl > .mdl-card__title {
   background-image: linear-gradient(125deg, #9d2235, #0bac44); }
-  .event-atxvsatl-card > .mdl-card__title mark {
+  .event-card-atxvsatl > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsdal-card > .mdl-card__title {
+.event-card-atxvsdal > .mdl-card__title {
   background-image: linear-gradient(125deg, #c6093b, #0bac44); }
-  .event-atxvsdal-card > .mdl-card__title mark {
+  .event-card-atxvsdal > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsskc-card > .mdl-card__title {
+.event-card-atxvsskc > .mdl-card__title {
   background-image: linear-gradient(125deg, #0c2340, #0bac44); }
-  .event-atxvsskc-card > .mdl-card__title mark {
+  .event-card-atxvsskc > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsmin-card > .mdl-card__title {
+.event-card-atxvsmin > .mdl-card__title {
   background-image: linear-gradient(125deg, #737b82, #0bac44); }
-  .event-atxvsmin-card > .mdl-card__title mark {
+  .event-card-atxvsmin > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsnsh-card > .mdl-card__title {
+.event-card-atxvsnsh > .mdl-card__title {
   background-image: linear-gradient(125deg, #201547, #0bac44); }
-  .event-atxvsnsh-card > .mdl-card__title mark {
+  .event-card-atxvsnsh > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvssea-card > .mdl-card__title {
+.event-card-atxvssea > .mdl-card__title {
   background-image: linear-gradient(125deg, #64a608, #0bac44); }
-  .event-atxvssea-card > .mdl-card__title mark {
+  .event-card-atxvssea > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsvan-card > .mdl-card__title {
+.event-card-atxvsvan > .mdl-card__title {
   background-image: linear-gradient(125deg, #002244, #0bac44); }
-  .event-atxvsvan-card > .mdl-card__title mark {
+  .event-card-atxvsvan > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvscin-card > .mdl-card__title {
+.event-card-atxvscin > .mdl-card__title {
   background-image: linear-gradient(125deg, #003087, #0bac44); }
-  .event-atxvscin-card > .mdl-card__title mark {
+  .event-card-atxvscin > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsmia-card > .mdl-card__title {
+.event-card-atxvsmia > .mdl-card__title {
   background-image: linear-gradient(125deg, #212322, #0bac44); }
-  .event-atxvsmia-card > .mdl-card__title mark {
+  .event-card-atxvsmia > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsorl-card > .mdl-card__title {
+.event-card-atxvsorl > .mdl-card__title {
   background-image: linear-gradient(125deg, #61259e, #0bac44); }
-  .event-atxvsorl-card > .mdl-card__title mark {
+  .event-card-atxvsorl > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-atxvsrbny-card > .mdl-card__title {
+.event-card-atxvsrbny > .mdl-card__title {
   background-image: linear-gradient(125deg, #ba0c2f, #0bac44); }
-  .event-atxvsrbny-card > .mdl-card__title mark {
+  .event-card-atxvsrbny > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(11, 172, 68, 0.75); }
 
-.event-porvsatx-card > .mdl-card__title {
+.event-card-porvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #004812); }
-  .event-porvsatx-card > .mdl-card__title mark {
+  .event-card-porvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(0, 72, 18, 0.75); }
 
-.event-sjvsatx-card > .mdl-card__title {
+.event-card-sjvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #0051ba); }
-  .event-sjvsatx-card > .mdl-card__title mark {
+  .event-card-sjvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(0, 81, 186, 0.75); }
 
-.event-dcvsatx-card > .mdl-card__title {
+.event-card-dcvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #212121); }
-  .event-dcvsatx-card > .mdl-card__title mark {
+  .event-card-dcvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(33, 33, 33, 0.75); }
 
-.event-houvsatx-card > .mdl-card__title {
+.event-card-houvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #101820); }
-  .event-houvsatx-card > .mdl-card__title mark {
+  .event-card-houvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(16, 24, 32, 0.75); }
 
-.event-rslvsatx-card > .mdl-card__title {
+.event-card-rslvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #001e61); }
-  .event-rslvsatx-card > .mdl-card__title mark {
+  .event-card-rslvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(0, 30, 97, 0.75); }
 
-.event-lafcvsatx-card > .mdl-card__title {
+.event-card-lafcvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #212121); }
-  .event-lafcvsatx-card > .mdl-card__title mark {
+  .event-card-lafcvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(33, 33, 33, 0.75); }
 
-.event-lavsatx-card > .mdl-card__title {
+.event-card-lavsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #004b87); }
-  .event-lavsatx-card > .mdl-card__title mark {
+  .event-card-lavsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(0, 75, 135, 0.75); }
 
-.event-mtlvsatx-card > .mdl-card__title {
+.event-card-mtlvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #212121); }
-  .event-mtlvsatx-card > .mdl-card__title mark {
+  .event-card-mtlvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(33, 33, 33, 0.75); }
 
-.event-cltvsatx-card > .mdl-card__title {
+.event-card-cltvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #0085ca); }
-  .event-cltvsatx-card > .mdl-card__title mark {
+  .event-card-cltvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(0, 133, 202, 0.75); }
 
-.event-colvsatx-card > .mdl-card__title {
+.event-card-colvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #8a2432); }
-  .event-colvsatx-card > .mdl-card__title mark {
+  .event-card-colvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(138, 36, 50, 0.75); }
 
-.event-atlvsatx-card > .mdl-card__title {
+.event-card-atlvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #9d2235); }
-  .event-atlvsatx-card > .mdl-card__title mark {
+  .event-card-atlvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(157, 34, 53, 0.75); }
 
-.event-dalvsatx-card > .mdl-card__title {
+.event-card-dalvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #c6093b); }
-  .event-dalvsatx-card > .mdl-card__title mark {
+  .event-card-dalvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(198, 9, 59, 0.75); }
 
-.event-skcvsatx-card > .mdl-card__title {
+.event-card-skcvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #0c2340); }
-  .event-skcvsatx-card > .mdl-card__title mark {
+  .event-card-skcvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(12, 35, 64, 0.75); }
 
-.event-minvsatx-card > .mdl-card__title {
+.event-card-minvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #737b82); }
-  .event-minvsatx-card > .mdl-card__title mark {
+  .event-card-minvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(115, 123, 130, 0.75); }
 
-.event-nshvsatx-card > .mdl-card__title {
+.event-card-nshvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #201547); }
-  .event-nshvsatx-card > .mdl-card__title mark {
+  .event-card-nshvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(32, 21, 71, 0.75); }
 
-.event-seavsatx-card > .mdl-card__title {
+.event-card-seavsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #64a608); }
-  .event-seavsatx-card > .mdl-card__title mark {
+  .event-card-seavsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(100, 166, 8, 0.75); }
 
-.event-vanvsatx-card > .mdl-card__title {
+.event-card-vanvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #002244); }
-  .event-vanvsatx-card > .mdl-card__title mark {
+  .event-card-vanvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(0, 34, 68, 0.75); }
 
-.event-cinvsatx-card > .mdl-card__title {
+.event-card-cinvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #003087); }
-  .event-cinvsatx-card > .mdl-card__title mark {
+  .event-card-cinvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(0, 48, 135, 0.75); }
 
-.event-miavsatx-card > .mdl-card__title {
+.event-card-miavsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #212322); }
-  .event-miavsatx-card > .mdl-card__title mark {
+  .event-card-miavsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(33, 35, 34, 0.75); }
 
-.event-orlvsatx-card > .mdl-card__title {
+.event-card-orlvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #61259e); }
-  .event-orlvsatx-card > .mdl-card__title mark {
+  .event-card-orlvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(97, 37, 158, 0.75); }
 
-.event-rbnyvsatx-card > .mdl-card__title {
+.event-card-rbnyvsatx > .mdl-card__title {
   background-image: linear-gradient(125deg, #0bac44, #ba0c2f); }
-  .event-rbnyvsatx-card > .mdl-card__title mark {
+  .event-card-rbnyvsatx > .mdl-card__title mark {
     padding: 2px;
     color: white;
     background-color: rgba(186, 12, 47, 0.75); }
-
-mark {
-  background-color: transparent; }
-
-  .month-card {
-    color: #fff; }
-
-    summary {
-      cursor: pointer; }
-
-      .event-card.mdl-card {
-        width: 100%; }
-
-        .event-card small {
-          opacity: 1;
-          font-size: medium; }
-
-          .event-card > .mdl-card__title {
-            height: 176px; }
-
-            .event-card .mdl-list__item {
-              padding: 0; }
-
-              .event-card .expandable-content {
-                display: none;
-                overflow: hidden; }
-
-                .event-card a {
-                  color: black; }
-
-                  .event-card > .mdl-card__actions {
-                    display: flex;
-                    box-sizing: border-box;
-                    align-items: center; }
-
-                    .event-card > .mdl-card__actions > .material-icons {
-                      padding-right: 10px; }
-
-                      .event-card .mdl-list__item-primary-content .mdl-list__item-icon {
-                        margin-right: 5px; }
-
-                        .event-card mark {
-                          background-color: rgba(0, 177, 64, 0.9);
-                          color: white; }
-
-                          .la-murge > .mdl-card__title {
-                            background: black url("./la_murga.png") center / cover; }
-
-                            .la-murge small {
-                              color: #fff; }
-
-                              .la-murge mark {
-                                background-color: rgba(0, 177, 64, 0.9);
-                                color: white; }
-
-                                .los-verdes > .mdl-card__title {
-                                  background: black url("./los_verdes.png") center / cover; }
-
-                                  .los-verdes mark {
-                                    background-color: rgba(0, 177, 64, 0.9);
-                                    color: white; }
-
-                                    input[type="radio"] {
-                                      position: absolute;
-                                      left: -9999px; }
-
-                                      .filters {
-                                        text-align: center;
-                                        margin-bottom: 2rem; }
-
-                                        .filters * {
-                                          display: inline-block; }
-
-                                          .filters label {
-                                            cursor: pointer;
-                                            transition: all 0.1s; }
-
-                                            .filters label:hover {
-                                              background: #0bac44;
-                                              color: var("--white"); }
-
-                                              .empty-event-card {
-                                                width: 100%; }
-
-                                                [value="all"]:checked ~ .event-cards [data-category] {
-                                                  display: block; }
-
-                                                  [value="all"]:checked ~ .empty-cards [data-category] {
-                                                    display: none; }
-
-                                                    [value="away-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="away-games"]) {
-                                                      display: none; }
-
-                                                      [value="away-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="away-games"]) {
-                                                        display: none; }
-
-                                                        [value="los-verdes"]:checked ~ .event-cards .mdl-cell:not([data-category~="los-verdes"]) {
-                                                          display: none; }
-
-                                                          [value="los-verdes"]:checked ~ .empty-cards .mdl-cell:not([data-category~="los-verdes"]) {
-                                                            display: none; }
-
-                                                            [value="home-games"]:checked ~ .event-cards .mdl-cell:not([data-category~="home-games"]) {
-                                                              display: none; }
-
-                                                              [value="home-games"]:checked ~ .empty-cards .mdl-cell:not([data-category~="home-games"]) {
-                                                                display: none; }
-
-                                                                [value="la-murga"]:checked ~ .event-cards .mdl-cell:not([data-category~="la-murga"]) {
-                                                                  display: none; }
-
-                                                                  [value="la-murga"]:checked ~ .empty-cards .mdl-cell:not([data-category~="la-murga"]) {
-                                                                    display: none; }
-
-                                                                    [value="misc"]:checked ~ .event-cards .mdl-cell:not([data-category~="misc"]) {
-                                                                      display: none; }
-
-                                                                      [value="misc"]:checked ~ .empty-cards .mdl-cell:not([data-category~="misc"]) {
-                                                                        display: none; }
-
-                                                                        [value="all"]:checked ~ .filters [for="all"] {
-                                                                          background: #0bac44;
-                                                                          color: white; }
-
-                                                                          [value="away-games"]:checked ~ .filters [for="away-games"] {
-                                                                            background: #0bac44;
-                                                                            color: white; }
-
-                                                                            [value="los-verdes"]:checked ~ .filters [for="los-verdes"] {
-                                                                              background: #0bac44;
-                                                                              color: white; }
-
-                                                                              [value="home-games"]:checked ~ .filters [for="home-games"] {
-                                                                                background: #0bac44;
-                                                                                color: white; }
-
-                                                                                [value="la-murga"]:checked ~ .filters [for="la-murga"] {
-                                                                                  background: #0bac44;
-                                                                                  color: white; }
-
-                                                                                  [value="misc"]:checked ~ .filters [for="misc"] {
-                                                                                    background: #0bac44;
-                                                                                    color: white; }

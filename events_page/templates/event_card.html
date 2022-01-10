@@ -1,0 +1,101 @@
+{% macro event_card(event) %}
+
+<div class="mdl-cell mdl-cell--4-col" data-category="{{ event.categories | join(' ') }}">
+  <div
+    class="mdl-card mdl-shadow--2dp event-card {{ event.categories | join(' ') }}{% if 'match_slug' in event %} event-card-{{ event.match_slug }}{% endif %}">
+    <div class="mdl-card__title mdl-card--expand" {% if event.cover_image_base64
+      %}style="background: {{ event.cover_color }} url({{ url_for('static', filename=event.cover_image_filename) }}) center / cover;"
+      {% endif %}>
+      <h4>
+        <mark>{{ event.summary }}</mark>
+        </br>
+        <mark><small>{{ event.start.strftime('%b %d') }} @ {{ event.start.strftime('%I:%M %p') }}</small></mark>
+      </h4>
+    </div>
+    <div class="mdl-card__supporting-text">
+      <details>
+        <summary id="calendar-details-{{event.id}}">Event Details</summary>
+
+        <ul class="mdl-list">
+          <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              <i class="material-icons mdl-list__item-icon">event</i>
+              {{ event.start.strftime('%A, %b %d, %Y') }}
+            </span>
+          </li>
+
+          <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              <i class="material-icons mdl-list__item-icon">schedule</i>
+              {{ event.start.strftime('%I:%M %p') }} - {{ event.end.strftime('%I:%M %p (%Z)') }}
+            </span>
+          </li>
+          {% if event.has_location %}
+          <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              {% if event.is_over_zoom %}
+              <i class="material-icons mdl-list__item-icon">videocam</i>
+              <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                href="{{event.location}}" target="_blank">
+                Join Zoom Meeting
+              </a>
+              {% else %}
+              <i class="material-icons mdl-list__item-icon">place</i>
+              <a href="https://www.google.com/maps/search/{{ event.location }}">{{ event.location }}</a>
+              {% endif %}
+            </span>
+          </li>
+          {% endif %}
+
+          <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              <i class="material-icons mdl-list__item-icon">category</i>
+              {% for category in event.categories %}
+              <span class="mdl-chip"><span class="mdl-chip__text">{{ category }}</span></span>
+              {% endfor %}
+            </span>
+          </li>
+        </ul>
+
+        {% if event.has_description %}
+        <span>
+          <i class="material-icons mdl-list__item-icon">description</i>
+
+          <details>
+            <summary id="calendar-details-{{event.id}}">
+              {{ event.description|truncate(100, False, '...', 0) }}
+            </summary>
+            {% for line in event.description_lines %}
+            {{ line }}
+            </br>
+            {% endfor %}
+          </details>
+        </span>
+        {% endif %}
+        </br>
+        <span class="mdl-chip">
+          <span class="mdl-chip__text">color ID: {{ event.color_id }}</span>
+        </span>
+        </br>
+        <span class="mdl-chip">
+          <span class="mdl-chip__text">gcal_background: {{ event.gcal_background }}</span>
+        </span>
+        </br>
+        <span class="mdl-chip">
+          <span class="mdl-chip__text">gcal_name: {{ event.gcal_name }}</span>
+        </span>
+        </br>
+      </details>
+    </div>
+    <div class="mdl-card__menu">
+      <a id="calendar-link-{{event.id}}" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+        href="{{event.htmlLink}}" target="_blank">
+        <i class="material-icons">launch</i>
+      </a>
+      <div class="mdl-tooltip mdl-tooltip" for="calendar-link-{{event.id}}">
+        View @ GCalendar
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

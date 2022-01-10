@@ -1,16 +1,17 @@
 #!/usr/bin/env python
+import itertools
 import os
 from datetime import datetime, timedelta
 from urllib.parse import quote_plus
 from zoneinfo import ZoneInfo
+
 import flask
 from dateutil.parser import parse
 from flask_assets import Bundle, Environment
-from logzero import setup_logger
+from logzero import logger, setup_logger
+from google_utils import calendar, drive, load_credentials
 
-from google_utils.calendar import get_calender_cid, get_events
-from google_utils.drive import list_files, build_drive_service, get_event_page_folder
-from google_utils import load_credentials
+
 # from pydrive2.auth import GoogleAuth
 setup_logger(name=__name__)
 
@@ -26,11 +27,6 @@ bundles = {  # define nested Bundle
     )
 }
 assets.register(bundles)
-app.config.update(
-    DEPLOYMENT_ID=os.getenv("WAYPOINT_DEPLOYMENT_ID", "IDK"),
-    CALENDAR_ID=os.getenv("CALENDAR_ID", "information@losverdesatx.org"),
-    USE_OAUTH_CREDS=os.getenv("USE_OAUTH_CREDS", False),
-)
 
 # Reference: https://stackoverflow.com/a/33486003
 # app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
@@ -41,84 +37,83 @@ GCLOUD_AUTH_SCOPES = [
     "https://www.googleapis.com/auth/drive.readonly",
 ]
 
+SERVICE_ACCOUNT_CREDENTIALS = load_credentials()
+
 
 @app.route("/")
-def home():
-    # team_schedule = grab_schedule(today.year)
-    # css_bits = []
-    # for slug, match in team_schedule.items():
-    #     css_class = f"event-{slug.split('-', 1)[0]}-card"
-    #     from textwrap import dedent
-    #     rgb_home = tuple(int(match['home']['backgroundColor'].lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
-    #     css_bits.append(
-    #         dedent(
-    #             f"""\
-    #             .{css_class}>.mdl-card__title {{
-    #                 background-image: linear-gradient(125deg, {match['away']['backgroundColor']}, {match['home']['backgroundColor']});
-    #             }}
-    #             .{css_class} mark {{
-    #                 padding: 2px;
-    #                 color: white;
-    #                 background-color: rgba({rgb_home[0]}, {rgb_home[1]}, {rgb_home[2]}, 0.75);
-    #             }}
-
-    #             """
-    #         )
-    #     )
-    # with open("bits.css", "w") as bits:
-    #     bits.write('\n'.join(css_bits))
-    # breakpoint()
-    # logger.debug(f"{list(team_schedule.keys())=}")
+def events():
     now = datetime.utcnow().isoformat() + "Z"  # 'Z' indicates UTC time
     events_time_min = now
     events_time_max = (datetime.utcnow() + timedelta(days=365)).isoformat() + "Z"
-    events = get_events(
-        calendar_id=app.config["CALENDAR_ID"],
-        # team_schedule=team_schedule,
-        team_schedule=dict(),
+    source_calendar_id = app.config["source_calendar_id"]
+    calendar_service = calendar.build_service(SERVICE_ACCOUNT_CREDENTIALS)
+    events = calendar.get_events(
+        service=calendar_service,
+        calendar_id=source_calendar_id,
         time_min=events_time_min,
         time_max=events_time_max,
+        categories_by_color_id=app.config["categories_by_color_id"],
+        mls_team_abbreviations=app.config["mls_team_abbreviations"],
     )
     # categories = {c for c in itertools.chain.from_iterable(e['css_classes'] for e in events)}
     # categories = list(EVENT_CSS_CLASSES.keys()) + ["away games", "home games"]
-    default_categories = [
-        "los-verdes",
-        "la-murga",
-        "home-games",
-        "away-games",
-    ]
-    event_categories = set()
+    logger.debug(f"{[c for c in app.config['categories_by_color_id'].values()]=}")
+    default_categories = list(
+        itertools.chain.from_iterable(
+            [
+                c["categories"]
+                for c in app.config["categories_by_color_id"].values()
+                if c.get("always_shown_in_filters")
+            ]
+        )
+    )
+
+    current_event_categories = set()
     for event in events:
-        event_categories |= set(event["categories"])
-    all_categories = set(default_categories) | event_categories
-    empty_categories = set(all_categories) - set(event_categories)
-    calendar_cid = get_calender_cid(app.config["CALENDAR_ID"])
+        current_event_categories |= set(event["categories"])
+    logger.debug(f"{current_event_categories=}")
+    all_categories = set(default_categories) | current_event_categories
+    empty_categories = set(all_categories) - set(current_event_categories)
+    additional_categories = list(current_event_categories - set(default_categories))
+    # logger.debug(f"")
+
+    logger.debug(
+        f"{default_categories=} {all_categories=} {empty_categories=} {additional_categories=}"
+    )
+    calendar_cid = calendar.get_cid_from_id(source_calendar_id)
+
     return flask.render_template(
-        "home.html",
-        calendar_id=app.config["CALENDAR_ID"],
-        cal_id_href=f"https://calendar.google.com/calendar/embed?src={quote_plus(app.config['CALENDAR_ID'])}",
+        "events.html",
+        calendar_id=source_calendar_id,
+        cal_id_href=f"https://calendar.google.com/calendar/embed?src={quote_plus(app.config['source_calendar_id'])}",
         calendar_cid=calendar_cid,
         cal_cid_href=f"https://calendar.google.com/calendar/u/0?cid={ calendar_cid }",
         events=events,
-        default_categories=default_categories,
-        additional_categories=list(event_categories - set(default_categories)),
+        default_categories=list(default_categories),
+        additional_categories=additional_categories,
         empty_categories=empty_categories,
         events_time_min=parse(events_time_min).replace(tzinfo=ZoneInfo("US/Central")),
         events_time_max=parse(events_time_max).replace(tzinfo=ZoneInfo("US/Central")),
+        now=datetime.utcnow(),
     )
 
 
 def create_app():
+    drive_service = drive.build_service(SERVICE_ACCOUNT_CREDENTIALS)
+    settings = drive.load_settings(drive_service)
+    app.config.update(settings)
+    drive.download_all_images(drive_service)
     return app
 
 
 if __name__ == "__main__":
-    get_event_page_folder(
-        drive=build_drive_service(),
-        # parent_folder="root",
-    )
+    import logging
+
+    for logger_name in ["google_utils.drive"]:
+        logging.getLogger(logger_name).setLevel(logging.INFO)
     create_app()
     app.run(
         host="0.0.0.0",
+        # debug=False,
         debug=True,
     )

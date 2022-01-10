@@ -1,175 +1,72 @@
 $bright-verde: #0bac44;
-$team-colors: (
-  "por": #004812,
-  "sj": #0051ba,
-  "dc": #212121,
-  "hou": #101820,
-  "rsl": #001e61,
-  "lafc": #212121,
-  "la": #004b87,
-  "mtl": #212121,
-  "clt": #0085ca,
-  "col": #8a2432,
-  "atl": #9d2235,
-  "dal": #c6093b,
-  "skc": #0c2340,
-  "min": #737b82,
-  "nsh": #201547,
-  "sea": #64a608,
-  "van": #002244,
-  "cin": #003087,
-  "mia": #212322,
-  "orl": #61259e,
-  "rbny": #ba0c2f,
-);
 
-@each $team, $color in $team-colors {
-  .event-atxvs#{$team}-card > .mdl-card__title {
-    // background-image: linear-gradient((random(50) + 100)+deg, $color, $bright-verde);
-    background-image: linear-gradient(125deg, $color, $bright-verde);
-
-    mark {
-      padding: 2px;
-      color: white;
-      background-color: rgba($bright-verde, 0.75);
-    }
-  }
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+  // Sort out better formatting (large width?) side nav stuff here:
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
-@each $team, $color in $team-colors {
-  .event-#{$team}vsatx-card > .mdl-card__title {
-    // background-image: linear-gradient((random(50) + 100)+deg, $bright-verde, $color);
-    background-image: linear-gradient(125deg, $bright-verde, $color);
-
-    mark {
-      padding: 2px;
-      color: white;
-      background-color: rgba($color, 0.75);
-    }
-  }
-}
-
-mark {
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.month-card {
-  color: #fff;
-}
-
-summary {
-  cursor: pointer;
-}
+// mark {
+//   background-color: rgba(0, 0, 0, 0);
+// }
 
 .event-card.mdl-card {
-  /* background: rgb(97, 97, 97); */
-  /* width: 512px; */
   width: 100%;
-  /* color: white; */
-  /* margin: auto; */
+
+  > .mdl-card__title {
+    height: 176px;
+  }
+
+  .expandable-content {
+    display: none;
+    overflow: hidden;
+  }
+
+  .mdl-list__item {
+    padding: 0;
+  }
+
+  mark {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: rgb(255, 255, 255);
+  }
+
+  small {
+    opacity: 1;
+    font-size: medium;
+  }
+
+  summary {
+    cursor: pointer;
+  }
 }
 
-.event-card small {
-  opacity: 1;
-  font-size: medium;
-}
+// Wrapping the following in .page-content mostly just to "organize" bits related to our pure CSS card filtering jazz
+.page-content {
+  input[type="radio"] {
+    position: absolute;
+    left: -9999px;
+  }
 
-.event-card > .mdl-card__title {
-  /* color: #fff; */
-  height: 176px;
-}
+  .filters {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 
-.event-card .mdl-list__item {
-  padding: 0;
-}
+  .filters * {
+    display: inline-block;
+  }
 
-.event-card .expandable-content {
-  display: none;
-  overflow: hidden;
-}
+  .filters label {
+    cursor: pointer;
+    transition: all 0.1s;
+  }
 
-.event-card a {
-  color: black;
+  .filters label:hover {
+    background: $bright-verde;
+    color: var(--white);
+  }
 }
-
-.event-card > .mdl-card__actions {
-  display: flex;
-  box-sizing: border-box;
-  align-items: center;
-}
-
-.event-card > .mdl-card__actions > .material-icons {
-  padding-right: 10px;
-}
-
-.event-card .mdl-list__item-primary-content .mdl-list__item-icon {
-  margin-right: 5px;
-}
-.event-card mark {
-  background-color: rgba(0, 177, 64, 0.9);
-  color: rgb(255, 255, 255);
-}
-
-.la-murge > .mdl-card__title {
-  background: black url("./la_murga.png") center / cover;
-}
-
-.la-murge small {
-  color: #fff;
-}
-
-.la-murge mark {
-  background-color: rgba(0, 177, 64, 0.9);
-  color: rgb(255, 255, 255);
-}
-
-.los-verdes > .mdl-card__title {
-  background: black url("./los_verdes.png") center / cover;
-}
-
-.los-verdes mark {
-  background-color: rgba(0, 177, 64, 0.9);
-  color: rgb(255, 255, 255);
-}
-
-input[type="radio"] {
-  position: absolute;
-  left: -9999px;
-}
-
-// :root {
-//   --black: #1a1a1a;
-//   --white: #fff;
-//   --green: #49b293;
-// }
-
-.filters {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.filters * {
-  display: inline-block;
-}
-
-.filters label {
-  // padding: 0.5rem 1rem;
-  // margin-bottom: 0.25rem;
-  // border-radius: 2rem;
-  // min-width: 50px;
-  // line-height: normal;
-  cursor: pointer;
-  transition: all 0.1s;
-}
-
-.filters label:hover {
-  background: $bright-verde;
-  color: var(--white);
-}
-
-// .empty-category {
-//   display: none;
-// }
 
 .empty-event-card {
   width: 100%;
@@ -183,6 +80,7 @@ input[type="radio"] {
   display: none;
 }
 
+// TODO: these need to be populated by the settings we pull down from google drive
 $categories: away-games, los-verdes, home-games, la-murga, misc;
 
 @each $category in $categories {
@@ -208,3 +106,53 @@ $categories: away-games, los-verdes, home-games, la-murga, misc;
 // [value="all"]:checked + label {
 //   background: $bright-verde;
 // }
+
+$team-colors: (
+  "por": #004812,
+  "sj": #0051ba,
+  "dc": #212121,
+  "hou": #101820,
+  "rsl": #001e61,
+  "lafc": #212121,
+  "la": #004b87,
+  "mtl": #212121,
+  "clt": #0085ca,
+  "col": #8a2432,
+  "atl": #9d2235,
+  "dal": #c6093b,
+  "skc": #0c2340,
+  "min": #737b82,
+  "nsh": #201547,
+  "sea": #64a608,
+  "van": #002244,
+  "cin": #003087,
+  "mia": #212322,
+  "orl": #61259e,
+  "rbny": #ba0c2f,
+);
+
+@each $team, $color in $team-colors {
+  .event-card-atxvs#{$team} > .mdl-card__title {
+    // background-image: linear-gradient((random(50) + 100)+deg, $color, $bright-verde);
+    background-image: linear-gradient(125deg, $color, $bright-verde);
+
+    mark {
+      padding: 2px;
+      color: white;
+      background-color: rgba($bright-verde, 0.75);
+    }
+  }
+}
+
+@each $team, $color in $team-colors {
+  .event-card-#{$team}vsatx > .mdl-card__title {
+    // background-image: linear-gradient((random(50) + 100)+deg, $bright-verde, $color);
+    background-image: linear-gradient(125deg, $bright-verde, $color);
+
+    mark {
+      padding: 2px;
+      color: white;
+      background-color: rgba($color, 0.75);
+    }
+  }
+}
