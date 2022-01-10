@@ -3,14 +3,15 @@ import os
 from datetime import datetime, timedelta
 from urllib.parse import quote_plus
 from zoneinfo import ZoneInfo
-
 import flask
 from dateutil.parser import parse
 from flask_assets import Bundle, Environment
 from logzero import setup_logger
 
 from google_utils.calendar import get_calender_cid, get_events
-
+from google_utils.drive import list_files
+from google_utils import load_credentials, get_pydrive_client
+# from pydrive2.auth import GoogleAuth
 setup_logger(name=__name__)
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -112,6 +113,7 @@ def create_app():
 
 
 if __name__ == "__main__":
+    list_files(drive=get_pydrive_client())
     create_app()
     app.run(
         host="0.0.0.0",

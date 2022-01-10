@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import base64
 import json
 import logging
 import os
@@ -11,7 +10,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from logzero import logger
 
-from google_utils import read_secret
+from google_utils import read_secret, load_credentials
 
 # Based on: https://medium.com/swlh/google-drive-push-notification-b62e2e2b3df4
 
@@ -110,23 +109,13 @@ if __name__ == "__main__":
         expiration_seconds = current_seconds + added_seconds
         expiration = round(expiration_seconds * 1000)
 
-    event_page_secret_name = (
-        "projects/538480189659/secrets/lv-events-page/versions/latest"
-    )
-    secrets = read_secret(event_page_secret_name)
-    service_account_info = json.loads(base64.b64decode(secrets["service_account_key"]))
-    sa_credentials = service_account.Credentials.from_service_account_info(
-        service_account_info
-    )
-    # breakpoint()
-    # token_secret_name = "projects/538480189659/secrets/webhook-token/versions/latest"
-    # token = read_secret(client, token_secret_name)
-    token = secrets["token"]
-
+    calendar_service = build("calendar", "v3", credentials=load_credentials())
     channel_id = args.channel_id  # str(uuid.uuid4())
-    logger.debug(f"Using {channel_id=}...")
-    calendar_service = build("calendar", "v3", credentials=sa_credentials)
-    logger.debug(f"Ensure GDrive watch ({expiration=}) for changes is in-place now...")
+    token = read_secret()["token"]
+
+    logger.debug(
+        f"Ensure GDrive watch ({channel_id=}, {expiration=}, token={token[0:2]}...{token[-2:0]}) for changes is in-place now..."
+    )
     response = ensure_events_watch(
         service=calendar_service,
         calendar_id=args.calendar_id,

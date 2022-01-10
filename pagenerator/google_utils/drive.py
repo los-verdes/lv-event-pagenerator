@@ -13,6 +13,12 @@ BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 DRIVE_RO_SCOPE = "https://www.googleapis.com/auth/drive.readonly"
 
 
+
+def list_files(drive):
+    file_list = drive.ListFile({'q': "'root' in parents and trashed=false"}).GetList()
+    for file1 in file_list:
+        print('title: %s, id: %s' % (file1['title'], file1['id']))
+
 def get_attachment(attachment):
     attachment_local_path = os.path.join(BASE_DIR, "..", "static", attachment["title"])
     if os.path.exists(attachment_local_path):

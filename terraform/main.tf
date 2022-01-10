@@ -77,7 +77,7 @@ resource "google_cloudfunctions_function" "webhook" {
   entry_point           = "process_events_push_notification"
 
   environment_variables = {
-    SECRET_NAME = google_secret_manager_secret_version.event_page_key.name
+    PAGENERATOR_SECRET_NAME = google_secret_manager_secret_version.event_page_key.name
   }
   build_environment_variables = {
     GOOGLE_FUNCTION_SOURCE = "webhook.py"
