@@ -2,6 +2,7 @@
 import base64
 import json
 import logging
+import os
 import time
 from datetime import datetime
 
@@ -24,71 +25,28 @@ GCLOUD_AUTH_SCOPES = [
 
 DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctions.net/drive-notification-receiver"
 DEFAULT_SETTINGS_FILE_ID = "1jJjp94KgQ7NtI0ds5SzpNKG3s2Y96dO8"
+DEFAULT_CALENDAR_ID = os.getenv("CALENDAR_ID", "information@losverdesatx.org")
 
 
-def ensure_changes_watch(service, channel_id, web_hook_address, token, expiration=None):
-    drive_id = service.files().get(fileId=DEFAULT_SETTINGS_FILE_ID).execute()["id"]
-    logger.debug(
-        f"Ensure GDrive watch ({expiration=}) ({drive_id=}) changes is in-place now..."
-    )
-    # logger.debug(f"{drive_id=}")
-    page_token_resp = service.changes().getStartPageToken().execute()
-    logger.debug(f"{page_token_resp=}")
-    # breakpoint()
-    request = service.changes().watch(
-        pageToken=page_token_resp["startPageToken"],
-        # driveId=drive_id,
-        # includeItemsFromAllDrives=True,
-        # supportsAllDrives=True,
-        includeItemsFromAllDrives=False,
-        supportsAllDrives=False,
-        body=dict(
-            kind="api#channel",
-            type="web_hook",
-            id=channel_id,
-            address=web_hook_address,
-            token=token,
-            # expiration=expiration,
-        ),
-    )
-    response = request.execute()
-
-    logger.debug(f"{response=}")
-
-    resp_expiration_dt = datetime.fromtimestamp(int(response["expiration"]) // 1000)
-    logger.debug(
-        f"Watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
-    )
-
-    return response
-
-
-def ensure_file_watch(
-    service,
-    channel_id,
-    web_hook_address,
-    file_id,
-    token,
-    expiration=None,
-    store_response=True,
+def ensure_events_watch(
+    service, calendar_id, channel_id, web_hook_address, token, expiration=None
 ):
     logger.debug(
-        f"Ensure GDrive watch ({expiration=}) for {file_id=} is in-place now..."
+        f"Ensure GCal events watch ({expiration=}) ({calendar_id=}) changes is in-place now..."
     )
-    request = service.files().watch(
-        fileId=file_id,
-        supportsAllDrives=True,
-        includeRemoved=True,
-        includePermissionsForView=True,
-        includeItemsFromAllDrives=True,
-        includeCorpusRemovals=True,
+    request = service.events().watch(
+        calendarId=calendar_id,
+        maxResults=2500,
+        orderBy="startTime",
+        singleEvents=True,
+        # syncToken=,
         body=dict(
             kind="api#channel",
             type="web_hook",
             id=channel_id,
             address=web_hook_address,
             token=token,
-            # expiration=expiration,
+            expiration=expiration,
         ),
     )
     response = request.execute()
@@ -100,11 +58,6 @@ def ensure_file_watch(
         f"Watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
     )
 
-    if store_response:
-        resp_output_path = f"{response['id']}.json"
-        logger.info(f"Writing response data to: {resp_output_path}")
-        with open(resp_output_path, "w", encoding="utf-8") as f:
-            json.dump(response, f, ensure_ascii=False, indent=4)
     return response
 
 
@@ -129,15 +82,14 @@ if __name__ == "__main__":
         "--channel_id",
         help="ID of the channel/ watch",
         # default=DEFAULT_SETTINGS_FILE_ID,
-        default="lv-events-page-drive-changes",
+        default="lv-events-page-events-changes",
     )
-    # parser.add_argument(
-    #     "-f",
-    #     "--file-id",
-    #     help="ID of the GDrive file to watch",
-    #     # default=DEFAULT_SETTINGS_FILE_ID,
-    #     default=None,
-    # )
+    parser.add_argument(
+        "-c",
+        "--calendar_id",
+        help="ID of the calendar to watch",
+        default=DEFAULT_CALENDAR_ID,
+    )
     parser.add_argument(
         "-e",
         "--expiration-in-days",
@@ -173,10 +125,11 @@ if __name__ == "__main__":
 
     channel_id = args.channel_id  # str(uuid.uuid4())
     logger.debug(f"Using {channel_id=}...")
-    drive_service = build("drive", "v3", credentials=sa_credentials)
+    calendar_service = build("calendar", "v3", credentials=sa_credentials)
     logger.debug(f"Ensure GDrive watch ({expiration=}) for changes is in-place now...")
-    response = ensure_changes_watch(
-        service=drive_service,
+    response = ensure_events_watch(
+        service=calendar_service,
+        calendar_id=args.calendar_id,
         channel_id=channel_id,
         web_hook_address=args.web_hook_address,
         token=token,

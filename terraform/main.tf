@@ -56,6 +56,13 @@ resource "google_storage_bucket_object" "archive" {
   source = data.archive_file.webhook_function.output_path
 }
 
+
+# Suppose we needed this function scheduled daily or whatnot as well...
+# > Notifications are not 100% reliable.
+# > Expect a small percentage of messages to get dropped under normal working conditions.
+# > Make sure to handle these missing messages gracefully, so that the application still
+# > syncs even if no push messages are received.
+# Reference: https://developers.google.com/calendar/api/guides/push#special-considerations
 resource "google_cloudfunctions_function" "webhook" {
   name        = "drive-notification-receiver"
   description = "Listens for calendar-event-related drive changes"
@@ -67,7 +74,7 @@ resource "google_cloudfunctions_function" "webhook" {
   source_archive_bucket = google_storage_bucket.bucket.name
   source_archive_object = google_storage_bucket_object.archive.name
   trigger_http          = true
-  entry_point           = "process_drive_push_notification"
+  entry_point           = "process_events_push_notification"
 
   environment_variables = {
     SECRET_NAME = google_secret_manager_secret_version.event_page_key.name

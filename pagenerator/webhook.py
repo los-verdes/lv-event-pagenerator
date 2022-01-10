@@ -23,8 +23,7 @@ def parse_push(req_headers):
     print(
         f"{push['channel_id']=} {push['message_number']=} {push.get('channel_expiration')=}"
     )
-    print(f"{push['resource_id']=} {push['resource_state']=} {push.get('changed')=}")
-    print(f"{push['resource_uri']=}")
+    print(f"{push['resource_id']=} {push['resource_state']=} {push['resource_uri']=}")
     print(f"{bool(push.get('channel_token') == WEBHOOK_TOKEN)=}")
     assert push.get("channel_token") == WEBHOOK_TOKEN, "channel token mismatch 💥🚨"
     return push
@@ -38,7 +37,7 @@ def ensure_token_loaded():
         WEBHOOK_TOKEN = secrets["token"]
 
 
-def process_drive_push_notification(request):
+def process_events_push_notification(request):
     """Responds to any HTTP request.
     Args:
         request (flask.Request): HTTP request object.
@@ -50,47 +49,7 @@ def process_drive_push_notification(request):
     ensure_token_loaded()
     push = parse_push(req_headers=request.headers)
 
-    uri_matches = uri_regexp.match(push["resource_uri"])
-    print(f"{uri_matches=}")
-    if not uri_matches:
-        parsed_uri = urlparse(push["resource_uri"])
-        # print(f"{parsed_uri=}")
-        uri_params = parse_qs(parsed_uri.query)
-        # print(f"{uri_params=}")
-        drive = build_service(
-            service_name="drive",
-            version="v3",
-            scopes=GCLOUD_AUTH_SCOPES,
-        )
-        changes_page_token = uri_params["pageToken"][0]
-        # print(f"{changes_page_token=}")
-        list_resp = (
-            drive.changes()
-            .list(
-                pageToken=changes_page_token,
-                pageSize=1,
-                supportsAllDrives=True,
-                includeRemoved=True,
-                includePermissionsForView=True,
-                includeItemsFromAllDrives=True,
-                includeCorpusRemovals=True,
-            )
-            .execute()
-        )
-        # print(f"{list_resp=}")
-        change = list_resp["changes"][0]
-        if file_id := change.get("fileId"):
-            drive = build_service(
-                service_name="drive",
-                version="v3",
-                scopes=GCLOUD_AUTH_SCOPES,
-            )
-            file_resp = drive.files().get(fileId=file_id).execute()
-            logger.debug(f"{file_resp=}")
-            print(f"{file_resp=}")
     return "idk"
-
-    return "Settings updates persisted! Diff is..."
 
 
 def local_invocation():
@@ -113,7 +72,7 @@ def local_invocation():
         "examples/incoming_drive_changes_webhook.json", "r", encoding="utf-8"
     ) as f:
         example_headers = json.load(f)
-    print(f"{process_drive_push_notification(MockRequest({}, example_headers))}")
+    print(f"{process_events_push_notification(MockRequest({}, example_headers))}")
 
 
 if __name__ == "__main__":
