@@ -1,17 +1,16 @@
 #!/usr/bin/env python
+import base64
 import json
 import logging
 import time
 from datetime import datetime
 
-import google.auth
 import logzero
-from google.cloud.secretmanager import SecretManagerServiceClient
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from logzero import logger
 
-from pagenerator.google_utils import read_secret
+from google_utils import build_service, read_secret
 
 # Based on: https://medium.com/swlh/google-drive-push-notification-b62e2e2b3df4
 
@@ -112,7 +111,7 @@ if __name__ == "__main__":
         "--channel_id",
         help="ID of the channel/ watch",
         # default=DEFAULT_SETTINGS_FILE_ID,
-        default="lv-events-page-webhook",
+        default="lv-events-page-drive-changes",
     )
     parser.add_argument(
         "-f",
@@ -141,15 +140,14 @@ if __name__ == "__main__":
         expiration_seconds = current_seconds + added_seconds
         expiration = round(expiration_seconds * 1000)
 
-    credentials, project = google.auth.default(GCLOUD_AUTH_SCOPES)
-    client = SecretManagerServiceClient(credentials=credentials)
-
-    sa_key_secret_name = "projects/538480189659/secrets/event-page-key/versions/latest"
-    service_account_info = json.loads(read_secret(client, sa_key_secret_name))
+    event_page_secret_name = "projects/538480189659/secrets/lv-events-page/versions/latest"
+    secrets = read_secret(event_page_secret_name)
+    service_account_info = json.loads(base64.b64decode(secrets["service_account_key"]))
     sa_credentials = service_account.Credentials.from_service_account_info(service_account_info)
     # breakpoint()
-    token_secret_name = "projects/538480189659/secrets/webhook-token/versions/latest"
-    token = read_secret(client, token_secret_name)
+    # token_secret_name = "projects/538480189659/secrets/webhook-token/versions/latest"
+    # token = read_secret(client, token_secret_name)
+    token = secrets["token"]
 
     channel_id = args.channel_id  # str(uuid.uuid4())
     logger.debug(f"Using {channel_id=}...")
@@ -179,5 +177,11 @@ if __name__ == "__main__":
     logger.info(f"Writing response data to: {resp_output_path}")
     with open(resp_output_path, "w", encoding="utf-8") as f:
         json.dump(response, f, ensure_ascii=False, indent=4)
+
+    channels = [
+        dict(id="lv-events-page-webhook", resource_id="hWpl0OlfRWVAbo8DFtMBa_f0hUM"),
+    ]
+    for channel in channels:
+        print(drive_service.channels().stop(body=dict(id=channel["id"], resourceId=channel["resource_id"])).execute())
 
     breakpoint()

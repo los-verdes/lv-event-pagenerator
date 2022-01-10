@@ -1,25 +1,30 @@
 #!/usr/bin/env python
 import io
+import json
 import os
 
-import base64
+import google.auth
+from google.auth.transport.requests import Request
+from google.cloud.secretmanager import SecretManagerServiceClient
+from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
 from logzero import logger
 
-import google.auth
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-def read_secret(client, secret_name):
 
+def read_secret(secret_name):
+    credentials, project = google.auth.default()
+    logger.debug(f"auth default project: {project}")
+    client = SecretManagerServiceClient(credentials=credentials)
     response = client.access_secret_version(request={"name": secret_name})
     payload = response.payload.data.decode("UTF-8")
-    return base64.b64decode(payload).decode().trim()
+    logger.debug(f"{payload=}")
+    return json.loads(payload)
+
 
 def load_local_creds(scopes):
     creds = None

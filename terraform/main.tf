@@ -63,11 +63,15 @@ resource "google_cloudfunctions_function" "webhook" {
 
   available_memory_mb   = 128
   max_instances         = 5
+  service_account_email = google_service_account.event_page.email
   source_archive_bucket = google_storage_bucket.bucket.name
   source_archive_object = google_storage_bucket_object.archive.name
   trigger_http          = true
   entry_point           = "process_drive_push_notification"
 
+  environment_variables = {
+    SECRET_NAME = google_secret_manager_secret_version.event_page_key.name
+  }
   build_environment_variables = {
     GOOGLE_FUNCTION_SOURCE = "webhook.py"
   }
@@ -100,8 +104,13 @@ resource "google_service_account_key" "event_page" {
   }
 }
 
+resource "random_password" "token" {
+  length  = 64
+  special = false
+}
+
 resource "google_secret_manager_secret" "event_page_key" {
-  secret_id = "event-page-key"
+  secret_id = var.service_account_id
 
   # labels = {
   #   service_account_email = google_service_account.event_page.email
@@ -114,8 +123,34 @@ resource "google_secret_manager_secret" "event_page_key" {
 
 
 resource "google_secret_manager_secret_version" "event_page_key" {
-  secret      = google_secret_manager_secret.event_page_key.id
-  secret_data = google_service_account_key.event_page.private_key
+  secret = google_secret_manager_secret.event_page_key.id
+  secret_data = jsonencode({
+    service_account_key = google_service_account_key.event_page.private_key
+    token               = random_password.token.result
+  })
+}
+
+data "google_project" "project" {
+}
+
+output "project_number" {
+  value = data.google_project.project.number
+}
+
+data "google_iam_policy" "event_page_key_access" {
+  binding {
+    role = "roles/secretmanager.secretAccessor"
+    members = [
+      "serviceAccount:${google_service_account.event_page.email}",
+      # "projectOwner:${data.google_project.project.number}",
+    ]
+  }
+}
+
+resource "google_secret_manager_secret_iam_policy" "policy" {
+  project = google_secret_manager_secret.event_page_key.project
+  secret_id = google_secret_manager_secret.event_page_key.secret_id
+  policy_data = data.google_iam_policy.event_page_key_access.policy_data
 }
 
 output "event_page_key" {
@@ -123,10 +158,16 @@ output "event_page_key" {
   value     = google_service_account_key.event_page.private_key
 }
 
+output "token" {
+  sensitive = true
+  value     = random_password.token.result
+}
+
+
 output "service_account_email" {
   value = google_service_account.event_page.email
 }
 
 output "secret_version_name" {
-  value = google_secret_manager_secret.event_page_key.name
+  value = google_secret_manager_secret_version.event_page_key.name
 }

@@ -1,7 +1,0 @@
-{
-    "kind": "api#channel",
-    "id": "lv-events-page-webhook",
-    "resourceId": "hWpl0OlfRWVAbo8DFtMBa_f0hUM",
-    "resourceUri": "https://www.googleapis.com/drive/v3/changes?alt=json&includeCorpusRemovals=false&includeItemsFromAllDrives=false&includeRemoved=true&includeTeamDriveItems=false&pageSize=100&pageToken=2&restrictToMyDrive=false&spaces=drive&supportsAllDrives=false&supportsTeamDrives=false&alt=json",
-    "expiration": "1641776965000"
-}
