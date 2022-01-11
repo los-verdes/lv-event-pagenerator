@@ -42,7 +42,12 @@ def load_settings(
     return settings
 
 
-def get_local_path_for_file(file_id, mime_type):
+def get_local_path_from_file_id(service, file_id):
+    file = service.files().get(fileId=file_id).execute()
+    return get_local_path_for_file(file["id"], file["mimeType"])
+
+
+def get_local_path_for_file(file_id, mime_type=None):
     local_filename = f"{file_id}{mimetypes.guess_extension(mime_type)}"
     return os.path.join(
         BASE_DIR,
@@ -62,26 +67,33 @@ def download_all_images(service, folder_name=DEFAULT_FOLDER_NAME):
     ]
     print(f"download_images_from_drive(): {image_files=}")
     for image_file in image_files:
-        image_file["local_path"] = get_local_path_for_file(
-            image_file["id"], image_file["mimeType"]
-        )
-        if os.path.exists(image_file["local_path"]):
-            logger.debug(
-                f"{image_file['name']} already present on disk: {image_file['local_path']}. Skipping download..."
-            )
-            continue
-
-        try:
-            fh = download_file_id(service=service, file_id=image_file["id"])
-            logger.debug(
-                f"{image_file['name']} already present on disk: {image_file['local_path']}. Skipping download..."
-            )
-            with open(image_file["local_path"], "wb") as f:
-                f.write(fh.getbuffer())
-        except HttpError as error:
-            # TODO(developer) - Handle errors from drive API.
-            logger.exception(f"An error occurred: {error}")
+        download_image(service, image_file)
     return image_files
+
+
+def download_image(service, image_file):
+
+    image_file["local_path"] = get_local_path_for_file(
+        image_file["id"], image_file["mimeType"]
+    )
+    if os.path.exists(image_file["local_path"]):
+        logger.debug(
+            f"{image_file['name']} already present on disk: {image_file['local_path']}. Skipping download..."
+        )
+        return image_file
+
+    try:
+        fh = download_file_id(service=service, file_id=image_file["id"])
+        logger.debug(
+            f"{image_file['name']} already present on disk: {image_file['local_path']}. Skipping download..."
+        )
+        with open(image_file["local_path"], "wb") as f:
+            f.write(fh.getbuffer())
+    except HttpError as error:
+        # TODO(developer) - Handle errors from drive API.
+        logger.exception(f"An error occurred: {error}")
+
+    return image_file
 
 
 def download_file_id(service, file_id):

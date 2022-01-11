@@ -28,64 +28,46 @@ source_calendar_id: 2urei2qv0edsscn71iamri0ok4@group.calendar.google.com
 #   width: 420px;
 # }
 
+event_categories:
+  "misc":
+    cover_color: "#000000"
+    gcal:
+      color_id: "0"
+      background: "#a4bdfc"
+      name: null
 
-categories_by_color_id:
-  "default":
-    categories:
-      - misc
-    cover_color: "#000000"
-    gcal_background: "#039be5"
-    gcal_name: null
-  "1":
-    categories:
-      - los-verdes
-    cover_color: "#000000"
-    gcal_background: "#a4bdfc"
-    gcal_name: lavender
+  "los-verdes":
+    bg_color: "#000000"
+    text_bg_color: "#00b140"
+    text_fg_color: "#FFFFFF"
+    default_cover_image: "https://drive.google.com/file/d/1dv2K9ep6wldSqYbhH8nizRQW2PTPwdLW/view?usp=sharing"
     always_shown_in_filters: true
-  "2":
-    categories:
-      - la-murga
+    gcal:
+      color_id: "1"
+      background: "#a4bdfc"
+      name: lavender
+
+  "la-murga":
     cover_color: "#000000"
-    gcal_background: "#7ae7bf"
-    gcal_name: sage
     always_shown_in_filters: true
-  "3":
-    categories:
-      - home-games
-      - cat-games
+    gcal:
+      color_id: "2"
+      background: "#7ae7bf"
+      name: sage
+  "home-games":
+    cover_color: "#dbadff"
+    always_shown_in_filters: true
+    gcal:
+      color_id: "3"
+      background: "#a4bdfc"
+      name: grape
+  "away-games":
     cover_color: "#000000"
-    gcal_background: "#dbadff"
-    gcal_name: grape
     always_shown_in_filters: true
-  "4":
-    categories:
-      - away-games
-    cover_color: "#000000"
-    gcal_background: "#ff887c"
-    gcal_name: flamingo
-    always_shown_in_filters: true
-  "5":
-    gcal_background: "#fbd75b"
-    gcal_foreground: "#1d1d1d"
-  "6":
-    gcal_background: "#ffb878"
-    gcal_foreground: "#1d1d1d"
-  "7":
-    gcal_background: "#46d6db"
-    gcal_foreground: "#1d1d1d"
-  "8":
-    gcal_background: "#e1e1e1"
-    gcal_foreground: "#1d1d1d"
-  "9":
-    gcal_background: "#5484ed"
-    gcal_foreground: "#1d1d1d"
-  "10":
-    gcal_background: "#51b749"
-    gcal_foreground: "#1d1d1d"
-  "11":
-    gcal_background: "#dc2127"
-    gcal_foreground: "#1d1d1d"
+    gcal:
+      color_id: "4"
+      background: "#ff887c"
+      name: flamingo
 
 mls_teams:
   atl:
@@ -130,6 +112,9 @@ mls_teams:
   orl:
     name: Orlando City
     color: '#61259e'
+  por:
+    name: Portland Timbers
+    color: '#004812'
   rbny:
     name: New York Red Bulls
     color: '#ba0c2f'

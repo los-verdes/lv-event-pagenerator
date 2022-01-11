@@ -42,31 +42,31 @@ $bright-verde: #0bac44;
 }
 
 // Wrapping the following in .page-content mostly just to "organize" bits related to our pure CSS card filtering jazz
-.page-content {
-  input[type="radio"] {
-    position: absolute;
-    left: -9999px;
-  }
-
-  .filters {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .filters * {
-    display: inline-block;
-  }
-
-  .filters label {
-    cursor: pointer;
-    transition: all 0.1s;
-  }
-
-  .filters label:hover {
-    background: $bright-verde;
-    color: var(--white);
-  }
+// .page-content {
+input[type="radio"] {
+  position: absolute;
+  left: -9999px;
 }
+
+.filters {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.filters * {
+  display: inline-block;
+}
+
+.filters label {
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.filters label:hover {
+  background: $bright-verde;
+  color: var(--white);
+}
+// }
 
 .empty-event-card {
   width: 100%;
@@ -80,14 +80,11 @@ $bright-verde: #0bac44;
   display: none;
 }
 
-// TODO: these need to be populated by the settings we pull down from google drive
-$categories: away-games, los-verdes, home-games, la-murga, misc;
-
-@each $category in $categories {
-  [value="$category"]:checked ~ .event-cards .mdl-cell:not([data-category~="$category"]) {
+@each $category_name in $category_names {
+  [value="#{$category_name}"]:checked ~ .event-cards .mdl-cell:not([data-category~="#{$category_name}"]) {
     display: none;
   }
-  [value="$category"]:checked ~ .empty-cards .mdl-cell:not([data-category~="$category"]) {
+  [value="#{$category_name}"]:checked ~ .empty-cards .mdl-cell:not([data-category~="#{$category_name}"]) {
     display: none;
   }
 }
@@ -96,8 +93,8 @@ $categories: away-games, los-verdes, home-games, la-murga, misc;
   background: $bright-verde;
   color: white;
 }
-@each $category in $categories {
-  [value="$category"]:checked ~ .filters [for="$category"] {
+@each $category_name in $category_names {
+  [value="#{$category_name}"]:checked ~ .filters [for="#{$category_name}"] {
     background: $bright-verde;
     color: white;
   }

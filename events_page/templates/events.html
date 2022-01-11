@@ -31,7 +31,7 @@
         <div class="mdl-layout-spacer"></div>
         <!-- Navigation. We hide it in small screens. -->
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="" target="_blank">
+          <a class="mdl-navigation__link" href="{{ calendar.cal_cid_href }}" target="_blank">
             <i class="material-icons">event</i>
             &nbsp;
             Add to Google Calendar
@@ -42,8 +42,8 @@
     <div class="mdl-layout__drawer">
       <span class="mdl-layout-title">Events</span>
       <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="{{ cal_id_href }}" target="_blank"><b>calendar ID</b>
-          {{ calendar_id | truncate(30) }}
+        <a class="mdl-navigation__link" href="{{ calendar.cal_id_href }}" target="_blank"><b>calendar ID</b>
+          {{ calendar.calendar_id | truncate(30) }}
         </a>
         <span class="mdl-navigation__link disabled">
           <b># events loaded</b>
@@ -69,7 +69,7 @@
     <main class="mdl-layout__content">
       <div class="page-content">
         <input type="radio" id="all" name="categories" value="all" checked>
-        {% for category in default_categories + additional_categories %}
+        {% for category in calendar.default_category_names + calendar.additional_category_names %}
         <input type="radio" id="{{ category }}" name="categories" value="{{ category }}">
         {% endfor %}
         <ol class="filters">
@@ -78,7 +78,7 @@
               <span class="mdl-chip__text">all</span>
             </label>
           </li>
-          {% for category in default_categories + additional_categories %}
+          {% for category in calendar.default_category_names + calendar.additional_category_names %}
           <li>
             <label class="mdl-chip" for="{{ category }}">
               <span class="mdl-chip__text">{{ category }}</span>
@@ -87,16 +87,14 @@
           {% endfor %}
         </ol>
         <div class="mdl-grid event-cards">
-          <div class="mdl-layout-spacer"></div>
           {% for event in events %}
           {{ macro.event_card(event) }}
           {% endfor %}
-          <div class="mdl-layout-spacer"></div>
         </div>
 
         <div class="mdl-grid empty-cards">
           <!-- <div class="mdl-layout-spacer"></div> -->
-          {% for empty_category in empty_categories %}
+          {% for empty_category in calendar.empty_category_names %}
           <div class="mdl-cell mdl-cell--12-col empty-category" data-category="{{ empty_category }}">
             <div class="empty-event-card mdl-card mdl-shadow--2dp">
               <div class="mdl-card__title mdl-card--expand">
