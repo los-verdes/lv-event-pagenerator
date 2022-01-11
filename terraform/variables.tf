@@ -1,16 +1,13 @@
 variable "enabled_gcp_services" {
   type = list(string)
   default = [
-    "calendar-json.googleapis.com",  # Google Calendar API
-    "cloudapis.googleapis.com",      # Google Cloud APIs
-    "cloudbuild.googleapis.com",     # Cloud Build API
-    "cloudfunctions.googleapis.com", # Cloud Functions API
-    # "compute.googleapis.com",
-    "containerregistry.googleapis.com",
-    # "dns.googleapis.com",
-    "drive.googleapis.com", # Google Drive API
-    # "run.googleapis.com",
-    "secretmanager.googleapis.com", # Secret Manager API
+    "calendar-json.googleapis.com",     # Google Calendar API
+    "cloudapis.googleapis.com",         # Google Cloud APIs
+    "cloudbuild.googleapis.com",        # Cloud Build API
+    "cloudfunctions.googleapis.com",    # Cloud Functions API
+    "containerregistry.googleapis.com", # Container Registry API
+    "drive.googleapis.com",             # Google Drive API
+    "secretmanager.googleapis.com",     # Secret Manager API
   ]
 }
 
