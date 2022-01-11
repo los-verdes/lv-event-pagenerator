@@ -1,0 +1,35 @@
+$team_colors: (
+{%- for team_abbreviation, hex_color in team_colors.items() %}
+  "{{ team_abbreviation }}": {{ hex_color }},
+{%- endfor %}
+);
+
+$category_names: (
+{%- for category_name in category_names %}
+  "{{ category_name }}",
+{%- endfor %}
+);
+
+$category_background_images: (
+{%- for class_name, background_image in event_category_background_images.items() %}
+  "{{ class_name }}": "{{ url_for('static', filename=background_image) }}",
+{%- endfor %}
+);
+
+$category_background_colors: (
+{%- for class_name, background_color in event_category_background_colors.items() %}
+  "{{ class_name }}": {{ background_color | hex2rgb }},
+{%- endfor %}
+);
+
+$category_text_fg_colors: (
+{%- for class_name, fg_color in event_category_text_fg_colors.items() %}
+  "{{ class_name }}": {{ fg_color | hex2rgb(0.9) }},
+{%- endfor %}
+);
+
+$category_text_bg_colors: (
+{%- for class_name, bg_color in event_category_text_bg_colors.items() %}
+  "{{ class_name }}": {{ bg_color | hex2rgb  }},
+{%- endfor %}
+);

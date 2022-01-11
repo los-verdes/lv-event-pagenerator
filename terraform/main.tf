@@ -77,6 +77,7 @@ resource "google_cloudfunctions_function" "webhook" {
   entry_point           = "process_events_push_notification"
 
   environment_variables = {
+    EVENT_PAGE_GCS_BUCKET_NAME = google_storage_bucket.static_site.name
     EVENTS_PAGE_SECRET_NAME = google_secret_manager_secret_version.event_page_key.name
   }
   build_environment_variables = {
@@ -138,7 +139,7 @@ resource "google_secret_manager_secret_version" "event_page_key" {
 }
 
 resource "google_storage_bucket" "static_site" {
-  name          = "events-page.losverdesatx.org"
+  name          = "losverdes-events-page2"
   location      = "US"
   force_destroy = true
 
@@ -154,6 +155,26 @@ resource "google_storage_bucket" "static_site" {
   #   response_header = ["*"]
   #   max_age_seconds = 3600
   # }
+}
+# google_storage_bucket_access_control.static_site_public_rule
+# resource "google_storage_bucket_access_control" "static_site_public_rule" {
+#   bucket = google_storage_bucket.static_site.name
+#   role   = "READER"
+#   entity = "allUsers"
+# }
+
+data "google_iam_policy" "allow_all_users_view" {
+  binding {
+    members = [
+      "allUsers",
+    ]
+  }
+}
+# google_storage_bucket_iam_member.static_site_public_rule
+resource "google_storage_bucket_iam_member" "static_site_public_rule" {
+  bucket = google_storage_bucket.static_site.name
+    role = "roles/storage.legacyBucketReader"
+    member = "allUsers"
 }
 
 data "google_project" "project" {
@@ -196,4 +217,8 @@ output "service_account_email" {
 
 output "secret_version_name" {
   value = google_secret_manager_secret_version.event_page_key.name
+}
+
+output "static_site_bucket" {
+  value = google_storage_bucket.bucket
 }

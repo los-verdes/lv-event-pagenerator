@@ -16,7 +16,10 @@ flask==2.0.2
     # via
     #   -r requirements.in
     #   flask-assets
+    #   frozen-flask
 flask-assets==2.0
+    # via -r requirements.in
+frozen-flask==0.18
     # via -r requirements.in
 google-api-core[grpc]==2.3.2
     # via

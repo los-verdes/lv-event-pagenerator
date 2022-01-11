@@ -1,5 +1,5 @@
 Flask-Assets
-
+Frozen-Flask
 flask
 google-api-python-client
 google-auth-httplib2
@@ -7,7 +7,6 @@ google-auth-oauthlib
 google-cloud-secret-manager
 gunicorn
 logzero
-# pyscss
 libsass
 python-dateutil
 ruamel.yaml

@@ -168,3 +168,4 @@ def download_category_images(drive_service, event_categories):
         parsed_categories[name] = event_category
 
     return parsed_categories
+

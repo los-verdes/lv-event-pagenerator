@@ -133,6 +133,10 @@ class Calendar(object):
             color_id = event.get("colorId", "0")
             logger.debug(f"{color_id=} ({type(color_id)})")
             event["color_id"] = color_id
+            event["css_classes"] = [
+                f"category-{event['color_id']}",
+                f"event-{event['id']}",
+            ]
             if category := self.categories_by_color_id.get(event["color_id"]):
                 logger.debug(f"{event['color_id']=} => {category=}")
                 event.update(category)

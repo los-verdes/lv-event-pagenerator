@@ -64,6 +64,7 @@ def hex2rgb(hex, alpha=None):
 
 @app.route("/")
 def events():
+
     source_calendar_id = app.config["source_calendar_id"]
     calendar_service = gcal.build_service(SERVICE_ACCOUNT_CREDENTIALS)
     calendar = gcal.Calendar(
@@ -81,7 +82,8 @@ def events():
         time_min=events_time_min,
         time_max=events_time_max,
     )
-
+    logger.debug(f"{calendar.events=}")
+    render_styles(app.config, calendar.events)
     return flask.render_template(
         "events.html",
         calendar=calendar,
@@ -95,6 +97,7 @@ def create_app():
         display_timezone=os.getenv("EVENTS_PAGE_TIMEZONE", "US/Central"),
         event_categories=dict(),
         mls_teams=dict(),
+        FREEZER_STATIC_IGNORE=["*.scss", ".webassets-cache/*"],
     )
     app.config.update(default_settings)
 
@@ -108,26 +111,52 @@ def create_app():
     )
     app.config.update(settings)
 
-    render_styles(settings)
+    # render_styles(settings)
 
     return app
 
 
-def render_styles(settings):
+def render_styles(settings, events=None):
     category_names = [
         n
         for n, c in settings["event_categories"].items()
         if c.get("always_shown_in_filters")
     ]
+    event_category_background_images = {}
+    event_category_background_colors = {}
+    event_category_text_fg_colors = {}
+    event_category_text_bg_colors = {}
+    for event_category in settings["event_categories"].values():
+        class_name = f"category-{event_category['gcal']['color_id']}"
+
+        if cover_image_filename := event_category.get("cover_image_filename"):
+            event_category_background_images[class_name] = cover_image_filename
+        if bg_color := event_category.get("bg_color"):
+            event_category_background_colors[class_name] = bg_color
+        if text_fg_color := event_category.get("text_fg_color"):
+            event_category_text_fg_colors[class_name] = text_fg_color
+        if text_bg_color := event_category.get("text_bg_color"):
+            event_category_text_bg_colors[class_name] = text_bg_color
+
+    if events is not None:
+        for event in events:
+            class_name = f"event-{event['id']}"
+            logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
+            if cover_image_filename := event.get("cover_image_filename"):
+                event_category_background_images[class_name] = cover_image_filename
+
     with app.app_context():
         rendered_scss = flask.render_template(
-            "style.scss.j2",
+            "_vars.scss.j2",
             team_colors={k: v["color"] for k, v in settings["mls_teams"].items()},
             category_names=category_names,  # TODO: should be passed event_categories for other styling bits
-            event_categories=settings["event_categories"],
+            event_category_background_images=event_category_background_images,
+            event_category_background_colors=event_category_background_colors,
+            event_category_text_fg_colors=event_category_text_fg_colors,
+            event_category_text_bg_colors=event_category_text_bg_colors,
         )
     logger.debug(f"{rendered_scss=}")
-    with open(os.path.join(BASE_DIR, "static", "scss", "style.scss"), "w") as f:
+    with open(os.path.join(BASE_DIR, "static", "scss", "_vars.scss"), "w") as f:
         f.write(rendered_scss)
 
 

@@ -4,8 +4,10 @@ import os
 import re
 
 import logzero
+from flask_frozen import Freezer
 from logzero import logger
 
+from app import create_app
 from google_utils import read_secret
 
 uri_regexp = re.compile(
@@ -36,7 +38,7 @@ def parse_push(req_headers):
 def ensure_token_loaded():
     global WEBHOOK_TOKEN
     if WEBHOOK_TOKEN is None:
-        secret_name = os.environ["SECRET_NAME"]
+        secret_name = os.environ["EVENTS_PAGE_SECRET_NAME"]
         secrets = read_secret(secret_name)
         WEBHOOK_TOKEN = secrets["token"]
 
@@ -53,6 +55,7 @@ def process_events_push_notification(request):
     ensure_token_loaded()
     push = parse_push(req_headers=request.headers)
     logger.info(f"push received: {push=}")
+    Freezer(create_app()).freeze()
     return "idk"
 
 
