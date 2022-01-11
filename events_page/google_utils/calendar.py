@@ -5,16 +5,13 @@ from datetime import datetime
 from os.path import basename
 from urllib.parse import quote_plus
 from zoneinfo import ZoneInfo
-from urllib.parse import parse_qs, urlparse
+
 from dateutil.parser import parse
 from googleapiclient.discovery import build
-
-# from logzero import logger
 from logzero import setup_logger
 
 from google_utils import load_credentials
-from google_utils.drive import get_local_path_for_file, download_image
-from google_utils.drive import build_service as build_drive_service
+from google_utils.drive import get_local_path_for_file
 
 CALENDAR_RO_SCOPE = "https://www.googleapis.com/auth/calendar.readonly"
 
@@ -33,32 +30,19 @@ def build_service(credentials=None):
     return build("calendar", "v3", credentials=credentials)
 
 
-def parsed_categories(drive_service, event_categories):
-    parsed_categories = dict()
-    uri_regexp = re.compile(r"https://drive.google.com/file/d/(?P<file_id>[^?]+)/.*")
-    for name, event_category in event_categories.items():
-        default_cover_image = event_category.get("default_cover_image", "")
-        if cover_image_uri_matches := uri_regexp.match(default_cover_image):
-            cover_image_file_id = cover_image_uri_matches.groupdict()["file_id"]
-
-            file = drive_service.files().get(fileId=cover_image_file_id).execute()
-            image_file = download_image(
-                drive_service,
-                file,
-            )
-            event_category["cover_image_filename"] = basename(image_file["local_path"])
-        parsed_categories[name] = event_category
-
-    return parsed_categories
-
-
 class Calendar(object):
     # Lazy caching by way of class attribute:
     events = None
+    events_time_min = None
+    events_time_max = None
+    last_refresh = None
 
-    def __init__(self, service, calendar_id, event_categories, mls_teams) -> None:
+    def __init__(
+        self, service, calendar_id, display_timezone, event_categories, mls_teams
+    ) -> None:
         self._service = service
         self.calendar_id = calendar_id
+        self.display_timezone = display_timezone
         self.event_categories = event_categories
         self.mls_teams = mls_teams
         self.cid = self.get_cid_from_id(self.calendar_id)
@@ -122,6 +106,10 @@ class Calendar(object):
         if self.events is not None:
             return self.events
 
+        self.events_time_min = time_min
+        self.events_time_max = time_max
+        self.last_refresh = datetime.now()
+
         mls_team_abbrs_by_name = {v["name"]: k for k, v in self.mls_teams.items()}
         logger.info(f"Getting the all events from {time_min} to {time_max}...")
 
@@ -150,9 +138,9 @@ class Calendar(object):
                 event.update(category)
 
             for key in ["start", "end"]:
-                event[key] = parse_event_timestamp(event, key)
+                event[key] = self.parse_event_timestamp(event, key)
 
-            if event["start"] < today.replace(tzinfo=ZoneInfo("US/Central")):
+            if event["start"] < today.replace(tzinfo=ZoneInfo(self.display_timezone)):
                 event["in_past"] = True
 
             event["has_location"] = True
@@ -189,13 +177,9 @@ class Calendar(object):
         self.events = events
         return self.events
 
-
-def parse_event_timestamp(event, timestamp_key):
-    parsed_dt = parse(
-        event[timestamp_key].get("dateTime", event[timestamp_key].get("date"))
-    )
-    # parsed_dt.replace(tzinfo=timezone.utc)
-    # TODO: set timezone via env var?
-    parsed_dt = parsed_dt.replace(tzinfo=ZoneInfo("US/Central"))
-    # parsed_dt.astimezone(ZoneInfo('US/Central'))
-    return parsed_dt
+    def parse_event_timestamp(self, event, timestamp_key):
+        parsed_dt = parse(
+            event[timestamp_key].get("dateTime", event[timestamp_key].get("date"))
+        )
+        parsed_dt = parsed_dt.replace(tzinfo=ZoneInfo(self.display_timezone))
+        return parsed_dt

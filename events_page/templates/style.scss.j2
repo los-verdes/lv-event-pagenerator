@@ -1,108 +1,37 @@
 $team_colors: (
-  
-  "atl": #9d2235,
-  
-  "cin": #003087,
-  
-  "clt": #0085ca,
-  
-  "col": #8a2432,
-  
-  "dal": #c6093b,
-  
-  "dc": #212121,
-  
-  "hou": #101820,
-  
-  "la": #004b87,
-  
-  "lafc": #212121,
-  
-  "mia": #212322,
-  
-  "min": #737b82,
-  
-  "mtl": #212121,
-  
-  "nsh": #201547,
-  
-  "orl": #61259e,
-  
-  "por": #004812,
-  
-  "rbny": #ba0c2f,
-  
-  "rsl": #001e61,
-  
-  "sea": #64a608,
-  
-  "sj": #0051ba,
-  
-  "skc": #0c2340,
-  
-  "van": #002244,
-  );
+  {% for team_abbreviation, hex_color in team_colors.items() %}
+  "{{ team_abbreviation }}": {{ hex_color }},
+  {% endfor -%}
+);
 
 
 // TODO: these need to be populated by the settings we pull down from google drive
-$category_names: los-verdes, la-murga, home-games, away-games;
+$category_names: {{ category_names | join(", ")}};
 
+{% for category_name, event_category in event_categories.items() %}
 
-
-.misc.event-card.mdl-card {
+.{{ category_name}}.event-card.mdl-card {
   > .mdl-card__title {
-    
+    {% if event_category.cover_image_filename %}
+    background: {{ event_category.bg_color | default("white")}} url("static/{{event_category.cover_image_filename}}") center / cover;
+    {% elif event_category.bg_color %}
+    background: {{ event_category.bg_color }};
+    {% endif %}
   }
 
-    
-}
-
-
-.los-verdes.event-card.mdl-card {
-  > .mdl-card__title {
-    
-    background: #000000 url("static/1dv2K9ep6wldSqYbhH8nizRQW2PTPwdLW.png") center / cover;
-    
-  }
-
-    
+    {% if event_category.text_bg_color or event_category.text_fg_color %}
   mark {
-    
-    background-color: rgba(0, 177, 64, 0.9);
-    
-    
-    color: rgb(255, 255, 255);
-    
+    {% if event_category.text_bg_color %}
+    background-color: {{ event_category.text_bg_color | default("white") | hex2rgb(0.9) }};
+    {% endif %}
+    {% if event_category.text_fg_color %}
+    color: {{ event_category.text_fg_color | default("black") | hex2rgb }};
+    {% endif %}
   }
-    
+    {% endif %}
 }
+{% endfor -%}
 
-
-.la-murga.event-card.mdl-card {
-  > .mdl-card__title {
-    
-  }
-
-    
-}
-
-
-.home-games.event-card.mdl-card {
-  > .mdl-card__title {
-    
-  }
-
-    
-}
-
-
-.away-games.event-card.mdl-card {
-  > .mdl-card__title {
-    
-  }
-
-    
-}
 $bright-verde: #0bac44;
 
 .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {

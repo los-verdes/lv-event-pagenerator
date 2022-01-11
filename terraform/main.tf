@@ -137,6 +137,25 @@ resource "google_secret_manager_secret_version" "event_page_key" {
   })
 }
 
+resource "google_storage_bucket" "static_site" {
+  name          = "events-page.losverdesatx.org"
+  location      = "US"
+  force_destroy = true
+
+  uniform_bucket_level_access = true
+
+  website {
+    main_page_suffix = "index.html"
+    # not_found_page   = "404.html"
+  }
+  # cors {
+  #   origin          = ["http://image-store.com"]
+  #   method          = ["GET", "HEAD", "PUT", "POST", "DELETE"]
+  #   response_header = ["*"]
+  #   max_age_seconds = 3600
+  # }
+}
+
 data "google_project" "project" {
 }
 
@@ -155,8 +174,8 @@ data "google_iam_policy" "event_page_key_access" {
 }
 
 resource "google_secret_manager_secret_iam_policy" "policy" {
-  project = google_secret_manager_secret.event_page_key.project
-  secret_id = google_secret_manager_secret.event_page_key.secret_id
+  project     = google_secret_manager_secret.event_page_key.project
+  secret_id   = google_secret_manager_secret.event_page_key.secret_id
   policy_data = data.google_iam_policy.event_page_key_access.policy_data
 }
 

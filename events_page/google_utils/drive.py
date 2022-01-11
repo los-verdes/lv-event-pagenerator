@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 import io
-import os
 import mimetypes
-from ruamel import yaml
+import os
+import re
+
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
 from logzero import logger
+from ruamel import yaml
 
 from google_utils import load_credentials
 
@@ -147,17 +149,22 @@ def list_files(service, q):
     return file_list_resp
 
 
-# def get_attachment(service, attachment):
-#     attachment_local_path = os.path.join(BASE_DIR, "..", "static", attachment["title"])
-#     if os.path.exists(attachment_local_path):
-#         with open(attachment_local_path, "rb") as fh:
-#             return fh.read()
+def download_category_images(drive_service, event_categories):
+    parsed_categories = dict()
+    uri_regexp = re.compile(r"https://drive.google.com/file/d/(?P<file_id>[^?]+)/.*")
+    for name, event_category in event_categories.items():
+        default_cover_image = event_category.get("default_cover_image", "")
+        if cover_image_uri_matches := uri_regexp.match(default_cover_image):
+            cover_image_file_id = cover_image_uri_matches.groupdict()["file_id"]
 
-#     try:
-#         fh = download_file_id(drive=service, file_id=attachment["fileId"])
-#         with open(attachment_local_path, "wb") as f:
-#             f.write(fh.getbuffer())
-#         return fh.getbuffer()
-#     except HttpError as error:
-#         # TODO(developer) - Handle errors from drive API.
-#         logger.exception(f"An error occurred: {error}")
+            file = drive_service.files().get(fileId=cover_image_file_id).execute()
+            image_file = download_image(
+                drive_service,
+                file,
+            )
+            event_category["cover_image_filename"] = os.path.basename(
+                image_file["local_path"]
+            )
+        parsed_categories[name] = event_category
+
+    return parsed_categories

@@ -48,21 +48,21 @@
         <span class="mdl-navigation__link disabled">
           <b># events loaded</b>
           <br>
-          {{ events|length }}
+          {{ calendar.events|length }}
         </span>
 
         <span class="mdl-navigation__link">
           <b>date range</b>
           <br>
-          {{ events_time_min.strftime('%x') }}
+          {{ (calendar.events_time_min | parse_tz_datetime).strftime('%x') }}
           to
-          {{ events_time_max.strftime('%x') }}
+          {{ (calendar.events_time_max | parse_tz_datetime).strftime('%x') }}
         </span>
 
         <span class="mdl-navigation__link">
-          <b>rendered on</b>
+          <b>last data refresh</b>
           <br>
-          {{ now.strftime('%c') }}
+          {{ (calendar.last_refresh | replace_tz).strftime('%c') }}
         </span>
       </nav>
     </div>
@@ -87,7 +87,7 @@
           {% endfor %}
         </ol>
         <div class="mdl-grid event-cards">
-          {% for event in events %}
+          {% for event in calendar.events %}
           {{ macro.event_card(event) }}
           {% endfor %}
         </div>

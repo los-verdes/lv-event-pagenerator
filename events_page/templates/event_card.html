@@ -4,7 +4,7 @@
   <div
     class="mdl-card mdl-shadow--2dp event-card {{ event.category_name }}{% if 'match_slug' in event %} event-card-{{ event.match_slug }}{% endif %}">
     <div class="mdl-card__title mdl-card--expand" {% if event.cover_image_filename
-      %}style="background-image: url({{ url_for('static', filename=event.cover_image_filename) }});"
+      %}style="background-image: url({{ url_for('static', filename=event.cover_image_filename) }}); background-position: center; background-size: cover;"
       {% endif %}>
       <h4>
         <mark>{{ event.summary }}</mark>
