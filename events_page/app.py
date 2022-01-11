@@ -15,6 +15,7 @@ from google_utils import drive, load_credentials
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 # TODO: set to some rando public calendar instead for the generic usecase?
 DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
+DEFAULT_TIMEZONE = "US/Central"
 
 setup_logger(name=__name__)
 
@@ -52,7 +53,7 @@ def hex2rgb(hex, alpha=None):
     """Convert a string to all caps."""
     h = hex.lstrip("#")
     try:
-        rgb = tuple(int(h[i : i + 2], 16) for i in (0, 2, 4))
+        rgb = tuple(int(h[i : i + 2], 16) for i in (0, 2, 4))  # noqa
     except Exception as err:
         logger.exception(f"unable to convert {hex=} to rgb: {err}")
         return h
@@ -64,7 +65,6 @@ def hex2rgb(hex, alpha=None):
 
 @app.route("/")
 def events():
-
     source_calendar_id = app.config["source_calendar_id"]
     calendar_service = gcal.build_service(SERVICE_ACCOUNT_CREDENTIALS)
     calendar = gcal.Calendar(
@@ -94,10 +94,12 @@ def create_app():
     # TODO: do this default settings thing better?
     default_settings = dict(
         source_calendar_id=DEFAULT_CALENDAR_ID,
-        display_timezone=os.getenv("EVENTS_PAGE_TIMEZONE", "US/Central"),
+        display_timezone=os.getenv("EVENTS_PAGE_TIMEZONE", DEFAULT_TIMEZONE),
         event_categories=dict(),
         mls_teams=dict(),
-        FREEZER_STATIC_IGNORE=["*.scss", ".webassets-cache/*"],
+        FREEZER_STATIC_IGNORE=["*.scss", ".webassets-cache/*", ".DS_Store"],
+        FREEZER_RELATIVE_URLS=True,
+        FREEZER_REMOVE_EXTRA_FILES=True,
     )
     app.config.update(default_settings)
 
@@ -110,8 +112,6 @@ def create_app():
         drive_service, settings["event_categories"]
     )
     app.config.update(settings)
-
-    # render_styles(settings)
 
     return app
 
@@ -126,10 +126,16 @@ def render_styles(settings, events=None):
     event_category_background_colors = {}
     event_category_text_fg_colors = {}
     event_category_text_bg_colors = {}
+
+    base_url = "static/"
+    if freezer_base_url := settings.get('FREEZER_BASE_URL'):
+        base_url = f"{freezer_base_url}/static/"
+
     for event_category in settings["event_categories"].values():
         class_name = f"category-{event_category['gcal']['color_id']}"
 
         if cover_image_filename := event_category.get("cover_image_filename"):
+            # event_category_background_images[class_name] = f"{base_url}/{cover_image_filename}"
             event_category_background_images[class_name] = cover_image_filename
         if bg_color := event_category.get("bg_color"):
             event_category_background_colors[class_name] = bg_color

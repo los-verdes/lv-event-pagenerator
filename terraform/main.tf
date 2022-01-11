@@ -14,6 +14,34 @@ variable "service_account_description" {
   default = "Los Verdes Event Page"
 }
 
+variable "static_site_domain" {
+  default = "asfasfsafsasfa.org"
+}
+
+variable "static_site_subdomain" {
+  default = "los-verdes-events"
+}
+# variable "managed_zone" {
+#   default = "events-asfasfsafsasfa-org"
+# }
+
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+      version = "~> 4.5"
+    }
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+      version = "~> 3.6"
+    }
+  }
+}
+
+# provider "cloudflare" {
+#   # Configuration options
+# }
+
 provider "google" {
   project = var.project_id
   region  = var.region
@@ -27,7 +55,7 @@ provider "google" {
 
 # resource "google_project_service" "project" {
 #   project = "your-project-id"
-#   service = "iam.googleapis.com" # secret manager, drive, cloud run, cloudfunctions?
+#   service = "iam.googleapis.com" # secret manager, drive, cloud run, cloudfunctions? cloud DNS + compute
 
 #   timeouts {
 #     create = "30m"
@@ -49,7 +77,6 @@ resource "google_storage_bucket" "bucket" {
   name     = "lv-event-page"
   location = "US"
 }
-
 resource "google_storage_bucket_object" "archive" {
   name   = "functions/webhook_${data.archive_file.webhook_function.output_sha}.zip"
   bucket = google_storage_bucket.bucket.name
@@ -77,8 +104,10 @@ resource "google_cloudfunctions_function" "webhook" {
   entry_point           = "process_events_push_notification"
 
   environment_variables = {
-    EVENT_PAGE_GCS_BUCKET_NAME = google_storage_bucket.static_site.name
-    EVENTS_PAGE_SECRET_NAME = google_secret_manager_secret_version.event_page_key.name
+    # EVENTS_PAGE_BASE_URL        = "https://storage.googleapis.com/${google_storage_bucket.static_site.name}/"
+    EVENTS_PAGE_BASE_URL        = var.cdn_domain
+    EVENTS_PAGE_GCS_BUCKET_NAME = google_storage_bucket.static_site.name
+    EVENTS_PAGE_SECRET_NAME     = google_secret_manager_secret_version.event_page_key.name
   }
   build_environment_variables = {
     GOOGLE_FUNCTION_SOURCE = "webhook.py"
@@ -139,7 +168,7 @@ resource "google_secret_manager_secret_version" "event_page_key" {
 }
 
 resource "google_storage_bucket" "static_site" {
-  name          = "losverdes-events-page2"
+  name          = "${var.static_site_sudomain}.${var.static_site_domain}"
   location      = "US"
   force_destroy = true
 
@@ -163,18 +192,96 @@ resource "google_storage_bucket" "static_site" {
 #   entity = "allUsers"
 # }
 
-data "google_iam_policy" "allow_all_users_view" {
-  binding {
-    members = [
-      "allUsers",
-    ]
-  }
-}
 # google_storage_bucket_iam_member.static_site_public_rule
-resource "google_storage_bucket_iam_member" "static_site_public_rule" {
+# resource "google_storage_bucket_iam_member" "static_site_public_rule" {
+#   bucket = google_storage_bucket.static_site.name
+#   role   = "roles/storage.legacyBucketReader"
+#   member = "allUsers"
+# }
+# resource "google_storage_bucket_iam_member" "static_site_public_rule2" {
+#   bucket = google_storage_bucket.static_site.name
+#   role   = "roles/storage.legacyObjectReader"
+#   member = "allUsers"
+# }
+
+
+
+# resource "google_compute_backend_bucket" "cdn_backend_bucket" {
+#   name        = "events-page-bucket"
+#   description = "Backend bucket for serving static content through CDN"
+#   bucket_name = google_storage_bucket.static_site.name
+#   enable_cdn  = true
+#   project     = data.google_project.project.name
+# }
+
+# resource "google_compute_url_map" "cdn_url_map" {
+#   name            = "cdn-url-map"
+#   description     = "CDN URL map to cdn_backend_bucket"
+#   default_service = google_compute_backend_bucket.cdn_backend_bucket.self_link
+#   project         = data.google_project.project.name
+# }
+
+# resource "google_compute_target_https_proxy" "cdn_https_proxy" {
+#   name             = "cdn-https-proxy"
+#   url_map          = google_compute_url_map.cdn_url_map.self_link
+#   ssl_certificates = [google_compute_managed_ssl_certificate.cdn_certificate.self_link]
+#   project          = data.google_project.project.name
+# }
+
+# resource "google_compute_managed_ssl_certificate" "cdn_certificate" {
+#   project = data.google_project.project.name
+#   name    = "cdn-managed-certificate"
+
+#   managed {
+#     domains = [var.cdn_domain]
+#   }
+# }
+
+# resource "google_compute_global_address" "cdn_public_address" {
+#   name         = "cdn-public-address"
+#   ip_version   = "IPV4"
+#   address_type = "EXTERNAL"
+#   project      = data.google_project.project.name
+# }
+
+# # ------------------------------------------------------------------------------
+# # CREATE A GLOBAL FORWARDING RULE
+# # ------------------------------------------------------------------------------
+
+# resource "google_compute_global_forwarding_rule" "cdn_global_forwarding_rule" {
+#   name       = "cdn-global-forwarding-https-rule"
+#   target     = google_compute_target_https_proxy.cdn_https_proxy.self_link
+#   ip_address = google_compute_global_address.cdn_public_address.address
+#   port_range = "443"
+#   project    = data.google_project.project.name
+# }
+
+# resource "google_dns_record_set" "cdn_dns_a_record" {
+#   managed_zone = var.managed_zone # Name of your managed DNS zone
+#   name         = "${var.cdn_domain}."
+#   type         = "A"
+#   ttl          = 3600 # 1 hour
+#   rrdatas      = [google_compute_global_address.cdn_public_address.address]
+#   project      = data.google_project.project.name
+# }
+
+data "cloudflare_zone" "static_site" {
+  name = var.static_site_domain
+}
+
+resource "cloudflare_record" "static_site" {
+  zone_id = data.cloudflare_zone.static_site.id
+  name    = var.static_site_subdomain
+  value   = "c.storage.googleapis.com"
+  type    = "CNAME"
+  ttl     = 3600
+}
+
+
+resource "google_storage_bucket_iam_member" "all_users_viewers" {
   bucket = google_storage_bucket.static_site.name
-    role = "roles/storage.legacyBucketReader"
-    member = "allUsers"
+  role   = "roles/storage.legacyObjectReader"
+  member = "allUsers"
 }
 
 data "google_project" "project" {
@@ -219,6 +326,15 @@ output "secret_version_name" {
   value = google_secret_manager_secret_version.event_page_key.name
 }
 
-output "static_site_bucket" {
-  value = google_storage_bucket.bucket
+output "static_site_bucket_name" {
+  value = google_storage_bucket.bucket.name
+}
+
+
+output "static_site_bucket_url" {
+  value = google_storage_bucket.bucket.url
+}
+
+output "cdn_domain" {
+  value = var.cdn_domain
 }

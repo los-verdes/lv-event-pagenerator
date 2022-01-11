@@ -14,7 +14,8 @@
 
 
   {% assets "style" %}
-  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
+  <!-- # {{ ASSET_URL }} -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}?{{ (calendar.last_refresh | replace_tz).strftime('%s') }}">
   {% endassets %}
 
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>

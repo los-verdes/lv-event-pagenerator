@@ -2,13 +2,12 @@
 import logging
 import os
 import re
-
-import logzero
 from flask_frozen import Freezer
+import logzero
 from logzero import logger
 
-from app import create_app
 from google_utils import read_secret
+from app import create_app
 
 uri_regexp = re.compile(
     r"https://www.googleapis.com/drive/v3/files/(?P<file_id>[^?]+).*"
@@ -55,7 +54,10 @@ def process_events_push_notification(request):
     ensure_token_loaded()
     push = parse_push(req_headers=request.headers)
     logger.info(f"push received: {push=}")
-    Freezer(create_app()).freeze()
+
+    app = create_app()
+    freezer = Freezer(app)
+    freezer.freeze()
     return "idk"
 
 
@@ -87,4 +89,4 @@ def local_invocation():
 
 if __name__ == "__main__":
     local_invocation()
-    breakpoint()
+    # breakpoint()

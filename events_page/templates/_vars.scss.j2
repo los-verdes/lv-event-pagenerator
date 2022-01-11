@@ -12,7 +12,7 @@ $category_names: (
 
 $category_background_images: (
 {%- for class_name, background_image in event_category_background_images.items() %}
-  "{{ class_name }}": "{{ url_for('static', filename=background_image) }}",
+  "{{ class_name }}": "{{ background_image }}",
 {%- endfor %}
 );
 
