@@ -11,3 +11,4 @@ libsass
 python-dateutil
 ruamel.yaml
 requests
+google-cloud-storage

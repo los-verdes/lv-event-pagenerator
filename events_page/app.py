@@ -82,10 +82,9 @@ def events():
         time_min=events_time_min,
         time_max=events_time_max,
     )
-    logger.debug(f"{calendar.events=}")
     render_styles(app.config, calendar.events)
     return flask.render_template(
-        "events.html",
+        "index.html",
         calendar=calendar,
     )
 
@@ -97,6 +96,8 @@ def create_app():
         display_timezone=os.getenv("EVENTS_PAGE_TIMEZONE", DEFAULT_TIMEZONE),
         event_categories=dict(),
         mls_teams=dict(),
+        static_site_bucket=os.getenv("EVENTS_PAGE_GCS_BUCKET_NAME"),
+        FREEZER_BASE_URL=os.getenv("EVENTS_PAGE_BASE_URL"),
         FREEZER_STATIC_IGNORE=["*.scss", ".webassets-cache/*", ".DS_Store"],
         FREEZER_RELATIVE_URLS=True,
         FREEZER_REMOVE_EXTRA_FILES=True,
@@ -127,15 +128,10 @@ def render_styles(settings, events=None):
     event_category_text_fg_colors = {}
     event_category_text_bg_colors = {}
 
-    base_url = "static/"
-    if freezer_base_url := settings.get('FREEZER_BASE_URL'):
-        base_url = f"{freezer_base_url}/static/"
-
     for event_category in settings["event_categories"].values():
         class_name = f"category-{event_category['gcal']['color_id']}"
 
         if cover_image_filename := event_category.get("cover_image_filename"):
-            # event_category_background_images[class_name] = f"{base_url}/{cover_image_filename}"
             event_category_background_images[class_name] = cover_image_filename
         if bg_color := event_category.get("bg_color"):
             event_category_background_colors[class_name] = bg_color
@@ -147,7 +143,7 @@ def render_styles(settings, events=None):
     if events is not None:
         for event in events:
             class_name = f"event-{event['id']}"
-            logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
+            # logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
             if cover_image_filename := event.get("cover_image_filename"):
                 event_category_background_images[class_name] = cover_image_filename
 
@@ -161,7 +157,7 @@ def render_styles(settings, events=None):
             event_category_text_fg_colors=event_category_text_fg_colors,
             event_category_text_bg_colors=event_category_text_bg_colors,
         )
-    logger.debug(f"{rendered_scss=}")
+    # logger.debug(f"{rendered_scss=}")
     with open(os.path.join(BASE_DIR, "static", "scss", "_vars.scss"), "w") as f:
         f.write(rendered_scss)
 

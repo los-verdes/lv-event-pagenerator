@@ -6,7 +6,7 @@ from flask_frozen import Freezer
 import logzero
 from logzero import logger
 
-from google_utils import read_secret
+from google_utils import read_secret, storage
 from app import create_app
 
 uri_regexp = re.compile(
@@ -56,8 +56,16 @@ def process_events_push_notification(request):
     logger.info(f"push received: {push=}")
 
     app = create_app()
-    freezer = Freezer(app)
-    freezer.freeze()
+    logger.debug(f"{app.config['FREEZER_BASE_URL']}")
+    logger.debug(f"{Freezer(app).freeze()=}")
+
+    if static_site_bucket := app.config.get('static_site_bucket'):
+        storage.upload_build_to_gcs(
+            client=storage.get_client(),
+            bucket_id=static_site_bucket,
+        )
+    else:
+        raise Exception("No static_site_bucket config key set, unable to complete site build!")
     return "idk"
 
 

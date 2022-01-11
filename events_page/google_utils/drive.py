@@ -40,7 +40,7 @@ def load_settings(
     )
     settings_fd.seek(0)
     settings = yaml.load(settings_fd, Loader=yaml.Loader)
-    print(f"load_settings_from_drive(): {settings=}")
+    # print(f"load_settings_from_drive(): {settings=}")
     return settings
 
 
@@ -116,7 +116,7 @@ def get_event_page_folder(service, folder_name=DEFAULT_FOLDER_NAME):
     list_resp = list_files(service, get_parent_folder_q)
     assert len(list_resp.get("files", [])) == 1
     event_page_folder = list_resp["files"][0]
-    logger.debug(f"get_event_page_folder(): {event_page_folder=}")
+    # logger.debug(f"get_event_page_folder(): {event_page_folder=}")
     return event_page_folder
 
 
@@ -134,7 +134,7 @@ def list_files_in_event_page_folder(service, folder_name=DEFAULT_FOLDER_NAME):
 
 
 def list_files(service, q):
-    logger.debug(f"list_files(): {q=}")
+    # logger.debug(f"list_files(): {q=}")
     file_list_resp = (
         service.files()
         .list(
@@ -145,7 +145,7 @@ def list_files(service, q):
         )
         .execute()
     )
-    logger.debug(f"list_files(): {q=} => {file_list_resp=}")
+    # logger.debug(f"list_files(): {q=} => {file_list_resp=}")
     return file_list_resp
 
 
@@ -168,4 +168,3 @@ def download_category_images(drive_service, event_categories):
         parsed_categories[name] = event_category
 
     return parsed_categories
-
