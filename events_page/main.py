@@ -181,7 +181,7 @@ def local_invocation():
     # logger.debug(
     #     f"{process_push_notification(MockRequest({}, example_headers))}"
     # )
-    # ensure_drive_watch()
+    ensure_drive_watch()
 
 
 if __name__ == "__main__":
