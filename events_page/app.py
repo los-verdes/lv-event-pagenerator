@@ -9,8 +9,8 @@ from flask_assets import Bundle, Environment
 from logzero import logger, setup_logger
 from webassets.filter import get_filter
 
-from google_utils import calendar as gcal
-from google_utils import drive, load_credentials
+from google_apis import calendar as gcal
+from google_apis import drive, load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 # TODO: set to some rando public calendar instead for the generic usecase?

@@ -20,8 +20,13 @@ DEFAULT_SCOPES = [
 ]
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
+SECRETS = {}
+
 
 def read_secret(secret_name=DEFAULT_SECRET_NAME):
+    global SECRETS
+    if SECRETS:
+        return SECRETS
     credentials, project = google.auth.default()
     logger.debug(f"auth default project: {project}")
     # noqa
@@ -30,6 +35,7 @@ def read_secret(secret_name=DEFAULT_SECRET_NAME):
     payload = response.payload.data.decode("UTF-8")
     secret = json.loads(payload)
     logger.debug(f"{secret.keys()=}")
+    SECRETS = secret
     return secret
 
 

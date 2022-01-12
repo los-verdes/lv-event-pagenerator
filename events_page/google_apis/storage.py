@@ -4,11 +4,14 @@ import glob
 import os
 from logzero import logger
 
+from google_apis import load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
-def get_client():
+def get_client(credentials=None):
+    if credentials is None:
+        credentials = load_credentials(credentials)
     return storage.Client()
 
 

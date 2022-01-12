@@ -9,7 +9,7 @@ from flask_frozen import Freezer
 from logzero import logger
 
 from app import create_app
-from google_utils import drive, read_secret, storage, calendar
+from google_apis import drive, read_secret, storage, calendar
 
 DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
 DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctions.net/push-notification-receiver"
@@ -64,25 +64,9 @@ def process_push_notification(request):
     if push["resource_uri"].startswith("https://www.googleapis.com/calendar"):
         logger.debug("calendar push!")
 
-    refresh_static_site()
+    # refresh_static_site()
 
     return "idk"
-
-
-def refresh_static_site():
-    app = create_app()
-    logger.debug(f"{app.config['FREEZER_BASE_URL']}")
-    logger.debug(f"{Freezer(app).freeze()=}")
-
-    if static_site_bucket := app.config.get("static_site_bucket"):
-        storage.upload_build_to_gcs(
-            client=storage.get_client(),
-            bucket_id=static_site_bucket,
-        )
-    else:
-        raise Exception(
-            "No static_site_bucket config key set, unable to complete site build!"
-        )
 
 
 def process_pubsub_msg(event, context):
@@ -121,7 +105,7 @@ def process_pubsub_msg(event, context):
 
     ensure_drive_watch()
     ensure_events_watch()
-    refresh_static_site()
+    # refresh_static_site()
 
 
 def ensure_events_watch():

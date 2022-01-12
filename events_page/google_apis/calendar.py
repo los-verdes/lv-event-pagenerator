@@ -11,8 +11,8 @@ from dateutil.parser import parse
 from googleapiclient.discovery import build
 from logzero import setup_logger
 
-from google_utils import load_credentials
-from google_utils.drive import get_local_path_for_file
+from google_apis import load_credentials
+from google_apis.drive import get_local_path_for_file
 
 CALENDAR_RO_SCOPE = "https://www.googleapis.com/auth/calendar.readonly"
 
@@ -191,7 +191,12 @@ class Calendar(object):
 
 
 def ensure_events_watch(
-    service, calendar_id, channel_id, web_hook_address, webhook_token, expiration_in_days=None
+    service,
+    calendar_id,
+    channel_id,
+    web_hook_address,
+    webhook_token,
+    expiration_in_days=None,
 ):
     current_seconds = time.time()
     added_seconds = expiration_in_days * 24 * 60 * 60

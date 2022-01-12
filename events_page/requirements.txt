@@ -24,6 +24,7 @@ frozen-flask==0.18
 google-api-core[grpc]==2.3.2
     # via
     #   google-api-python-client
+    #   google-cloud-build
     #   google-cloud-core
     #   google-cloud-secret-manager
     #   google-cloud-storage
@@ -42,6 +43,8 @@ google-auth-httplib2==0.1.0
     #   -r requirements.in
     #   google-api-python-client
 google-auth-oauthlib==0.4.6
+    # via -r requirements.in
+google-cloud-build==3.7.1
     # via -r requirements.in
 google-cloud-core==2.2.1
     # via google-cloud-storage
@@ -93,7 +96,9 @@ mypy-extensions==0.4.3
 oauthlib==3.1.1
     # via requests-oauthlib
 proto-plus==1.19.8
-    # via google-cloud-secret-manager
+    # via
+    #   google-cloud-build
+    #   google-cloud-secret-manager
 protobuf==3.19.1
     # via
     #   google-api-core

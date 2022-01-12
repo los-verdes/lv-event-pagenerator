@@ -12,7 +12,7 @@ from googleapiclient.http import MediaIoBaseDownload
 from logzero import logger
 from ruamel import yaml
 
-from google_utils import load_credentials
+from google_apis import load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
