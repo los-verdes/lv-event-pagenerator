@@ -137,21 +137,23 @@ def ensure_watch(api_module, channel_id, watch_kwargs=None, expiration_in_days=1
 
 
 def ensure_events_watch():
+    calendar_id = os.getenv("EVENTS_PAGE_CALENDAR_ID", DEFAULT_CALENDAR_ID)
     ensure_watch(
         api_module=calendar,
-        channel_id="events-page-calendar-watch",
+        channel_id=f"events-page-{calendar_id.split('@', 1)[0]}-watch",
         watch_kwargs=dict(
-            calendar_id=os.getenv("EVENTS_PAGE_CALENDAR_ID", DEFAULT_CALENDAR_ID),
+            calendar_id=calendar_id,
         ),
     )
 
 
 def ensure_drive_watch():
+    settings_file_id = drive.get_settings_file_id(drive.build_service())
     ensure_watch(
         api_module=drive,
-        channel_id="events-page-settings-watch",
+        channel_id=f"events-page-{settings_file_id}-watch",
         watch_kwargs=dict(
-            file_id=drive.get_settings_file_id(drive.build_service()),
+            file_id=settings_file_id,
         ),
     )
 
