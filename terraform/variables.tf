@@ -45,3 +45,6 @@ variable "static_site_domain" {
 variable "static_site_subdomain" {
   default = "los-verdes-events"
 }
+variable "source_calendar_id" {
+  default = "information@losverdesatx.org"
+}

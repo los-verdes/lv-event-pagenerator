@@ -24,6 +24,6 @@ resource "google_project_service" "events_page" {
 }
 
 resource "google_app_engine_application" "schedule_app" {
-#  project     = "${var.project_id}"
- location_id = "us-central"
+  #  project     = "${var.project_id}"
+  location_id = "us-central" ## TODO: data source?
 }

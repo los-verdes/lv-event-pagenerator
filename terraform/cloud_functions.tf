@@ -23,6 +23,7 @@ locals {
     EVENTS_PAGE_GCS_BUCKET_NAME = google_storage_bucket.static_site.name
     EVENTS_PAGE_SECRET_NAME     = google_secret_manager_secret_version.event_page_key.name
     EVENTS_PAGE_WEBHOOK_URL     = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
+    EVENTS_PAGE_CALENDAR_ID     = var.source_calendar_id
   }
 }
 # Suppose we needed this function scheduled daily or whatnot as well...
