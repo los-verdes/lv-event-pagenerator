@@ -187,3 +187,36 @@ class Calendar(object):
         )
         parsed_dt = parsed_dt.replace(tzinfo=ZoneInfo(self.display_timezone))
         return parsed_dt
+
+
+def ensure_events_watch(
+    service, calendar_id, channel_id, web_hook_address, token, expiration=None
+):
+    logger.debug(
+        f"Ensure GCal events watch ({expiration=}) ({calendar_id=}) changes is in-place now..."
+    )
+    request = service.events().watch(
+        calendarId=calendar_id,
+        maxResults=2500,
+        orderBy="startTime",
+        singleEvents=True,
+        # syncToken=,
+        body=dict(
+            kind="api#channel",
+            type="web_hook",
+            id=channel_id,
+            address=web_hook_address,
+            token=token,
+            expiration=expiration,
+        ),
+    )
+    response = request.execute()
+
+    logger.debug(f"{response=}")
+
+    resp_expiration_dt = datetime.fromtimestamp(int(response["expiration"]) // 1000)
+    logger.debug(
+        f"Watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
+    )
+
+    return response

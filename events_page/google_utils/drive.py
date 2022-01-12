@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 import io
+import time
 import mimetypes
 import os
 import re
+from datetime import datetime
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -25,7 +27,7 @@ def build_service(credentials=None):
     return build("drive", "v3", credentials=credentials)
 
 
-def load_settings(
+def get_settings_file_id(
     service, folder_name=DEFAULT_FOLDER_NAME, file_name=DEFAULT_SETTINGS_FILE_NAME
 ):
     files_in_folder = list_files_in_event_page_folder(
@@ -33,6 +35,13 @@ def load_settings(
         folder_name=folder_name,
     )
     settings_file_id = files_in_folder[file_name]["id"]
+    return settings_file_id
+
+
+def load_settings(
+    service, folder_name=DEFAULT_FOLDER_NAME, file_name=DEFAULT_SETTINGS_FILE_NAME
+):
+    settings_file_id = get_settings_file_id(service, folder_name, file_name)
     print(f"load_settings_from_drive(): {settings_file_id=}")
     settings_fd = download_file_id(
         service=service,
@@ -168,3 +177,38 @@ def download_category_images(drive_service, event_categories):
         parsed_categories[name] = event_category
 
     return parsed_categories
+
+
+def ensure_changes_watch(
+    service, channel_id, web_hook_address, file_id, expiration_in_days=1
+):
+    # exp_dt = datetime.utcnow() + timedelta(days=int(args.expiration_in_days))
+    current_seconds = time.time()
+    added_seconds = expiration_in_days * 24 * 60 * 60
+    expiration_seconds = current_seconds + added_seconds
+    expiration = round(expiration_seconds * 1000)
+    drive_id = service.files().get(fileId=file_id).execute()["id"]
+    logger.debug(
+        f"Ensure GDrive watch ({expiration=}) ({drive_id=}) changes is in-place now..."
+    )
+    page_token_resp = service.changes().getStartPageToken().execute()
+    logger.debug(f"{page_token_resp=}")
+    request = service.changes().watch(
+        pageToken=page_token_resp["startPageToken"],
+        includeItemsFromAllDrives=True,
+        supportsAllDrives=True,
+        body=dict(
+            kind="api#channel",
+            type="web_hook",
+            id=channel_id,
+            address=web_hook_address,
+            expiration=expiration,
+        ),
+    )
+    response = request.execute()
+    resp_expiration_dt = datetime.fromtimestamp(int(response["expiration"]) // 1000)
+    logger.debug(
+        f"Watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
+    )
+
+    return response

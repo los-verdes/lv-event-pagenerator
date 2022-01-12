@@ -15,6 +15,16 @@ resource "google_storage_bucket_object" "webhook_archive" {
   source = data.archive_file.webhook_function.output_path
 }
 
+locals {
+  function_name = "push-notification-receiver"
+  env_vars = {
+    # EVENTS_PAGE_BASE_URL        = "https://storage.googleapis.com/${google_storage_bucket.static_site.name}/"
+    EVENTS_PAGE_BASE_URL        = "https://${cloudflare_record.static_site.hostname}"
+    EVENTS_PAGE_GCS_BUCKET_NAME = google_storage_bucket.static_site.name
+    EVENTS_PAGE_SECRET_NAME     = google_secret_manager_secret_version.event_page_key.name
+    EVENTS_PAGE_WEBHOOK_URL     = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
+  }
+}
 # Suppose we needed this function scheduled daily or whatnot as well...
 # > Notifications are not 100% reliable.
 # > Expect a small percentage of messages to get dropped under normal working conditions.
@@ -22,7 +32,7 @@ resource "google_storage_bucket_object" "webhook_archive" {
 # > syncs even if no push messages are received.
 # Reference: https://developers.google.com/calendar/api/guides/push#special-considerations
 resource "google_cloudfunctions_function" "webhook" {
-  name        = "drive-notification-receiver"
+  name        = local.function_name
   description = "Listens for calendar-event-related drive changes"
   runtime     = "python39"
 
@@ -32,14 +42,9 @@ resource "google_cloudfunctions_function" "webhook" {
   source_archive_bucket = data.google_storage_bucket.cloud_functions.name
   source_archive_object = google_storage_bucket_object.webhook_archive.name
   trigger_http          = true
-  entry_point           = "process_events_push_notification"
+  entry_point           = "process_push_notification"
 
-  environment_variables = {
-    # EVENTS_PAGE_BASE_URL        = "https://storage.googleapis.com/${google_storage_bucket.static_site.name}/"
-    EVENTS_PAGE_BASE_URL        = "https://${cloudflare_record.static_site.hostname}"
-    EVENTS_PAGE_GCS_BUCKET_NAME = google_storage_bucket.static_site.name
-    EVENTS_PAGE_SECRET_NAME     = google_secret_manager_secret_version.event_page_key.name
-  }
+  environment_variables = local.env_vars
   build_environment_variables = {
     GOOGLE_FUNCTION_SOURCE = "webhook.py"
   }
@@ -54,4 +59,22 @@ resource "google_cloudfunctions_function_iam_member" "webhook_allow_all" {
 
   role   = "roles/cloudfunctions.invoker"
   member = "allUsers"
+}
+
+module "scheduled_refresh_function" {
+  source     = "terraform-google-modules/scheduled-function/google"
+  version    = "~> 2.0"
+  project_id = var.gcp_project_id
+  job_name   = "${var.static_site_subdomain}-refresh"
+
+  # "At minute 0 past every 6th hour."
+  job_schedule              = "0 */6 * * *"
+  function_entry_point      = "process_pubsub_msg"
+  function_source_directory = "${path.module}/../events_page/"
+  function_name             = "refresh-state"
+  function_runtime          = "python39"
+  message_data              = base64encode(jsonencode({ msg : "refresh for ${var.static_site_subdomain}" }))
+  region                    = var.gcp_region
+
+  function_environment_variables = local.env_vars
 }

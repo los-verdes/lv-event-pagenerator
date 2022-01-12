@@ -1,6 +1,9 @@
 variable "enabled_gcp_services" {
   type = list(string)
   default = [
+    "appengine.googleapis.com",
+    "cloudscheduler.googleapis.com",
+    "pubsub.googleapis.com",
     "calendar-json.googleapis.com",     # Google Calendar API
     "cloudapis.googleapis.com",         # Google Cloud APIs
     "cloudbuild.googleapis.com",        # Cloud Build API

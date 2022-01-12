@@ -1,16 +1,13 @@
 #!/usr/bin/env python
-import json
 import logging
 import os
 import time
-from datetime import datetime
 
 import logzero
-from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from logzero import logger
 
-from google_utils import read_secret, load_credentials
+from google_utils import read_secret, load_credentials, calendar
 
 # Based on: https://medium.com/swlh/google-drive-push-notification-b62e2e2b3df4
 
@@ -25,39 +22,6 @@ GCLOUD_AUTH_SCOPES = [
 DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctions.net/drive-notification-receiver"
 DEFAULT_SETTINGS_FILE_ID = "1jJjp94KgQ7NtI0ds5SzpNKG3s2Y96dO8"
 DEFAULT_CALENDAR_ID = os.getenv("CALENDAR_ID", "information@losverdesatx.org")
-
-
-def ensure_events_watch(
-    service, calendar_id, channel_id, web_hook_address, token, expiration=None
-):
-    logger.debug(
-        f"Ensure GCal events watch ({expiration=}) ({calendar_id=}) changes is in-place now..."
-    )
-    request = service.events().watch(
-        calendarId=calendar_id,
-        maxResults=2500,
-        orderBy="startTime",
-        singleEvents=True,
-        # syncToken=,
-        body=dict(
-            kind="api#channel",
-            type="web_hook",
-            id=channel_id,
-            address=web_hook_address,
-            token=token,
-            expiration=expiration,
-        ),
-    )
-    response = request.execute()
-
-    logger.debug(f"{response=}")
-
-    resp_expiration_dt = datetime.fromtimestamp(int(response["expiration"]) // 1000)
-    logger.debug(
-        f"Watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
-    )
-
-    return response
 
 
 if __name__ == "__main__":
@@ -116,8 +80,8 @@ if __name__ == "__main__":
     logger.debug(
         f"Ensure GDrive watch ({channel_id=}, {expiration=}, token={token[0:2]}...{token[-2:0]}) for changes is in-place now..."
     )
-    response = ensure_events_watch(
-        service=calendar_service,
+    response = calendar.ensure_events_watch(
+        service=calendar.build_service(credentials=load_credentials()),
         calendar_id=args.calendar_id,
         channel_id=channel_id,
         web_hook_address=args.web_hook_address,
