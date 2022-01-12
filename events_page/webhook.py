@@ -9,7 +9,13 @@ from flask_frozen import Freezer
 from logzero import logger
 
 from app import create_app
-from google_utils import drive, read_secret, storage
+from google_utils import drive, read_secret, storage, calendar
+
+DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
+DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctions.net/push-notification-receiver"
+
+web_hook_address = os.getenv("EVENTS_PAGE_WEBHOOK_URL", DEFAULT_WEB_HOOK_ADDRESS)
+calendar_id = os.getenv("EVENTS_PAGE_CALENDAR_ID", DEFAULT_CALENDAR_ID)
 
 uri_regexp = re.compile(
     r"https://www.googleapis.com/drive/v3/files/(?P<file_id>[^?]+).*"
@@ -114,13 +120,32 @@ def process_pubsub_msg(event, context):
         logger.debug(f"{payload=}")
 
     ensure_drive_watch()
+    ensure_events_watch()
     refresh_static_site()
 
 
-def ensure_drive_watch():
+def ensure_events_watch():
+    calendar_service = calendar.build_service()
+    channel_id = "events-page-calendar-watch"
+    try:
+        calendar.ensure_events_watch(
+            service=calendar_service,
+            calendar_id=calendar_id,
+            channel_id=channel_id,
+            web_hook_address=web_hook_address,
+            webhook_token=get_webhook_token(),
+            expiration_in_days=1,
+        )
+    except HttpError as err:
+        logger.debug(err)
+        if err.reason != f"Channel id {channel_id} not unique":
+            # already have watch in place
+            logger.exception(f"unexpected err: {err}")
+            raise err
+        logger.warning(f"ignoring err: {err}")
 
-    DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctions.net/push-notification-receiver"
-    web_hook_address = os.getenv("EVENTS_PAGE_WEBHOOK_URL", DEFAULT_WEB_HOOK_ADDRESS)
+
+def ensure_drive_watch():
     drive_service = drive.build_service()
     channel_id = "events-page-settings-watch"
     try:
@@ -128,6 +153,7 @@ def ensure_drive_watch():
             service=drive_service,
             channel_id=channel_id,
             web_hook_address=web_hook_address,
+            webhook_token=get_webhook_token(),
             file_id=drive.get_settings_file_id(drive_service),
             expiration_in_days=1,
         )
@@ -155,6 +181,7 @@ def local_invocation():
             return self._headers
 
     logzero.loglevel(logging.DEBUG)
+    ensure_events_watch()
     # import json
     # example_headers = []
     # with open(

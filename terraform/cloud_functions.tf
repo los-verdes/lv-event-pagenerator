@@ -66,6 +66,7 @@ module "scheduled_refresh_function" {
   version    = "~> 2.0"
   project_id = var.gcp_project_id
   job_name   = "${var.static_site_subdomain}-refresh"
+  topic_name = var.static_site_subdomain
 
   # "At minute 0 past every 6th hour."
   job_schedule              = "0 */6 * * *"
@@ -76,5 +77,6 @@ module "scheduled_refresh_function" {
   message_data              = base64encode(jsonencode({ msg : "refresh for ${var.static_site_subdomain}" }))
   region                    = var.gcp_region
 
+  function_service_account_email = google_service_account.event_page.email
   function_environment_variables = local.env_vars
 }

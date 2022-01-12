@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import base64
 import re
+import time
 from datetime import datetime
 from os.path import basename
 from urllib.parse import quote_plus
@@ -190,8 +191,12 @@ class Calendar(object):
 
 
 def ensure_events_watch(
-    service, calendar_id, channel_id, web_hook_address, token, expiration=None
+    service, calendar_id, channel_id, web_hook_address, webhook_token, expiration_in_days=None
 ):
+    current_seconds = time.time()
+    added_seconds = expiration_in_days * 24 * 60 * 60
+    expiration_seconds = current_seconds + added_seconds
+    expiration = round(expiration_seconds * 1000)
     logger.debug(
         f"Ensure GCal events watch ({expiration=}) ({calendar_id=}) changes is in-place now..."
     )
@@ -206,7 +211,7 @@ def ensure_events_watch(
             type="web_hook",
             id=channel_id,
             address=web_hook_address,
-            token=token,
+            token=webhook_token,
             expiration=expiration,
         ),
     )

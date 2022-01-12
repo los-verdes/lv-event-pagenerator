@@ -180,7 +180,7 @@ def download_category_images(drive_service, event_categories):
 
 
 def ensure_changes_watch(
-    service, channel_id, web_hook_address, file_id, expiration_in_days=1
+    service, channel_id, web_hook_address, webhook_token, file_id, expiration_in_days=1
 ):
     # exp_dt = datetime.utcnow() + timedelta(days=int(args.expiration_in_days))
     current_seconds = time.time()
@@ -200,6 +200,7 @@ def ensure_changes_watch(
         body=dict(
             kind="api#channel",
             type="web_hook",
+            token=webhook_token,
             id=channel_id,
             address=web_hook_address,
             expiration=expiration,
