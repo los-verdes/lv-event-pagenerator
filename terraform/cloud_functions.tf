@@ -45,9 +45,9 @@ resource "google_cloudfunctions_function" "webhook" {
   entry_point           = "process_push_notification"
 
   environment_variables = local.env_vars
-  build_environment_variables = {
-    GOOGLE_FUNCTION_SOURCE = "webhook.py"
-  }
+  # build_environment_variables = {
+  #   GOOGLE_FUNCTION_SOURCE = "webhook.py"
+  # }
 }
 
 
