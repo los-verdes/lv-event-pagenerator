@@ -130,7 +130,6 @@ class Calendar(object):
         if not events:
             return []
         for event in events:
-            event["category_name"] = "misc"
             color_id = event.get("colorId", "0")
             # logger.debug(f"{color_id=} ({type(color_id)})")
             event["color_id"] = color_id
@@ -179,6 +178,8 @@ class Calendar(object):
                     event["match_slug"] = f"atxvs{opp_abbr}"
                 else:
                     event["match_slug"] = f"{opp_abbr}vsatx"
+            if event.get("category_name") is None:
+                event["category_name"] = "misc"
         self.events = events
         return self.events
 
@@ -190,7 +191,7 @@ class Calendar(object):
         return parsed_dt
 
 
-def ensure_events_watch(
+def ensure_watch(
     service,
     calendar_id,
     channel_id,

@@ -16,6 +16,10 @@ output "service_account_email" {
   value = google_service_account.event_page.email
 }
 
+output "cdn_secret_id" {
+  value = google_secret_manager_secret.event_page_cdn.id
+}
+
 output "secret_version_name" {
   value = google_secret_manager_secret_version.event_page_key.name
 }

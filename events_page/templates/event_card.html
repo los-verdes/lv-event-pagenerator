@@ -48,9 +48,7 @@
           <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
               <i class="material-icons mdl-list__item-icon">category</i>
-              {% for category in event.categories %}
-              <span class="mdl-chip"><span class="mdl-chip__text">{{ category }}</span></span>
-              {% endfor %}
+              <span class="mdl-chip"><span class="mdl-chip__text">{{ event.category_name }}</span></span>
             </span>
           </li>
         </ul>
@@ -58,9 +56,11 @@
         {% if event.has_description %}
         <span>
           <i class="material-icons mdl-list__item-icon">description</i>
+          <b>Description:</b>
+          <br>
 
           <details>
-            <summary id="calendar-details-{{event.id}}">
+            <summary id="event-descriptioon-{{event.id}}" class="event-description">
               {{ event.description|truncate(100, False, '...', 0) }}
             </summary>
             {% for line in event.description_lines %}
@@ -70,19 +70,6 @@
           </details>
         </span>
         {% endif %}
-        </br>
-        <span class="mdl-chip">
-          <span class="mdl-chip__text">color ID: {{ event.color_id }}</span>
-        </span>
-        </br>
-        <span class="mdl-chip">
-          <span class="mdl-chip__text">gcal_background: {{ event.gcal_background }}</span>
-        </span>
-        </br>
-        <span class="mdl-chip">
-          <span class="mdl-chip__text">gcal_name: {{ event.gcal_name }}</span>
-        </span>
-        </br>
       </details>
     </div>
     <div class="mdl-card__menu">

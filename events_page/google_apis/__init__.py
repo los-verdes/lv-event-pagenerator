@@ -14,6 +14,11 @@ DEFAULT_SECRET_NAME = os.getenv(
     "projects/538480189659/secrets/lv-events-page/versions/latest",
 )
 
+CDN_SECRET_NAME = os.getenv(
+    "EVENTS_PAGE_CDN_SECRET_NAME",
+    "projects/538480189659/secrets/events-page-cdn/versions/latest",
+)
+
 DEFAULT_SCOPES = [
     "https://www.googleapis.com/auth/calendar.readonly",
     "https://www.googleapis.com/auth/drive.readonly",
@@ -25,17 +30,18 @@ SECRETS = {}
 
 def read_secret(secret_name=DEFAULT_SECRET_NAME):
     global SECRETS
-    if SECRETS:
-        return SECRETS
+    if secret := SECRETS.get(secret_name):
+        return secret
     credentials, project = google.auth.default()
-    logger.debug(f"auth default project: {project}")
-    # noqa
+    logger.debug(f"Default credentials project: {project}")
+    logger.debug(f"Retriving {secret_name=}")
     client = SecretManagerServiceClient(credentials=credentials)
     response = client.access_secret_version(request={"name": secret_name})
     payload = response.payload.data.decode("UTF-8")
     secret = json.loads(payload)
+    # logger.debug(f"{payload=} {secret=}")
     logger.debug(f"{secret.keys()=}")
-    SECRETS = secret
+    SECRETS[secret_name] = secret
     return secret
 
 

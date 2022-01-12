@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-import os
-
 from google.cloud.devtools import cloudbuild_v1
-
 from logzero import logger
 
 from google_apis import load_credentials
@@ -15,7 +12,7 @@ def get_client(credentials=None):
     return cloudbuild_v1.CloudBuildClient()
 
 
-def trigger_build(client, project_id, static_site_bucket, repo_name):
+def trigger_build(client, project_id, repo_name):
     build = cloudbuild_v1.Build()
     # repo_source = cloudbuild_v1.RepoSource()
     # repo_source.project_id =
@@ -39,12 +36,16 @@ def trigger_build(client, project_id, static_site_bucket, repo_name):
             "args": ["build_static_site.py"],
         },
     ]
-    build.artifacts = {
-        "objects": {
-            "location": f"gs://{static_site_bucket}",
-            "paths": ["build/*"],
-        }
-    }
+    # Reference: https://stackoverflow.com/a/53074972
+    # build.artifacts = {
+    #     "objects": {
+    #         "location": f"gs://{static_site_bucket}",
+    #         "paths": [
+    #             "events_page/build/*",
+    #             "events_page/build/static/*",
+    #         ],
+    #     }
+    # }
     operation = client.create_build(
         project_id=project_id,
         build=build,

@@ -38,6 +38,12 @@ def get_settings_file_id(
     return settings_file_id
 
 
+def load_setting(
+    service, key, folder_name=DEFAULT_FOLDER_NAME, file_name=DEFAULT_SETTINGS_FILE_NAME
+):
+    return load_settings(service, folder_name, file_name).get(key)
+
+
 def load_settings(
     service, folder_name=DEFAULT_FOLDER_NAME, file_name=DEFAULT_SETTINGS_FILE_NAME
 ):
@@ -179,7 +185,7 @@ def download_category_images(drive_service, event_categories):
     return parsed_categories
 
 
-def ensure_changes_watch(
+def ensure_watch(
     service, channel_id, web_hook_address, webhook_token, file_id, expiration_in_days=1
 ):
     # exp_dt = datetime.utcnow() + timedelta(days=int(args.expiration_in_days))

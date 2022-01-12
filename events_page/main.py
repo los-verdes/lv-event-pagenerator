@@ -3,70 +3,21 @@ import logging
 import os
 import re
 
-from googleapiclient.errors import HttpError
 import logzero
-from flask_frozen import Freezer
+from googleapiclient.errors import HttpError
 from logzero import logger
-
-from app import create_app
-from google_apis import drive, read_secret, storage, calendar
+from trigger_site_build import trigger_site_build
+from google_apis import calendar, drive, read_secret
 
 DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
 DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctions.net/push-notification-receiver"
 
-web_hook_address = os.getenv("EVENTS_PAGE_WEBHOOK_URL", DEFAULT_WEB_HOOK_ADDRESS)
-calendar_id = os.getenv("EVENTS_PAGE_CALENDAR_ID", DEFAULT_CALENDAR_ID)
 
 uri_regexp = re.compile(
     r"https://www.googleapis.com/drive/v3/files/(?P<file_id>[^?]+).*"
 )
 
 logzero.loglevel(logging.INFO)
-
-
-def parse_push(req_headers):
-    webhook_token = get_webhook_token()
-    push = {
-        h[0].lower().lstrip("x-goog-").replace("-", "_"): h[1]
-        for h in req_headers
-        if h[0].lower().startswith("x-goog")
-    }
-    logger.debug(
-        f"{push['channel_id']=} {push['message_number']=} {push.get('channel_expiration')=}"
-    )
-    logger.debug(
-        f"{push['resource_id']=} {push['resource_state']=} {push['resource_uri']=}"
-    )
-    logger.debug(f"{bool(push.get('channel_token') == webhook_token)=}")
-    assert push.get("channel_token") == webhook_token, "channel token mismatch 💥🚨"
-    return push
-
-
-def get_webhook_token():
-    secret_name = os.environ["EVENTS_PAGE_SECRET_NAME"]
-    secrets = read_secret(secret_name)
-    return secrets["token"]
-
-
-def process_push_notification(request):
-    """Responds to any HTTP request.
-    Args:
-        request (flask.Request): HTTP request object.
-    Returns:
-        The response text or any set of values that can be turned into a
-        Response object using
-        `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
-    """
-    push = parse_push(req_headers=request.headers)
-    logger.info(f"push received: {push=}")
-    logger.info(f"{request.url=} {os.getenv('FUNCTION_NAME')=}")
-
-    if push["resource_uri"].startswith("https://www.googleapis.com/calendar"):
-        logger.debug("calendar push!")
-
-    # refresh_static_site()
-
-    return "idk"
 
 
 def process_pubsub_msg(event, context):
@@ -105,49 +56,104 @@ def process_pubsub_msg(event, context):
 
     ensure_drive_watch()
     ensure_events_watch()
-    # refresh_static_site()
+    trigger_site_build()
+
+
+def process_push_notification(request):
+    """Responds to any HTTP request.
+    Args:
+        request (flask.Request): HTTP request object.
+    Returns:
+        The response text or any set of values that can be turned into a
+        Response object using
+        `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
+    """
+    push = parse_push(req_headers=request.headers)
+    logger.info(f"push received: {push=}")
+    logger.info(f"{request.url=} {os.getenv('FUNCTION_NAME')=}")
+
+    if push["resource_uri"].startswith("https://www.googleapis.com/calendar"):
+        logger.debug("calendar push!")
+
+    trigger_site_build()
+
+    return "idk"
+
+
+def parse_push(req_headers):
+    webhook_token = get_webhook_token()
+    push = {
+        h[0].lower().lstrip("x-goog-").replace("-", "_"): h[1]
+        for h in req_headers
+        if h[0].lower().startswith("x-goog")
+    }
+    logger.debug(
+        f"{push['channel_id']=} {push['message_number']=} {push.get('channel_expiration')=}"
+    )
+    logger.debug(
+        f"{push['resource_id']=} {push['resource_state']=} {push['resource_uri']=}"
+    )
+    logger.debug(f"{bool(push.get('channel_token') == webhook_token)=}")
+    assert push.get("channel_token") == webhook_token, "channel token mismatch 💥🚨"
+    return push
+
+
+def get_webhook_token():
+    secret_name = os.environ["EVENTS_PAGE_SECRET_NAME"]
+    secrets = read_secret(secret_name)
+    return secrets["token"]
+
+
+def get_base_url():
+    return f"https://{os.getenv('EVENTS_PAGE_HOSTNAME')}"
+
+
+def ensure_watch(api_module, channel_id, watch_kwargs=None, expiration_in_days=1):
+    if watch_kwargs is None:
+        watch_kwargs = dict()
+
+    service = getattr(api_module, "build_service")()
+    try:
+        response = getattr(api_module, "ensure_watch")(
+            service=service,
+            channel_id=channel_id,
+            web_hook_address=os.getenv(
+                "EVENTS_PAGE_WEBHOOK_URL", DEFAULT_WEB_HOOK_ADDRESS
+            ),
+            webhook_token=get_webhook_token(),
+            expiration_in_days=expiration_in_days,
+            **watch_kwargs,
+        )
+        logger.debug(f"ensure_watch(): {response=}")
+    except HttpError as err:
+        logger.debug(err)
+        if err.reason != f"Channel id {channel_id} not unique":
+            # already have watch in place
+            logger.exception(f"unexpected err: {err}")
+            raise err
+        logger.warning(
+            f"Watch {channel_id} already present ({err=}). Happily continuing..."
+        )
 
 
 def ensure_events_watch():
-    calendar_service = calendar.build_service()
-    channel_id = "events-page-calendar-watch"
-    try:
-        calendar.ensure_events_watch(
-            service=calendar_service,
-            calendar_id=calendar_id,
-            channel_id=channel_id,
-            web_hook_address=web_hook_address,
-            webhook_token=get_webhook_token(),
-            expiration_in_days=1,
-        )
-    except HttpError as err:
-        logger.debug(err)
-        if err.reason != f"Channel id {channel_id} not unique":
-            # already have watch in place
-            logger.exception(f"unexpected err: {err}")
-            raise err
-        logger.warning(f"ignoring err: {err}")
+    ensure_watch(
+        api_module=calendar,
+        channel_id="events-page-calendar-watch",
+        watch_kwargs=dict(
+            calendar_id=os.getenv("EVENTS_PAGE_CALENDAR_ID", DEFAULT_CALENDAR_ID),
+        ),
+    )
 
 
 def ensure_drive_watch():
-    drive_service = drive.build_service()
-    channel_id = "events-page-settings-watch"
-    try:
-        drive.ensure_changes_watch(
-            service=drive_service,
-            channel_id=channel_id,
-            web_hook_address=web_hook_address,
-            webhook_token=get_webhook_token(),
-            file_id=drive.get_settings_file_id(drive_service),
-            expiration_in_days=1,
-        )
-    except HttpError as err:
-        logger.debug(err)
-        if err.reason != f"Channel id {channel_id} not unique":
-            # already have watch in place
-            logger.exception(f"unexpected err: {err}")
-            raise err
-        logger.warning(f"ignoring err: {err}")
+    ensure_watch(
+        api_module=drive,
+        channel_id="events-page-settings-watch",
+        watch_kwargs=dict(
+            file_id=drive.get_settings_file_id(drive.build_service()),
+        ),
+    )
 
 
 def local_invocation():

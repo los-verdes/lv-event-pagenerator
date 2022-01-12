@@ -10,6 +10,7 @@ from logzero import logger, setup_logger
 from webassets.filter import get_filter
 
 from google_apis import calendar as gcal
+from main import get_base_url
 from google_apis import drive, load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -82,7 +83,7 @@ def events():
         time_min=events_time_min,
         time_max=events_time_max,
     )
-    render_styles(app.config, calendar.events)
+    render_styles(app.config, calendar.current_event_category_names, calendar.events)
     return flask.render_template(
         "index.html",
         calendar=calendar,
@@ -97,7 +98,7 @@ def create_app():
         event_categories=dict(),
         mls_teams=dict(),
         static_site_bucket=os.getenv("EVENTS_PAGE_GCS_BUCKET_NAME"),
-        FREEZER_BASE_URL=os.getenv("EVENTS_PAGE_BASE_URL"),
+        FREEZER_BASE_URL=get_base_url(),
         FREEZER_STATIC_IGNORE=["*.scss", ".webassets-cache/*", ".DS_Store"],
         FREEZER_RELATIVE_URLS=True,
         FREEZER_REMOVE_EXTRA_FILES=True,
@@ -117,12 +118,15 @@ def create_app():
     return app
 
 
-def render_styles(settings, events=None):
-    category_names = [
-        n
-        for n, c in settings["event_categories"].items()
-        if c.get("always_shown_in_filters")
-    ]
+def render_styles(settings, category_names, events=None):
+    category_names = list(
+        set(category_names)
+        | {
+            n
+            for n, c in settings["event_categories"].items()
+            if c.get("always_shown_in_filters")
+        }
+    )
     event_category_background_images = {}
     event_category_background_colors = {}
     event_category_text_fg_colors = {}
@@ -163,10 +167,10 @@ def render_styles(settings, events=None):
 
 
 if __name__ == "__main__":
-    import logging
+    # import logging
 
-    for logger_name in ["google_utils.drive"]:
-        logging.getLogger(logger_name).setLevel(logging.INFO)
+    # for logger_name in ["google_utils.drive"]:
+    #     logging.getLogger(logger_name).setLevel(logging.INFO)
     app = create_app()
     app.run(
         host="0.0.0.0",

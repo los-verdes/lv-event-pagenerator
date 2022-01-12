@@ -18,10 +18,11 @@ resource "google_storage_bucket_object" "webhook_archive" {
 locals {
   function_name = "push-notification-receiver"
   env_vars = {
-    # EVENTS_PAGE_BASE_URL        = "https://storage.googleapis.com/${google_storage_bucket.static_site.name}/"
-    EVENTS_PAGE_BASE_URL        = "https://${cloudflare_record.static_site.hostname}"
+    EVENTS_PAGE_BASE_DOMAIN        = var.static_site_domain
+    EVENTS_PAGE_HOSTNAME        = cloudflare_record.static_site.hostname
     EVENTS_PAGE_GCS_BUCKET_NAME = google_storage_bucket.static_site.name
     EVENTS_PAGE_SECRET_NAME     = google_secret_manager_secret_version.event_page_key.name
+    EVENTS_PAGE_CDN_SECRET_NAME = "${google_secret_manager_secret.event_page_cdn.name}/versions/latest"
     EVENTS_PAGE_WEBHOOK_URL     = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
     EVENTS_PAGE_CALENDAR_ID     = var.source_calendar_id
   }
