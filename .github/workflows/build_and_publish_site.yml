@@ -47,5 +47,5 @@ jobs:
         working-directory: events_page
         run: |
           ./build_and_publish_site.py \
-            --site-hostname="${{ inputs.site_hostname }}"
+            --site-hostname="${{ inputs.site_hostname }}" \
             --cdn-zone-name="${{ inputs.cdn_zone_name }}"
