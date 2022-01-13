@@ -14,7 +14,6 @@ on:
 
 jobs:
   terraform-outputs:
-    needs: deploy-infrastructure
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -27,6 +26,6 @@ jobs:
       id-token: 'write'
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
     with:
-      events_page_env: ${{ needs.job1.terraform-outputs.events_page_env }}
-      site_hostname: ${{ needs.job1.terraform-outputs.bucket_id }}
-      calendar_id: ${{ needs.job1.terraform-outputs.cdn_zone_name }}
+      events_page_env: ${{ needs.terraform-outputs.outputs.events_page_env }}
+      site_hostname: ${{ needs.terraform-outputs.outputs.bucket_id }}
+      calendar_id: ${{ needs.terraform-outputs.output.cdn_zone_name }}
