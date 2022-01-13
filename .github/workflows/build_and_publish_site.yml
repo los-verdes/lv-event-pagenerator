@@ -2,23 +2,30 @@ name: Build and Publish Site
 
 on:
   workflow_call:
-    inputs:
-      site_hostname:
-        default: 'los-verdes-events.asfasfsafsasfa.org'
-        required: false
-        type: string
-      cdn_zone_name:
-        default: 'asfasfsafsasfa.org'
-        required: false
-        type: string
-      calendar_id:
-        default: 'information@losverdesatx.org'
-        required: false
-        type: string
+    # inputs:
+    #   site_hostname:
+    #     default: 'los-verdes-events.asfasfsafsasfa.org'
+    #     required: false
+    #     type: string
+    #   cdn_zone_name:
+    #     default: 'asfasfsafsasfa.org'
+    #     required: false
+    #     type: string
+    #   calendar_id:
+    #     default: 'information@losverdesatx.org'
+    #     required: false
+    #     type: string
 
 jobs:
+  terraform-outputs:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/load_terraform_outputs.yml@main
+
   build-and-publish-site:
     name: Build and Publish Site
+    needs: terraform-outputs
     runs-on: ubuntu-latest
     environment: prod-site
     env:
@@ -51,7 +58,15 @@ jobs:
 
       - name: Build and Publish Site
         working-directory: events_page
+        env:
+          EVENTS_PAGE_BASE_DOMAIN: "${{ needs.terraform-outputs.outputs.cdn_zone_name }}"
+          EVENTS_PAGE_CALENDAR_ID: "${{ needs.terraform-outputs.outputs.calendar_id }}"
+          EVENTS_PAGE_GCS_BUCKET_NAME: "${{ needs.terraform-outputs.outputs.bucket_id }}"
+          EVENTS_PAGE_GITHUB_REPO: "${{ github.repository }}"
+          EVENTS_PAGE_HOSTNAME: "${{ needs.terraform-outputs.outputs.bucket_id }}"
+          EVENTS_PAGE_WEBHOOK_TOKEN_SECRET_NAME: "${{ needs.terraform-outputs.outputs.webhook_token_secret_name }}"
+          EVENTS_PAGE_WEBHOOK_URL: "${{ needs.terraform-outputs.outputs.webhook_url }}"
         run: |
           ./build_and_publish_site.py \
-            --site-hostname="${{ inputs.site_hostname }}" \
-            --cdn-zone-name="${{ inputs.cdn_zone_name }}"
+            --site-hostname="${{ needs.terraform-outputs.outputs.bucket_id }}" \
+            --cdn-zone-name="${{ needs.terraform-outputs.outputs.cdn_zone_name }}"

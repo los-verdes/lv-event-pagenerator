@@ -6,8 +6,15 @@ on:
   workflow_dispatch: {}
 
 jobs:
+  terraform-outputs:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/load_terraform_outputs.yml@main
+
   ensure-watches:
     name: Ensure GCal and GDrive Watches
+    needs: terraform-outputs
     runs-on: ubuntu-latest
     environment: prod-site
     permissions:
@@ -41,8 +48,17 @@ jobs:
 
       - name: Ensure GCal and GDrive Watches
         working-directory: events_page
+        env:
+          EVENTS_PAGE_BASE_DOMAIN: "${{ needs.terraform-outputs.outputs.cdn_zone_name }}"
+          EVENTS_PAGE_CALENDAR_ID: "${{ needs.terraform-outputs.outputs.calendar_id }}"
+          EVENTS_PAGE_GCS_BUCKET_NAME: "${{ needs.terraform-outputs.outputs.bucket_id }}"
+          EVENTS_PAGE_GITHUB_REPO: "${{ github.repository }}"
+          EVENTS_PAGE_HOSTNAME: "${{ needs.terraform-outputs.outputs.bucket_id }}"
+          EVENTS_PAGE_WEBHOOK_TOKEN_SECRET_NAME: "${{ needs.terraform-outputs.outputs.webhook_token_secret_name }}"
+          EVENTS_PAGE_WEBHOOK_URL: "${{ needs.terraform-outputs.outputs.webhook_url }}"
         run: |
+          # TODO: figure out canonical location for settings-file-name and such when finalizing setting arrangements
           ./ensure_watches.py \
-            --calendar-id='information@losverdesatx.org' \
+            --calendar-id="${{ needs.terraform-outputs.outputs.calendar_id }}" \
             --settings-file-name='event_page_settings.yaml' \
-            --gdrive-folder-name='lv-event-cover-images' 
+            --gdrive-folder-name='lv-event-cover-images'

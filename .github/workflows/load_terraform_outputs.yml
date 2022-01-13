@@ -1,0 +1,84 @@
+name: Load Terraform Outputs
+
+on:
+  workflow_call:
+    outputs:
+      bucket_id:
+        description: "Static site GCS bucket ID"
+        value: ${{ jobs.terraform-outputs.outputs.bucket_id }}
+      calendar_id:
+        description: "Static site GCS bucket ID"
+        value: ${{ jobs.terraform-outputs.outputs.calendar_id }}
+      cdn_zone_name:
+        description: "Static site GCS bucket ID"
+        value: ${{ jobs.terraform-outputs.outputs.cdn_zone_name }}
+      webhook_url:
+        description: "Incoming Cloudfunction / webhook URL"
+        value: ${{ jobs.terraform-outputs.outputs.webhook_url }}
+      webhook_token_secret_name:
+        description: "Incoming webhook token secretsmanager name"
+        value: ${{ jobs.terraform-outputs.outputs.webhook_token_secret_name }}
+
+jobs:
+  terraform-outputs:
+    name: Load Terraform Outputs
+    runs-on: ubuntu-latest
+    environment: prod-site
+    outputs:
+      bucket_id: ${{ steps.tfoutbucket.outputs.stdout }}
+      calendar_id: ${{ steps.tfoutcalendar.outputs.stdout }}
+      cdn_zone_name: ${{ steps.tfoutzone.outputs.stdout }}
+      webhook_url: ${{ steps.tfoutwebhook.outputs.stdout }}
+      webhook_token_secret_name: ${{ steps.tfoutwebhooksecret.outputs.stdout }}
+    env:
+      EVENTS_PAGE_CALENDAR_ID: "${{ inputs.calendar_id }}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          workload_identity_provider: 'projects/538480189659/locations/global/workloadIdentityPools/los-verdes-events/providers/los-verdes-events-provider'
+          service_account: 'gh-publisher-los-verdes-events@losverdesatx-events.iam.gserviceaccount.com'
+
+      - name: Read .terraform-version
+        id: read_tf_version
+        run: |
+          echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TFC_TOKEN }}
+          terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
+
+      - name: Init - terraform
+        run: terraform init
+        working-directory: terraform
+
+      - name: Record static site GCS bucket ID
+        id: tfoutbucket
+        run: terraform output -raw static_site_bucket_name
+        working-directory: terraform
+
+      - name: Record source Google Calendar ID
+        id: tfoutcalendar
+        run: terraform output -raw source_calendar_id
+        working-directory: terraform
+
+      - name: Record CDN zone name
+        id: tfoutzone
+        run: terraform output -raw cdn_zone_name
+        working-directory: terraform
+
+      - name: Record Cloudfunction / webhook URL
+        id: tfoutwebhook
+        run: terraform output -raw webhook_url
+        working-directory: terraform
+
+      - name: Record webhook token secret name
+        id: tfoutwebhooksecret
+        run: terraform output -raw webhook_url
+        working-directory: terraform

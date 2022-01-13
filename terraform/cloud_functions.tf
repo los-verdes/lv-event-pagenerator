@@ -23,7 +23,7 @@ resource "google_service_account" "webhook_function" {
 
 locals {
   function_name        = "push-webhook-receiver"
-  events_page_hostname = "${var.static_site_subdomain}.${var.static_site_domain}"
+  webhook_url = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
 }
 
 resource "google_cloudfunctions_function" "webhook" {
@@ -41,14 +41,12 @@ resource "google_cloudfunctions_function" "webhook" {
 
   environment_variables = {
     EVENTS_PAGE_BASE_DOMAIN               = var.static_site_domain
-    EVENTS_PAGE_HOSTNAME                  = local.events_page_hostname
-    EVENTS_PAGE_GCS_BUCKET_NAME           = google_storage_bucket.static_site.name
-    EVENTS_PAGE_WEBHOOK_TOKEN_SECRET_NAME = google_secret_manager_secret_version.events_page_webhook_token.name
-    EVENTS_PAGE_CDN_TOKEN_SECRET_NAME     = "${google_secret_manager_secret.events_page["events-page-cdn-token"].name}/versions/latest"
-    EVENTS_PAGE_GITHUB_PAT_SECRET_NAME    = "${google_secret_manager_secret.events_page["events-page-github-pat"].name}/versions/latest"
-    EVENTS_PAGE_WEBHOOK_URL               = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
     EVENTS_PAGE_CALENDAR_ID               = var.source_calendar_id
+    EVENTS_PAGE_GCS_BUCKET_NAME           = google_storage_bucket.static_site.name
     EVENTS_PAGE_GITHUB_REPO               = var.github_repo
+    EVENTS_PAGE_HOSTNAME                  = google_storage_bucket.static_site.name
+    EVENTS_PAGE_WEBHOOK_TOKEN_SECRET_NAME = google_secret_manager_secret_version.events_page_webhook_token.name
+    EVENTS_PAGE_WEBHOOK_URL               = local.webhook_url
   }
 
   build_environment_variables = {

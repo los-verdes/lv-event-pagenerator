@@ -44,5 +44,17 @@ output "static_site_bucket_url" {
 }
 
 output "static_site_fqdn" {
-  value = local.events_page_hostname
+  value = google_storage_bucket.static_site.name
+}
+
+output "source_calendar_id" {
+  value = var.source_calendar_id
+}
+
+output "cdn_zone_name" {
+  value = var.static_site_domain
+}
+
+output "webhook_url" {
+  value = local.webhook_url
 }

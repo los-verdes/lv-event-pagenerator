@@ -11,57 +11,57 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  deploy-infrastructure:
-    name: Deploy Infrastructure
-    runs-on: ubuntu-latest
-    environment: prod-gcp-project
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  # deploy-infrastructure:
+  #   name: Deploy Infrastructure
+  #   runs-on: ubuntu-latest
+  #   environment: prod-gcp-project
+  #   permissions:
+  #     contents: 'read'
+  #     id-token: 'write'
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0'
-        with:
-          workload_identity_provider: 'projects/538480189659/locations/global/workloadIdentityPools/los-verdes-events/providers/los-verdes-events-provider'
-          service_account: 'gh-owner-los-verdes-events@losverdesatx-events.iam.gserviceaccount.com'
+  #     - id: 'auth'
+  #       name: 'Authenticate to Google Cloud'
+  #       uses: 'google-github-actions/auth@v0'
+  #       with:
+  #         workload_identity_provider: 'projects/538480189659/locations/global/workloadIdentityPools/los-verdes-events/providers/los-verdes-events-provider'
+  #         service_account: 'gh-owner-los-verdes-events@losverdesatx-events.iam.gserviceaccount.com'
 
-      # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0.2.1'
+  #     # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
+  #     - name: 'Set up Cloud SDK'
+  #       uses: 'google-github-actions/setup-gcloud@v0.2.1'
 
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
+  #     - name: 'Use gcloud CLI'
+  #       run: 'gcloud info'
 
-      - name: Read .terraform-version
-        id: read_tf_version
-        run: |
-          echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
+  #     - name: Read .terraform-version
+  #       id: read_tf_version
+  #       run: |
+  #         echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          cli_config_credentials_token: ${{ secrets.TFC_TOKEN }}
-          terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
+  #     - name: Setup Terraform
+  #       uses: hashicorp/setup-terraform@v1
+  #       with:
+  #         cli_config_credentials_token: ${{ secrets.TFC_TOKEN }}
+  #         terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
 
-      - name: Init - terraform
-        run: terraform init
-      #   run: terraform init -backend-config=<(echo 'workspaces { name = "infrastructure-${{ inputs.terraform_environment }}" }')
-        working-directory: terraform
+  #     - name: Init - terraform
+  #       run: terraform init
+  #     #   run: terraform init -backend-config=<(echo 'workspaces { name = "infrastructure-${{ inputs.terraform_environment }}" }')
+  #       working-directory: terraform
 
-      - name: Plan - terraform
-        run: terraform plan
-        working-directory: terraform
+  #     - name: Plan - terraform
+  #       run: terraform plan
+  #       working-directory: terraform
 
-      - name: Apply - terraform
-        run: terraform apply -auto-approve
-        working-directory: terraform
+  #     - name: Apply - terraform
+  #       run: terraform apply -auto-approve
+  #       working-directory: terraform
 
   build-site:
-    needs: deploy-infrastructure
+    # needs: deploy-infrastructure
     permissions:
       contents: 'read'
       id-token: 'write'
