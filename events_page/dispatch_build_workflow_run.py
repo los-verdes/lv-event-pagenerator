@@ -14,7 +14,7 @@ def get_github_client(owner, repo, token):
     github_client = GhApi(
         owner=owner,
         repo=repo,
-        token=token(),
+        token=token,
     )
     return github_client
 
