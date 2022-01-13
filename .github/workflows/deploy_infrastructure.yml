@@ -66,6 +66,9 @@ jobs:
 
   build-site:
     needs: deploy-infrastructure
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
     with:
       site_hostname: ${{ github.event.inputs.site_hostname }}
