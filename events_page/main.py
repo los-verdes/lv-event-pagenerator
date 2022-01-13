@@ -6,7 +6,7 @@ import re
 import logzero
 from googleapiclient.errors import HttpError
 from logzero import logger
-from trigger_site_build import trigger_site_build
+from dispatch_build_workflow_run import dispatch_build_workflow_run
 from google_apis import calendar, drive, read_secret
 
 DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
@@ -56,7 +56,7 @@ def process_pubsub_msg(event, context):
 
     ensure_drive_watch()
     ensure_events_watch()
-    trigger_site_build()
+    dispatch_build_workflow_run()
 
 
 def process_push_notification(request):
@@ -75,7 +75,7 @@ def process_push_notification(request):
     if push["resource_uri"].startswith("https://www.googleapis.com/calendar"):
         logger.debug("calendar push!")
 
-    trigger_site_build()
+    dispatch_build_workflow_run()
 
     return "idk"
 

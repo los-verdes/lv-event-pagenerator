@@ -9,7 +9,7 @@ module "github_oidc" {
     "attribute.actor"      = "assertion.actor"
     "attribute.repository" = "assertion.repository"
   }
-  attribute_condition = "google.subject == 'repo:${var.github_repo}:environment:Production'"
+  attribute_condition = "google.subject == 'repo:${var.github_repo}:environment:production'"
   sa_mapping = {
     "events-page-service-account" = {
       sa_name   = google_service_account.event_page.name

@@ -46,6 +46,10 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TFC_TOKEN }}
           terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
 
+      # - name: Init - infrastructure
+      #   run: terraform init -backend-config=<(echo 'workspaces { name = "infrastructure-${{ inputs.terraform_environment }}" }')
+      #   working-directory: infrastructure
+
       - name: Init - terraform
         run: terraform init
         working-directory: terraform
@@ -53,6 +57,13 @@ jobs:
       - name: Plan - terraform
         run: terraform plan
         working-directory: terraform
+
+# jobs:
+#   build-site:
+#     uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
+#     with:
+#       site_hostname: ${{ github.event.inputs.site_hostname }}
+#       cdn_zone_name: ${{ github.event.inputs.cdn_zone_name }}
 
       # - name: Apply - terraform
       #   run: terraform apply -auto-approve
