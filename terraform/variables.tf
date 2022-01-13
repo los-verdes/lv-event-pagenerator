@@ -12,7 +12,10 @@ variable "enabled_gcp_services" {
     "drive.googleapis.com",             # Google Drive API
     "secretmanager.googleapis.com",     # Secret Manager API
 
+    "iam.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
     "iamcredentials.googleapis.com", # IAM Credentials API
+    "sts.googleapis.com",
   ]
 }
 

@@ -33,8 +33,8 @@ resource "google_service_account" "event_page" {
 
 resource "google_project_iam_member" "allow_functions_trigger_builds" {
   project = google_project.events_page.id
-  role   = "roles/cloudbuild.builds.editor"
-  member = "serviceAccount:${google_service_account.event_page.email}"
+  role    = "roles/cloudbuild.builds.editor"
+  member  = "serviceAccount:${google_service_account.event_page.email}"
 }
 
 # TODO: add variable with account owner iam member jazz here

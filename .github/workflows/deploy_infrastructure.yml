@@ -6,8 +6,8 @@ on:
   # workflow_dispatch: {}
 
 jobs:
-  apply-and-smoke-test:
-    name: Apply and Smoke Test
+  deploy-infrastructure:
+    name: Deploy Infrastructure
     runs-on: ubuntu-latest
     environment: production
     permissions:
@@ -26,7 +26,7 @@ jobs:
 
       # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
       - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0'
+        uses: 'google-github-actions/setup-gcloud@v0.2.1'
 
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
