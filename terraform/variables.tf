@@ -17,12 +17,16 @@ variable "enabled_gcp_services" {
     "iamcredentials.googleapis.com", # IAM Credentials API
     "sts.googleapis.com",
 
-    "cloudbilling.googleapis.com", # Cloud Billing Api
+    # "cloudbilling.googleapis.com", # Cloud Billing Api
   ]
 }
 
-variable "gcp_billing_account_name" {
-  default = "Los Verdes"
+# variable "gcp_billing_account_name" {
+#   default = "Los Verdes"
+# }
+
+variable "gcp_billing_account_id" {
+  default = "019767-2A54C9-AE07C6"
 }
 
 variable "gcp_project_name" {

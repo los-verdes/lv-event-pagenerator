@@ -16,7 +16,7 @@ resource "google_storage_bucket_object" "webhook_archive" {
 }
 
 locals {
-  function_name = "push-notification-receiver"
+  function_name        = "push-notification-receiver"
   events_page_hostname = "${var.static_site_subdomain}.${var.static_site_domain}"
   env_vars = {
     EVENTS_PAGE_BASE_DOMAIN     = var.static_site_domain
