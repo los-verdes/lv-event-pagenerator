@@ -6,12 +6,8 @@ import re
 import logzero
 from logzero import logger
 
-from dispatch_build_workflow_run import (dispatch_build_workflow_run,
-                                         get_github_client)
+from dispatch_build_workflow_run import dispatch_build_workflow_run, get_github_client
 from google_apis import secrets
-
-DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
-DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctions.net/push-notification-receiver"
 
 
 uri_regexp = re.compile(

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 import json
-import google.auth
 import os
-from google.cloud.secretmanager import SecretManagerServiceClient
 
+import google.auth
+from google.cloud.secretmanager import SecretManagerServiceClient
 from logzero import logger
 
 WEBHOOK_TOKEN_SECRET_NAME = os.getenv(

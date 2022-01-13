@@ -211,7 +211,6 @@ def ensure_watch(
         maxResults=2500,
         orderBy="startTime",
         singleEvents=True,
-        # syncToken=,
         body=dict(
             kind="api#channel",
             type="web_hook",
