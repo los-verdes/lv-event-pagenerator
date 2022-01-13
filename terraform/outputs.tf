@@ -4,7 +4,7 @@ output "github_oidc" {
 
 output "token" {
   sensitive = true
-  value     = random_password.token.result
+  value     = random_password.webhook_token.result
 }
 
 output "project_number" {
@@ -23,12 +23,16 @@ output "gh_terraform_applier_sa_email" {
   value = google_service_account.gh_terraform_applier.email
 }
 
-output "cdn_secret_id" {
-  value = google_secret_manager_secret.event_page_cdn.id
+output "event_page_cdn_secret_id" {
+  value = google_secret_manager_secret.events_page["events-page-cdn-token"].id
 }
 
-output "secret_version_name" {
-  value = google_secret_manager_secret_version.event_page_key.name
+output "event_page_github_pat_secret_id" {
+  value = google_secret_manager_secret.events_page["events-page-github-pat"].id
+}
+
+output "event_page_webhook_token_secret_name" {
+  value = google_secret_manager_secret_version.events_page_webhook_token.name
 }
 
 output "static_site_bucket_name" {

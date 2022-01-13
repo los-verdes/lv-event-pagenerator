@@ -6,7 +6,7 @@ from flask_frozen import Freezer
 from logzero import logger
 
 from app import create_app
-from google_apis import CDN_SECRET_NAME, read_secret, storage
+from google_apis import secrets, storage
 
 
 def freeze_site(app):
@@ -61,7 +61,7 @@ def build_static_site(site_hostname, cdn_zone_name):
         client=storage.get_client(),
         bucket_id=site_hostname,
     )
-    cdn_api_token = read_secret(CDN_SECRET_NAME)["token"]
+    cdn_api_token = secrets.read_secret(secrets.CDN_TOKEN_SECRET_NAME)["token"]
     purge_cache(
         CloudFlare(token=cdn_api_token),
         cdn_zone_name=cdn_zone_name,

@@ -38,12 +38,12 @@ variable "gcp_project_id" {
 }
 
 variable "gcp_project_owners" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 
 variable "gcp_project_editors" {
-  type = list(string)
+  type    = list(string)
   default = []
 }
 

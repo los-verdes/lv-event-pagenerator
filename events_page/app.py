@@ -10,8 +10,7 @@ from logzero import logger, setup_logger
 from webassets.filter import get_filter
 
 from google_apis import calendar as gcal
-from google_apis import drive, load_credentials
-from main import get_base_url
+from google_apis import drive
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 # TODO: set to some rando public calendar instead for the generic usecase?
@@ -35,8 +34,6 @@ bundles = {  # define nested Bundle
     )
 }
 assets.register(bundles)
-
-SERVICE_ACCOUNT_CREDENTIALS = load_credentials()
 
 
 @app.template_filter()
@@ -67,7 +64,7 @@ def hex2rgb(hex, alpha=None):
 @app.route("/")
 def events():
     source_calendar_id = app.config["source_calendar_id"]
-    calendar_service = gcal.build_service(SERVICE_ACCOUNT_CREDENTIALS)
+    calendar_service = gcal.build_service()
     calendar = gcal.Calendar(
         service=calendar_service,
         calendar_id=source_calendar_id,
@@ -105,7 +102,7 @@ def create_app():
     )
     app.config.update(default_settings)
 
-    drive_service = drive.build_service(SERVICE_ACCOUNT_CREDENTIALS)
+    drive_service = drive.build_service()
     settings = drive.load_settings(drive_service)
 
     # Ensure all our category and event-specifc cover images are downloaded
@@ -116,6 +113,10 @@ def create_app():
     app.config.update(settings)
 
     return app
+
+
+def get_base_url():
+    return f"https://{os.getenv('EVENTS_PAGE_HOSTNAME')}"
 
 
 def render_styles(settings, category_names, events=None):

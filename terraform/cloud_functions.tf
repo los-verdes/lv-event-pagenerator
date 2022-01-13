@@ -22,7 +22,7 @@ resource "google_service_account" "webhook_function" {
 }
 
 locals {
-  function_name        = "push-notification-receiver"
+  function_name        = "push-webhook-receiver"
   events_page_hostname = "${var.static_site_subdomain}.${var.static_site_domain}"
 }
 
@@ -40,18 +40,19 @@ resource "google_cloudfunctions_function" "webhook" {
   entry_point           = "process_push_notification"
 
   environment_variables = {
-    EVENTS_PAGE_BASE_DOMAIN     = var.static_site_domain
-    EVENTS_PAGE_HOSTNAME        = local.events_page_hostname
-    EVENTS_PAGE_GCS_BUCKET_NAME = google_storage_bucket.static_site.name
-    EVENTS_PAGE_SECRET_NAME     = google_secret_manager_secret_version.event_page_key.name
-    EVENTS_PAGE_CDN_SECRET_NAME = "${google_secret_manager_secret.event_page_cdn.name}/versions/latest"
-    EVENTS_PAGE_WEBHOOK_URL     = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
-    EVENTS_PAGE_CALENDAR_ID     = var.source_calendar_id
+    EVENTS_PAGE_BASE_DOMAIN               = var.static_site_domain
+    EVENTS_PAGE_HOSTNAME                  = local.events_page_hostname
+    EVENTS_PAGE_GCS_BUCKET_NAME           = google_storage_bucket.static_site.name
+    EVENTS_PAGE_WEBHOOK_TOKEN_SECRET_NAME = google_secret_manager_secret_version.events_page_webhook_token.name
+    EVENTS_PAGE_CDN_TOKEN_SECRET_NAME     = "${google_secret_manager_secret.events_page["events-page-cdn-token"].name}/versions/latest"
+    EVENTS_PAGE_GITHUB_PAT_SECRET_NAME    = "${google_secret_manager_secret.events_page["events-page-github-pat"].name}/versions/latest"
+    EVENTS_PAGE_WEBHOOK_URL               = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
+    EVENTS_PAGE_CALENDAR_ID               = var.source_calendar_id
   }
 
-  # build_environment_variables = {
-  #   GOOGLE_FUNCTION_SOURCE = "webhook.py"
-  # }
+  build_environment_variables = {
+    GOOGLE_FUNCTION_SOURCE = "webhook.py"
+  }
 }
 
 resource "google_cloudfunctions_function_iam_member" "webhook_allow_all" {

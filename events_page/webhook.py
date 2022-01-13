@@ -5,8 +5,9 @@ import re
 
 import logzero
 from logzero import logger
+
 from dispatch_build_workflow_run import dispatch_build_workflow_run
-from google_apis import read_secret
+from google_apis import secrets
 
 DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
 DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctions.net/push-notification-receiver"
@@ -59,13 +60,7 @@ def parse_push(req_headers):
 
 
 def get_webhook_token():
-    secret_name = os.environ["EVENTS_PAGE_SECRET_NAME"]
-    secrets = read_secret(secret_name)
-    return secrets["token"]
-
-
-def get_base_url():
-    return f"https://{os.getenv('EVENTS_PAGE_HOSTNAME')}"
+    return secrets.read_secret(secrets.WEBHOOK_TOKEN_SECRET_NAME)["token"]
 
 
 def local_invocation():
