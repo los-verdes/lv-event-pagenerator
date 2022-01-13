@@ -23,7 +23,7 @@ jobs:
   deploy-infrastructure:
     name: Deploy Infrastructure
     runs-on: ubuntu-latest
-    environment: production
+    environment: prod-gcp-project
     permissions:
       contents: 'read'
       id-token: 'write'
