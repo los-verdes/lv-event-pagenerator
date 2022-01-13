@@ -2,7 +2,7 @@ name: Deploy Infrastructure & Run Build
 
 
 concurrency:
-  group: "deploy-${{ github.ref }}"
+  group: "deploy-main-branch"
   cancel-in-progress: true
 
 on:
