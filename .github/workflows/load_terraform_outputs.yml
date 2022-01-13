@@ -84,7 +84,7 @@ jobs:
 
       - name: Record webhook token secret name
         id: tfoutwebhooksecret
-        run: terraform output -raw webhook_url
+        run: terraform output -raw event_page_webhook_token_secret_name
         working-directory: terraform
 
       - name: aggregate-tf-outputs
