@@ -1,5 +1,10 @@
 name: Deploy Infrastructure & Run Build
 
+
+concurrency:
+  group: "deploy-${{ github.ref }}"
+  cancel-in-progress: true
+
 on:
   push:
     branches: [main]
