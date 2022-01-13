@@ -1,6 +1,8 @@
 name: Build and Publish Site
 
 on:
+  push:
+    branches: [main]
   workflow_call:
     # inputs:
     #   site_hostname:

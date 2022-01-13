@@ -11,16 +11,16 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  # deploy-infrastructure:
-  #   name: Deploy Infrastructure
-  #   runs-on: ubuntu-latest
-  #   environment: prod-gcp-project
-  #   permissions:
-  #     contents: 'read'
-  #     id-token: 'write'
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+  deploy-infrastructure:
+    name: Deploy Infrastructure
+    runs-on: ubuntu-latest
+    environment: prod-gcp-project
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
   #     - id: 'auth'
   #       name: 'Authenticate to Google Cloud'
@@ -60,9 +60,9 @@ jobs:
   #       run: terraform apply -auto-approve
   #       working-directory: terraform
 
-  build-site:
-    # needs: deploy-infrastructure
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-    uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
+  # build-site:
+  #   needs: deploy-infrastructure
+  #   permissions:
+  #     contents: 'read'
+  #     id-token: 'write'
+  #   uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
