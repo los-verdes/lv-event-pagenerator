@@ -4,9 +4,11 @@ on:
   workflow_call:
     inputs:
       site_hostname:
+        default: 'los-verdes-events.asfasfsafsasfa.org'
         required: true
         type: string
       cdn_zone_name:
+        default: 'asfasfsafsasfa.org'
         required: true
         type: string
 

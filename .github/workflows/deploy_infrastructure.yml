@@ -8,16 +8,7 @@ concurrency:
 on:
   push:
     branches: [main]
-  workflow_dispatch:
-    inputs:
-      site_hostname:
-        default: 'los-verdes-events.asfasfsafsasfa.org'
-        description: 'Fully-qualified domain name of the published site. Used in cache purging / priming methods.'
-        required: true
-      cdn_zone_name:
-        default: 'asfasfsafsasfa.org'
-        description: 'Name of zone at CDN provider (Cloudflare only provider currently considered / supported).'
-        required: true
+  workflow_dispatch: {}
 
 jobs:
   deploy-infrastructure:
@@ -75,6 +66,3 @@ jobs:
       contents: 'read'
       id-token: 'write'
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
-    with:
-      site_hostname: ${{ github.event.inputs.site_hostname }}
-      cdn_zone_name: ${{ github.event.inputs.cdn_zone_name }}
