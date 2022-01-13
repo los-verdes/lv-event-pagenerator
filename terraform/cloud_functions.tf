@@ -48,6 +48,7 @@ resource "google_cloudfunctions_function" "webhook" {
     EVENTS_PAGE_GITHUB_PAT_SECRET_NAME    = "${google_secret_manager_secret.events_page["events-page-github-pat"].name}/versions/latest"
     EVENTS_PAGE_WEBHOOK_URL               = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
     EVENTS_PAGE_CALENDAR_ID               = var.source_calendar_id
+    EVENTS_PAGE_GITHUB_REPO               = var.github_repo
   }
 
   build_environment_variables = {

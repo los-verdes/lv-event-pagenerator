@@ -6,7 +6,8 @@ import re
 import logzero
 from logzero import logger
 
-from dispatch_build_workflow_run import dispatch_build_workflow_run
+from dispatch_build_workflow_run import (dispatch_build_workflow_run,
+                                         get_github_client)
 from google_apis import secrets
 
 DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
@@ -36,9 +37,29 @@ def process_push_notification(request):
     if push["resource_uri"].startswith("https://www.googleapis.com/calendar"):
         logger.debug("calendar push!")
 
-    dispatch_build_workflow_run()
+    workflow_run = dispatch_build()
+    logger.debug(f"dispatch_build() result: {workflow_run=}")
+    return workflow_run
 
-    return "idk"
+
+def dispatch_build():
+    github_org, repo_name = os.environ["EVENTS_PAGE_GITHUB_REPO"].split("/", 1)
+    github_client = get_github_client(
+        owner=github_org,
+        repo=repo_name,
+        token=get_github_pat(),
+    )
+
+    site_hostname = os.environ["EVENTS_PAGE_HOSTNAME"]
+    cdn_zone_name = os.environ["EVENTS_PAGE_BASE_DOMAIN"]
+    workflow_run = dispatch_build_workflow_run(
+        github_client=github_client,
+        github_ref="main",
+        workflow_filename="trigger_site_build.yml",
+        site_hostname=site_hostname,
+        cdn_zone_name=cdn_zone_name,
+    )
+    return workflow_run
 
 
 def parse_push(req_headers):
@@ -61,6 +82,10 @@ def parse_push(req_headers):
 
 def get_webhook_token():
     return secrets.read_secret(secrets.WEBHOOK_TOKEN_SECRET_NAME)["token"]
+
+
+def get_github_pat():
+    return secrets.read_secret(secrets.GITHUB_PAT_SECRET_NAME)["token"]
 
 
 def local_invocation():
