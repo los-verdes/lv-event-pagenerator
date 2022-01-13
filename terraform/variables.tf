@@ -11,6 +11,8 @@ variable "enabled_gcp_services" {
     "containerregistry.googleapis.com", # Container Registry API
     "drive.googleapis.com",             # Google Drive API
     "secretmanager.googleapis.com",     # Secret Manager API
+
+    "iamcredentials.googleapis.com", # IAM Credentials API
   ]
 }
 
@@ -47,4 +49,8 @@ variable "static_site_subdomain" {
 }
 variable "source_calendar_id" {
   default = "information@losverdesatx.org"
+}
+
+variable "github_repo" {
+  default = "jeffwecan/lv-event-pagenerator"
 }

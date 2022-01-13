@@ -1,9 +1,14 @@
 
 terraform {
+  backend "gcs" {
+    bucket = "losverdesatx-events-tfstate"
+    prefix = "env/production"
+  }
+
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.5"
+      version = "~> 3.0"
     }
     # google-beta = {
     #   source  = "hashicorp/google-beta"
@@ -15,13 +20,6 @@ terraform {
     }
   }
 }
-
-# terraform {
-#   backend "gcs" {
-#     bucket = "PROJECT_ID-tfstate"
-#     prefix = "env/dev"
-#   }
-# }
 
 provider "google" {
   project = var.gcp_project_id

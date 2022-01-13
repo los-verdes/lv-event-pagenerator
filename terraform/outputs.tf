@@ -3,6 +3,10 @@ output "event_page_key" {
   value     = google_service_account_key.event_page.private_key
 }
 
+output "github_oidc" {
+  value = module.github_oidc
+}
+
 output "token" {
   sensitive = true
   value     = random_password.token.result

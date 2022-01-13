@@ -1,0 +1,76 @@
+name: Deploy Infrastructure
+
+on:
+  push:
+    branches: [main]
+  # workflow_dispatch: {}
+
+jobs:
+  apply-and-smoke-test:
+    name: Apply and Smoke Test
+    runs-on: ubuntu-20.04
+    environment: production
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          workload_identity_provider: 'projects/538480189659/locations/global/workloadIdentityPools/los-verdes-events/providers/los-verdes-events-provider'
+          service_account: 'lv-events-page@losverdesatx-events.iam.gserviceaccount.com'
+
+      # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
+
+      # Now you can run gcloud commands authenticated as the impersonated service account.
+      - id: 'gcloud'
+        name: 'gcloud'
+        run: gcloud secrets list
+
+      - name: Read .terraform-version
+        id: read_tf_version
+        run: |
+          echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TFC_TOKEN }}
+          terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
+
+      - name: Init - terraform
+        run: terraform init
+        working-directory: terraform
+
+      - name: Plan - terraform
+        run: terraform plan
+        working-directory: terraform
+
+      # - name: Apply - terraform
+      #   run: terraform apply -auto-approve
+      #   working-directory: terraform
+
+      # - name: Set up Python 3.9
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: 3.9
+
+      # - name: Install Python Dependencies
+      #   working-directory: tests
+      #   run: pip3 install --requirement=requirements.txt
+
+      # - name: Run Integration Test
+      #   working-directory: tests
+      #   run: |
+      #     pytest \
+      #       --durations=10 \
+      #       --junitxml=artifacts/junit.xml
+      #   env:
+      #     GITHUB_PAT: ${{ secrets.GH_PAT }}
+      #     PYTEST_RUN_PATH: tests
