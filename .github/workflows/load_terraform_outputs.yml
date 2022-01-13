@@ -34,8 +34,6 @@ jobs:
       webhook_url: ${{ steps.tfoutwebhook.outputs.stdout }}
       webhook_token_secret_name: ${{ steps.tfoutwebhooksecret.outputs.stdout }}
       events_page_env: ${{ toJSON(steps.aggregate-tf-outputs.outputs)  }}
-    env:
-      EVENTS_PAGE_CALENDAR_ID: "${{ inputs.calendar_id }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v2

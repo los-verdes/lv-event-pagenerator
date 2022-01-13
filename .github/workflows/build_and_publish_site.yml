@@ -42,6 +42,9 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: a bit of a dump
+        run: echo "${{ inputs.events_page_env }}"
+
       - name: Install Python Dependencies
         working-directory: events_page
         run: pip3 install --requirement=requirements.txt
