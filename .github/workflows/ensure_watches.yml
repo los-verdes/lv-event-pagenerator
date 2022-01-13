@@ -1,0 +1,42 @@
+name: Ensure Watches
+
+on:
+  schedule:
+    - cron:  '* * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  ensure-watches:
+    name: Ensure GCal and GDrive Watches
+    runs-on: ubuntu-latest
+    environment: prod-site
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          workload_identity_provider: 'projects/538480189659/locations/global/workloadIdentityPools/los-verdes-events/providers/los-verdes-events-provider'
+          service_account: 'lv-events-page@losverdesatx-events.iam.gserviceaccount.com'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0.2.1'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install Python Dependencies
+        working-directory: events_page
+        run: pip3 install --requirement=requirements.txt
+
+      - name: Build and Publish Site
+        working-directory: events_page
+        run: |
+          ./ensure_watches.py
