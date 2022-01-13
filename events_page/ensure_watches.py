@@ -9,6 +9,8 @@ from logzero import logger
 from google_apis import calendar, drive
 from webhook import get_webhook_token
 
+# DEFAULT_EXPIRATION_IN_DAYS = 1
+DEFAULT_EXPIRATION_IN_DAYS = 0.1
 DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
 DEFAULT_WEB_HOOK_ADDRESS = (
     "https://us-central1-losverdesatx-events.cloudfunctions.net/push-webhook-receiver"
@@ -37,7 +39,7 @@ def ensure_watch(
     web_hook_address,
     webhook_token,
     watch_kwargs=None,
-    expiration_in_days=1,
+    expiration_in_days=DEFAULT_EXPIRATION_IN_DAYS,
 ):
     if watch_kwargs is None:
         watch_kwargs = dict()
@@ -112,6 +114,11 @@ if __name__ == "__main__":
         default=drive.DEFAULT_SETTINGS_FILE_NAME,
     )
     parser.add_argument(
+        "-g",
+        "--gdrive-folder-name",
+        default=drive.DEFAULT_FOLDER_NAME,
+    )
+    parser.add_argument(
         "-w",
         "--web-hook-address",
         default=DEFAULT_WEB_HOOK_ADDRESS,
@@ -123,6 +130,7 @@ if __name__ == "__main__":
 
     settings_file_id = drive.get_settings_file_id(
         service=drive.build_service(),
+        folder_name=args.gdrive_folder_name,
         file_name=args.settings_file_name,
     )
     ensure_watches(

@@ -11,12 +11,18 @@ on:
         default: 'asfasfsafsasfa.org'
         required: false
         type: string
+      calendar_id:
+        default: 'information@losverdesatx.org'
+        required: false
+        type: string
 
 jobs:
   build-and-publish-site:
     name: Build and Publish Site
     runs-on: ubuntu-latest
     environment: prod-site
+    env:
+      EVENTS_PAGE_CALENDAR_ID: "${{ inputs.calendar_id }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v2

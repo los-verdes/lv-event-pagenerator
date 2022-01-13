@@ -39,7 +39,10 @@ jobs:
         working-directory: events_page
         run: pip3 install --requirement=requirements.txt
 
-      - name: Build and Publish Site
+      - name: Ensure GCal and GDrive Watches
         working-directory: events_page
         run: |
-          ./ensure_watches.py
+          ./ensure_watches.py \
+            --calendar-id='information@losverdesatx.org' \
+            --settings-file-name='event_page_settings.yaml' \
+            --gdrive-folder-name='lv-event-cover-images' 
