@@ -11,16 +11,16 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  deploy-infrastructure:
-    name: Deploy Infrastructure
-    runs-on: ubuntu-latest
-    environment: prod-gcp-project
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  # deploy-infrastructure:
+  #   name: Deploy Infrastructure
+  #   runs-on: ubuntu-latest
+  #   environment: prod-gcp-project
+  #   permissions:
+  #     contents: 'read'
+  #     id-token: 'write'
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
   #     - id: 'auth'
   #       name: 'Authenticate to Google Cloud'
@@ -60,9 +60,20 @@ jobs:
   #       run: terraform apply -auto-approve
   #       working-directory: terraform
 
-  # build-site:
-  #   needs: deploy-infrastructure
-  #   permissions:
-  #     contents: 'read'
-  #     id-token: 'write'
-  #   uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
+  terraform-outputs:
+    needs: deploy-infrastructure
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/load_terraform_outputs.yml@main
+
+  build-site:
+    needs: terraform-outputs
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
+    with:
+      events_page_env: ${{ needs.job1.terraform-outputs.events_page_env }}
+      site_hostname: ${{ needs.job1.terraform-outputs.bucket_id }}
+      calendar_id: ${{ needs.job1.terraform-outputs.cdn_zone_name }}

@@ -18,6 +18,9 @@ on:
       webhook_token_secret_name:
         description: "Incoming webhook token secretsmanager name"
         value: ${{ jobs.terraform-outputs.outputs.webhook_token_secret_name }}
+      events_page_env:
+        description: "Terraform outputs arranged in a map suitable for passing to CLI entrypoints"
+        value: ${{ jobs.terraform-outputs.outputs.events_page_env }}
 
 jobs:
   terraform-outputs:
@@ -30,6 +33,7 @@ jobs:
       cdn_zone_name: ${{ steps.tfoutzone.outputs.stdout }}
       webhook_url: ${{ steps.tfoutwebhook.outputs.stdout }}
       webhook_token_secret_name: ${{ steps.tfoutwebhooksecret.outputs.stdout }}
+      events_page_env: ${{ toJSON(steps.aggregate-tf-outputs.outputs)  }}
     env:
       EVENTS_PAGE_CALENDAR_ID: "${{ inputs.calendar_id }}"
     steps:
@@ -82,3 +86,14 @@ jobs:
         id: tfoutwebhooksecret
         run: terraform output -raw webhook_url
         working-directory: terraform
+
+      - name: aggregate-tf-outputs
+        id: aggregate-tf-outputs
+        run: |
+          echo '::set-output name=EVENTS_PAGE_BASE_DOMAIN::${{ steps.tfoutzone.outputs.stdout }}'
+          echo '::set-output name=EVENTS_PAGE_CALENDAR_ID::${{ steps.tfoutcalendar.outputs.stdout }}'
+          echo '::set-output name=EVENTS_PAGE_GCS_BUCKET_NAME::${{ steps.tfoutbucket.outputs.stdout }}'
+          echo '::set-output name=EVENTS_PAGE_GITHUB_REPO::${{ github.repository }}'
+          echo '::set-output name=EVENTS_PAGE_HOSTNAME::${{ steps.tfoutbucket.outputs.stdout }}'
+          echo '::set-output name=EVENTS_PAGE_WEBHOOK_TOKEN_SECRET_NAME::${{ steps.tfoutwebhooksecret.outputs.stdout }}'
+          echo '::set-output name=EVENTS_PAGE_WEBHOOK_URL::${{ steps.tfoutwebhook.outputs.stdout }}'
