@@ -83,7 +83,7 @@ if __name__ == "__main__":
         action="store_true",
     )
     parser.add_argument(
-        "-h",
+        "-s",
         "--site-hostname",
         help="Fully-qualified domain name of the published site. Used in cache purging / priming methods.",
     )
