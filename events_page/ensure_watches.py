@@ -7,7 +7,7 @@ from googleapiclient.errors import HttpError
 from logzero import logger
 
 from google_apis import calendar, drive
-from webhook import get_webhook_token
+from main import get_webhook_token
 
 DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
 DEFAULT_WEB_HOOK_ADDRESS = "https://us-central1-losverdesatx-events.cloudfunctions.net/push-notification-receiver"

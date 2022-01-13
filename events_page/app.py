@@ -11,7 +11,7 @@ from webassets.filter import get_filter
 
 from google_apis import calendar as gcal
 from google_apis import drive, load_credentials
-from webhook import get_base_url
+from main import get_base_url
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 # TODO: set to some rando public calendar instead for the generic usecase?

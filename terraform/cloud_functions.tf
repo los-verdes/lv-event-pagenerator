@@ -49,9 +49,9 @@ resource "google_cloudfunctions_function" "webhook" {
     EVENTS_PAGE_CALENDAR_ID     = var.source_calendar_id
   }
 
-  build_environment_variables = {
-    GOOGLE_FUNCTION_SOURCE = "webhook.py"
-  }
+  # build_environment_variables = {
+  #   GOOGLE_FUNCTION_SOURCE = "webhook.py"
+  # }
 }
 
 resource "google_cloudfunctions_function_iam_member" "webhook_allow_all" {
