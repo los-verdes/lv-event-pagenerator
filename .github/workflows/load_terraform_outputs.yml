@@ -90,7 +90,7 @@ jobs:
       - name: aggregate-tf-outputs
         id: aggregate-tf-outputs
         run: |
-          echo '::set-output name=EVENTS_PAGE_BASE_DOMAIN::${{ steps.tfoutzone.outputs.stdout }}'
+          echo '::set-output name=EVENTS_PAGE_BASE_DOMAIN::"${{ steps.tfoutzone.outputs.stdout }}"'
           echo '::set-output name=EVENTS_PAGE_CALENDAR_ID::${{ steps.tfoutcalendar.outputs.stdout }}'
           echo '::set-output name=EVENTS_PAGE_GCS_BUCKET_NAME::${{ steps.tfoutbucket.outputs.stdout }}'
           echo '::set-output name=EVENTS_PAGE_GITHUB_REPO::${{ github.repository }}'
