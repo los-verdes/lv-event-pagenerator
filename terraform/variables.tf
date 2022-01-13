@@ -37,12 +37,18 @@ variable "gcp_project_id" {
   default = "losverdesatx-events"
 }
 
-variable "gcp_region" {
-  default = "us-central1"
+variable "gcp_project_owners" {
+  type = list(string)
+  default = []
 }
 
-variable "service_account_id" {
-  default = "lv-events-page"
+variable "gcp_project_editors" {
+  type = list(string)
+  default = []
+}
+
+variable "gcp_region" {
+  default = "us-central1"
 }
 
 variable "service_account_description" {
@@ -56,6 +62,7 @@ variable "static_site_domain" {
 variable "static_site_subdomain" {
   default = "los-verdes-events"
 }
+
 variable "source_calendar_id" {
   default = "information@losverdesatx.org"
 }

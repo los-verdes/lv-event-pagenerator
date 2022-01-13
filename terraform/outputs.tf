@@ -1,8 +1,3 @@
-output "event_page_key" {
-  sensitive = true
-  value     = google_service_account_key.event_page.private_key
-}
-
 output "github_oidc" {
   value = module.github_oidc
 }
@@ -16,12 +11,16 @@ output "project_number" {
   value = google_project.events_page.number
 }
 
-output "service_account_email" {
-  value = google_service_account.event_page.email
+output "webhook_function_sa_email" {
+  value = google_service_account.webhook_function.email
 }
 
-output "github_actions_service_account_email" {
-  value = google_service_account.gh_env_production.email
+output "site_publisher_sa_email" {
+  value = google_service_account.site_publisher.email
+}
+
+output "gh_terraform_applier_sa_email" {
+  value = google_service_account.gh_terraform_applier.email
 }
 
 output "cdn_secret_id" {

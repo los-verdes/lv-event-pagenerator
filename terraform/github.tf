@@ -13,30 +13,35 @@ module "github_oidc" {
   }
   attribute_condition = "assertion.repository=='${var.github_repo}'"
   sa_mapping = {
-    "gh-branch-main" = {
-      sa_name   = google_service_account.event_page.name
-      attribute = "attribute.ref/refs/heads/main"
+    "gh-site-publisher" = {
+      sa_name   = google_service_account.site_publisher.name
+      attribute = "attribute.environment/prod-site"
     }
-    "gh-env-production" = {
-      sa_name   = google_service_account.gh_env_production.name
-      attribute = "attribute.environment/production"
+    "gh-terraform-applier" = {
+      sa_name   = google_service_account.gh_terraform_applier.name
+      attribute = "attribute.environment/prod-gcp-project"
     }
   }
 }
 
-resource "google_service_account" "gh_env_production" {
-  account_id   = "gh-env-prod-${var.service_account_id}"
+resource "google_service_account" "site_publisher" {
+  account_id   = "gh-publisher-${var.static_site_subdomain}"
+  display_name = var.service_account_description
+}
+
+resource "google_project_iam_member" "site_publisher_viewer" {
+  project = google_project.events_page.id
+  role    = "roles/viewer"
+  member  = "serviceAccount:${google_service_account.site_publisher.email}"
+}
+
+resource "google_service_account" "gh_terraform_applier" {
+  account_id   = "gh-owner-${var.static_site_subdomain}"
   display_name = "Identity used for privileged deploys within GitHub Actions workflow runs"
 }
 
-resource "google_project_iam_member" "gh_env_production_owner" {
+resource "google_project_iam_member" "gh_terraform_applier" {
   project = google_project.events_page.id
   role    = "roles/owner"
-  member  = "serviceAccount:${google_service_account.gh_env_production.email}"
+  member  = "serviceAccount:${google_service_account.gh_terraform_applier.email}"
 }
-
-
-# Service Account used to deploy this module has the following roles
-
-# roles/iam.workloadIdentityPoolAdmin
-# roles/iam.serviceAccountAdmin
