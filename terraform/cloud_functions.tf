@@ -10,8 +10,7 @@ data "archive_file" "webhook_function" {
 }
 
 resource "google_storage_bucket_object" "webhook_archive" {
-  # name   = "terraform/functions/webhook_${data.archive_file.webhook_function.output_sha}.zip"
-  name   = "terraform/functions/webhook.zip"
+  name   = "terraform/functions/webhook_${data.archive_file.webhook_function.output_sha}.zip"
   bucket = data.google_storage_bucket.cloud_functions.name
   source = data.archive_file.webhook_function.output_path
 }
