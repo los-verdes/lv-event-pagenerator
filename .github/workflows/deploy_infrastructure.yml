@@ -22,7 +22,7 @@ jobs:
         uses: 'google-github-actions/auth@v0'
         with:
           workload_identity_provider: 'projects/538480189659/locations/global/workloadIdentityPools/los-verdes-events/providers/los-verdes-events-provider'
-          service_account: 'lv-events-page@losverdesatx-events.iam.gserviceaccount.com'
+          service_account: 'gh-env-prod-lv-events-page@losverdesatx-events.iam.gserviceaccount.com'
 
       # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
       - name: 'Set up Cloud SDK'
@@ -30,10 +30,6 @@ jobs:
 
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
-      # Now you can run gcloud commands authenticated as the impersonated service account.
-      - id: 'gcloud'
-        name: 'gcloud'
-        run: gcloud secrets list
 
       - name: Read .terraform-version
         id: read_tf_version
@@ -58,12 +54,12 @@ jobs:
         run: terraform plan
         working-directory: terraform
 
-# jobs:
-#   build-site:
-#     uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
-#     with:
-#       site_hostname: ${{ github.event.inputs.site_hostname }}
-#       cdn_zone_name: ${{ github.event.inputs.cdn_zone_name }}
+  build-site:
+    needs: deploy-infrastructure
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
+    with:
+      site_hostname: ${{ github.event.inputs.site_hostname }}
+      cdn_zone_name: ${{ github.event.inputs.cdn_zone_name }}
 
       # - name: Apply - terraform
       #   run: terraform apply -auto-approve

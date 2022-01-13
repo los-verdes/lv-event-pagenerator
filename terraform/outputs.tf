@@ -20,6 +20,10 @@ output "service_account_email" {
   value = google_service_account.event_page.email
 }
 
+output "github_actions_service_account_email" {
+  value = google_service_account.gh_env_production.email
+}
+
 output "cdn_secret_id" {
   value = google_secret_manager_secret.event_page_cdn.id
 }
