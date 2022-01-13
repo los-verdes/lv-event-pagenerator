@@ -61,7 +61,7 @@ jobs:
   #       working-directory: terraform
 
   terraform-outputs:
-    needs: deploy-infrastructure
+    # needs: deploy-infrastructure
     permissions:
       contents: 'read'
       id-token: 'write'
