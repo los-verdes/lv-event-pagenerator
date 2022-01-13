@@ -16,6 +16,8 @@ variable "enabled_gcp_services" {
     "cloudresourcemanager.googleapis.com",
     "iamcredentials.googleapis.com", # IAM Credentials API
     "sts.googleapis.com",
+
+    "cloudbilling.googleapis.com", # Cloud Billing Api
   ]
 }
 
