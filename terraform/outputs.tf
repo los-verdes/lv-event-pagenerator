@@ -58,3 +58,7 @@ output "cdn_zone_name" {
 output "webhook_url" {
   value = local.webhook_url
 }
+
+output "events_page_env" {
+  value = local.events_page_env
+}
