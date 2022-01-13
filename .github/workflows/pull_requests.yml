@@ -1,12 +1,14 @@
-name: Pull Requests
+name: Lint and Test
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch: {}
 
 concurrency:
-  group: pr-${{ github.ref }}
+  group: ${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

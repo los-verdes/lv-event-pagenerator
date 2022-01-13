@@ -8,7 +8,7 @@ on:
 jobs:
   apply-and-smoke-test:
     name: Apply and Smoke Test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     environment: production
     permissions:
       contents: 'read'
@@ -28,6 +28,8 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v0'
 
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
       # Now you can run gcloud commands authenticated as the impersonated service account.
       - id: 'gcloud'
         name: 'gcloud'
