@@ -7,7 +7,7 @@
 resource "google_project" "events_page" {
   name            = var.gcp_project_name
   project_id      = var.gcp_project_id
-  billing_account = var.billing_account_id
+  billing_account = var.gcp_billing_account_id
   # billing_account = data.google_billing_account.events_page.id
 }
 
