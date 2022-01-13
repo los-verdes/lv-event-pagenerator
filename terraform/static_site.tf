@@ -16,15 +16,15 @@ resource "google_storage_bucket_iam_member" "all_users_viewers" {
   member = "allUsers"
 }
 
-data "cloudflare_zone" "static_site" {
-  name = var.static_site_domain
-}
+# data "cloudflare_zone" "static_site" {
+#   name = var.static_site_domain
+# }
 
-resource "cloudflare_record" "static_site" {
-  zone_id = data.cloudflare_zone.static_site.id
-  name    = var.static_site_subdomain
-  value   = "c.storage.googleapis.com"
-  type    = "CNAME"
-  ttl     = 1
-  proxied = true
-}
+# resource "cloudflare_record" "static_site" {
+#   zone_id = data.cloudflare_zone.static_site.id
+#   name    = var.static_site_subdomain
+#   value   = "c.storage.googleapis.com"
+#   type    = "CNAME"
+#   ttl     = 1
+#   proxied = true
+# }

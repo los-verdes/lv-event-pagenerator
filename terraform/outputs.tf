@@ -41,5 +41,5 @@ output "static_site_bucket_url" {
 }
 
 output "static_site_fqdn" {
-  value = cloudflare_record.static_site.hostname
+  value = local.events_page_hostname
 }

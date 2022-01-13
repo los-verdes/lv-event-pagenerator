@@ -14,10 +14,10 @@ terraform {
     #   source  = "hashicorp/google-beta"
     #   version = "~> 4.5"
     # }
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 3.6"
-    }
+    # cloudflare = {
+    #   source  = "cloudflare/cloudflare"
+    #   version = "~> 3.6"
+    # }
   }
 }
 

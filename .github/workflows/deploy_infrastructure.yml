@@ -1,9 +1,18 @@
-name: Deploy Infrastructure
+name: Deploy Infrastructure & Run Build
 
 on:
   push:
     branches: [main]
-  # workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      site_hostname:
+        default: 'los-verdes-events.asfasfsafsasfa.org'
+        description: 'Fully-qualified domain name of the published site. Used in cache purging / priming methods.'
+        required: true
+      cdn_zone_name:
+        default: 'asfasfsafsasfa.org'
+        description: 'Name of zone at CDN provider (Cloudflare only provider currently considered / supported).'
+        required: true
 
 jobs:
   deploy-infrastructure:
@@ -42,16 +51,17 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TFC_TOKEN }}
           terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
 
-      # - name: Init - infrastructure
-      #   run: terraform init -backend-config=<(echo 'workspaces { name = "infrastructure-${{ inputs.terraform_environment }}" }')
-      #   working-directory: infrastructure
-
       - name: Init - terraform
         run: terraform init
+      #   run: terraform init -backend-config=<(echo 'workspaces { name = "infrastructure-${{ inputs.terraform_environment }}" }')
         working-directory: terraform
 
       - name: Plan - terraform
         run: terraform plan
+        working-directory: terraform
+
+      - name: Apply - terraform
+        run: terraform apply -auto-approve
         working-directory: terraform
 
   build-site:
@@ -60,26 +70,3 @@ jobs:
     with:
       site_hostname: ${{ github.event.inputs.site_hostname }}
       cdn_zone_name: ${{ github.event.inputs.cdn_zone_name }}
-
-      # - name: Apply - terraform
-      #   run: terraform apply -auto-approve
-      #   working-directory: terraform
-
-      # - name: Set up Python 3.9
-      #   uses: actions/setup-python@v2
-      #   with:
-      #     python-version: 3.9
-
-      # - name: Install Python Dependencies
-      #   working-directory: tests
-      #   run: pip3 install --requirement=requirements.txt
-
-      # - name: Run Integration Test
-      #   working-directory: tests
-      #   run: |
-      #     pytest \
-      #       --durations=10 \
-      #       --junitxml=artifacts/junit.xml
-      #   env:
-      #     GITHUB_PAT: ${{ secrets.GH_PAT }}
-      #     PYTEST_RUN_PATH: tests
