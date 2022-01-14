@@ -60,7 +60,7 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: terraform
 
-  terraform-outputs:
+  load-events-env:
     needs: deploy-infrastructure
     permissions:
       contents: 'read'
@@ -68,12 +68,10 @@ jobs:
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/load_terraform_outputs.yml@main
 
   build-site:
-    needs: terraform-outputs
+    needs: load-events-env
     permissions:
       contents: 'read'
       id-token: 'write'
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
     with:
-      events_page_env: ${{ needs.terraform-outputs.outputs.events_page_env }}
-      site_hostname: ${{ needs.terraform-outputs.outputs.bucket_id }}
-      calendar_id: ${{ needs.terraform-outputs.output.cdn_zone_name }}
+      events_page_env: ${{ needs.load-events-env.outputs.events_page_env }}

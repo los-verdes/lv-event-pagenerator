@@ -1,0 +1,46 @@
+name: Load Terraform Outputs
+
+on:
+  workflow_call:
+    outputs:
+      events_page_env:
+        description: "Terraform outputs arranged in a map suitable for passing to CLI entrypoints"
+        value: ${{ jobs.terraform-outputs.outputs.events_page_env }}
+
+jobs:
+  load-events-page-env-output:
+    name: Load events_page_eng Terraform Output
+    runs-on: ubuntu-latest
+    environment: prod-site
+    outputs:
+      events_page_env: ${{ steps.tf-output-events-page-env.outputs.stdout  }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          workload_identity_provider: 'projects/538480189659/locations/global/workloadIdentityPools/los-verdes-events/providers/los-verdes-events-provider'
+          service_account: 'gh-publisher-los-verdes-events@losverdesatx-events.iam.gserviceaccount.com'
+
+      - name: Read .terraform-version
+        id: read_tf_version
+        run: |
+          echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TFC_TOKEN }}
+          terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
+
+      - name: Init - terraform
+        run: terraform init
+        working-directory: terraform
+
+      - name: Record the events_page_env Terraform output
+        id: tf-output-events-page-env
+        working-directory: terraform
+        run: terraform output -json events_page_env

@@ -6,7 +6,7 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  terraform-outputs:
+  load-events-env:
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -14,7 +14,7 @@ jobs:
 
   ensure-watches:
     name: Ensure GCal and GDrive Watches
-    needs: terraform-outputs
+    needs: load-events-env
     runs-on: ubuntu-latest
     environment: prod-site
     permissions:
@@ -48,10 +48,10 @@ jobs:
 
       - name: Ensure GCal and GDrive Watches
         working-directory: events_page
-        env: ${{ fromJSON(needs.terraform-outputs.outputs.events_page_env) }}
+        env: ${{ fromJSON(needs.load-events-env.outputs.events_page_env) }}
         run: |
           # TODO: figure out canonical location for settings-file-name and such when finalizing setting arrangements
           ./ensure_watches.py \
-            --calendar-id="${{ needs.terraform-outputs.outputs.calendar_id }}" \
+            --calendar-id="${{ env.EVENTS_PAGE_CALENDAR_ID }}" \
             --settings-file-name='event_page_settings.yaml' \
             --gdrive-folder-name='lv-event-cover-images'

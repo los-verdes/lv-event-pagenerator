@@ -1,15 +1,13 @@
 name: Build and Publish Site
 
+concurrency:
+  group: "build-and-publish-${{ github.ref }}"
+  cancel-in-progress: true
+
 on:
   workflow_call:
     inputs:
       events_page_env:
-        required: true
-        type: string
-      site_hostname:
-        required: true
-        type: string
-      calendar_id:
         required: true
         type: string
 
@@ -49,5 +47,5 @@ jobs:
         env: ${{ fromJSON(inputs.events_page_env) }}
         run: |
           ./build_and_publish_site.py \
-            --site-hostname="${{ inputs.site_hostname }}" \
-            --cdn-zone-name="${{ inputs.cdn_zone_name }}"
+            --site-hostname="${{ env.EVENTS_PAGE_HOSTNAME }}" \
+            --cdn-zone-name="${{ env.EVENTS_PAGE_BASE_DOMAIN }}"

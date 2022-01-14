@@ -10,6 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # TODO: Do a TF plan here?
   super-linter:
     name: "Lint Configuration"
     runs-on: ubuntu-latest
