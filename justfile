@@ -20,6 +20,8 @@ tf-apply: tf-plan
 tf-auto-apply: tf-plan
   terraform -chdir="{{ tf_dir }}" apply -auto-approve
 
+set-tf-ver-output:
+  echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
 
 export-env: tf-init
   #!/bin/bash

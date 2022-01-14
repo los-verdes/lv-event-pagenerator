@@ -32,11 +32,20 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: Read .terraform-version
+        id: read_tf_version
+        run: just set-tf-ver-output
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
+
       - name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v0"
         with:
           workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
-          service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
+          service_account: "gh-terraform-applier@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Build and Publish Site
         run: just build-and-publish

@@ -22,10 +22,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Setup just
+        uses: extractions/setup-just@v1
+
       - name: Read .terraform-version
         id: read_tf_version
-        run: |
-          echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
+        run: just set-tf-ver-output
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
