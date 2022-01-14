@@ -1,6 +1,5 @@
 name: Deploy Infrastructure & Run Build
 
-
 concurrency:
   group: "deploy-main-branch"
   cancel-in-progress: true
@@ -18,18 +17,18 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod-gcp-project
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0'
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v0"
         with:
-          workload_identity_provider: 'projects/538480189659/locations/global/workloadIdentityPools/los-verdes-events/providers/los-verdes-events-provider'
-          service_account: 'gh-owner-los-verdes-events@losverdesatx-events.iam.gserviceaccount.com'
+          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
+          service_account: "gh-terraform-applier@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Read .terraform-version
         id: read_tf_version
@@ -49,25 +48,30 @@ jobs:
         run: terraform plan -var-file=../losverdesatx-events.tfvars
         working-directory: terraform
         env:
+          TF_VAR_github_repo: ${{ github.repo }}
           TF_VAR_cloudflare_api_token: ${{ secrets.cloudflare_api_token }}
           TF_VAR_site_publisher_github_pat: ${{ secrets.site_publisher_github_pat }}
 
       - name: Apply - terraform
         run: terraform apply -var-file=../losverdesatx-events.tfvars -auto-approve
         working-directory: terraform
+        env:
+          TF_VAR_github_repo: ${{ github.repo }}
+          TF_VAR_cloudflare_api_token: ${{ secrets.cloudflare_api_token }}
+          TF_VAR_site_publisher_github_pat: ${{ secrets.site_publisher_github_pat }}
 
   load-events-env:
     needs: deploy-infrastructure
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/load_events_env.yml@main
 
   build-site:
     needs: load-events-env
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: "read"
+      id-token: "write"
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
     with:
       events_page_env: ${{ needs.load-events-env.outputs.events_page_env }}

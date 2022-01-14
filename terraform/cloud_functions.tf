@@ -24,14 +24,14 @@ resource "google_service_account" "webhook_function" {
 locals {
   function_name = "push-webhook-receiver"
   webhook_url   = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
-  
+
   events_page_env = {
-    EVENTS_PAGE_CLOUDFLARE_ZONE               = var.cloudflare_zone
-    EVENTS_PAGE_CALENDAR_ID               = var.source_calendar_id
-    EVENTS_PAGE_GITHUB_REPO               = var.github_repo
-    EVENTS_PAGE_HOSTNAME                  = google_storage_bucket.static_site.name
-    EVENTS_PAGE_SECRET_NAME = google_secret_manager_secret_version.events_page_webhook_token.name
-    EVENTS_PAGE_WEBHOOK_URL               = local.webhook_url
+    EVENTS_PAGE_CLOUDFLARE_ZONE = var.cloudflare_zone
+    EVENTS_PAGE_CALENDAR_ID     = var.calendar_id
+    EVENTS_PAGE_GITHUB_REPO     = var.github_repo
+    EVENTS_PAGE_HOSTNAME        = google_storage_bucket.static_site.name
+    EVENTS_PAGE_SECRET_NAME     = google_secret_manager_secret_version.events_page.name
+    EVENTS_PAGE_WEBHOOK_URL     = local.webhook_url
   }
 }
 

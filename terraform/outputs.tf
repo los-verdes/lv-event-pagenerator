@@ -26,8 +26,8 @@ output "site_publisher_sa_email" {
   value = google_service_account.site_publisher.email
 }
 
-output "source_calendar_id" {
-  value = var.source_calendar_id
+output "calendar_id" {
+  value = var.calendar_id
 }
 
 output "token" {

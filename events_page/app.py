@@ -9,13 +9,11 @@ from flask_assets import Bundle, Environment
 from logzero import logger, setup_logger
 from webassets.filter import get_filter
 
+from config import env
 from google_apis import calendar as gcal
 from google_apis import drive
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-# TODO: set to some rando public calendar instead for the generic usecase?
-DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
-DEFAULT_TIMEZONE = "US/Central"
 
 setup_logger(name=__name__)
 
@@ -63,11 +61,11 @@ def hex2rgb(hex, alpha=None):
 
 @app.route("/")
 def events():
-    source_calendar_id = app.config["source_calendar_id"]
+    calendar_id = app.config["calendar_id"]
     calendar_service = gcal.build_service()
     calendar = gcal.Calendar(
         service=calendar_service,
-        calendar_id=source_calendar_id,
+        calendar_id=calendar_id,
         display_timezone=app.config["display_timezone"],
         event_categories=app.config["event_categories"],
         mls_teams=app.config["mls_teams"],
@@ -90,11 +88,10 @@ def events():
 def create_app():
     # TODO: do this default settings thing better?
     default_settings = dict(
-        source_calendar_id=DEFAULT_CALENDAR_ID,
-        display_timezone=os.getenv("EVENTS_PAGE_TIMEZONE", DEFAULT_TIMEZONE),
+        calendar_id=env.calendar_id,
+        display_timezone=env.display_timezone,
         event_categories=dict(),
         mls_teams=dict(),
-        static_site_bucket=os.getenv("EVENTS_PAGE_GCS_BUCKET_NAME"),
         FREEZER_BASE_URL=get_base_url(),
         FREEZER_STATIC_IGNORE=["*.scss", ".webassets-cache/*", ".DS_Store"],
         FREEZER_RELATIVE_URLS=True,
@@ -103,10 +100,10 @@ def create_app():
     app.config.update(default_settings)
 
     drive_service = drive.build_service()
-    settings = drive.load_settings(drive_service)
+    settings = drive.load_settings(drive_service, env.folder_name, env.file_name)
 
     # Ensure all our category and event-specifc cover images are downloaded
-    drive.download_all_images(drive_service)
+    drive.download_all_images_in_folder(drive_service, env.folder_name)
     settings["event_categories"] = drive.download_category_images(
         drive_service, settings["event_categories"]
     )

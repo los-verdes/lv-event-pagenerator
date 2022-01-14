@@ -7,7 +7,7 @@ module "github_oidc" {
   version     = "~> 2.0"
   project_id  = var.gcp_project_id
   pool_id     = local.oidc_pool_id
-  provider_id = "${local.oidc_pool_id}-provider"
+  provider_id = local.oidc_pool_id
   attribute_mapping = {
     "google.subject"        = "assertion.sub"
     "attribute.actor"       = "assertion.actor"

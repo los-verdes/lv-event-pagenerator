@@ -66,7 +66,7 @@ variable "page_description" {
 variable "static_site_hostname" {
 }
 
-variable "source_calendar_id" {
+variable "calendar_id" {
 }
 
 variable "github_repo" {

@@ -20,18 +20,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0'
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v0"
         with:
-          workload_identity_provider: 'projects/538480189659/locations/global/workloadIdentityPools/los-verdes-events/providers/los-verdes-events-provider'
-          service_account: 'gh-publisher-los-verdes-events@losverdesatx-events.iam.gserviceaccount.com'
+          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
+          service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0.2.1'
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v0.2.1"
 
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
 
       - name: Set up Python 3.9
         uses: actions/setup-python@v2

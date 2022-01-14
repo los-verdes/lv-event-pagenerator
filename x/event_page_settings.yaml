@@ -1,6 +1,5 @@
 ---
-
-source_calendar_id: 2urei2qv0edsscn71iamri0ok4@group.calendar.google.com
+calendar_id: 2urei2qv0edsscn71iamri0ok4@group.calendar.google.com
 
 event_categories:
   "misc":
@@ -46,64 +45,64 @@ event_categories:
 mls_teams:
   atl:
     name: Atlanta United
-    color: '#9d2235'
+    color: "#9d2235"
   cin:
     name: FC Cincinnati
-    color: '#003087'
+    color: "#003087"
   clt:
     name: Charlotte FC
-    color: '#0085ca'
+    color: "#0085ca"
   col:
     name: Colorado Rapids
-    color: '#8a2432'
+    color: "#8a2432"
   dal:
     name: FC Dallas
-    color: '#c6093b'
+    color: "#c6093b"
   dc:
     name: D.C. United
-    color: '#212121'
+    color: "#212121"
   hou:
     name: Houston Dynamo FC
-    color: '#101820'
+    color: "#101820"
   la:
     name: LA Galaxy
-    color: '#004b87'
+    color: "#004b87"
   lafc:
     name: LAFC
-    color: '#212121'
+    color: "#212121"
   mia:
     name: Inter Miami CF
-    color: '#212322'
+    color: "#212322"
   min:
     name: Minnesota United
-    color: '#737b82'
+    color: "#737b82"
   mtl:
     name: "CF Montr\xE9al"
-    color: '#212121'
+    color: "#212121"
   nsh:
     name: Nashville SC
-    color: '#201547'
+    color: "#201547"
   orl:
     name: Orlando City
-    color: '#61259e'
+    color: "#61259e"
   por:
     name: Portland Timbers
-    color: '#004812'
+    color: "#004812"
   rbny:
     name: New York Red Bulls
-    color: '#ba0c2f'
+    color: "#ba0c2f"
   rsl:
     name: Real Salt Lake
-    color: '#001e61'
+    color: "#001e61"
   sea:
     name: Seattle Sounders FC
-    color: '#64a608'
+    color: "#64a608"
   sj:
     name: San Jose Earthquakes
-    color: '#0051ba'
+    color: "#0051ba"
   skc:
     name: Sporting Kansas City
-    color: '#0c2340'
+    color: "#0c2340"
   van:
     name: Vancouver Whitecaps FC
-    color: '#002244'
+    color: "#002244"

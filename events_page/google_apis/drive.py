@@ -64,7 +64,7 @@ def get_local_path_for_file(file_id, mime_type=None):
     )
 
 
-def download_all_images(service, folder_name):
+def download_all_images_in_folder(service, folder_name):
     files_in_folder = list_files_in_event_page_folder(
         service=service,
         folder_name=folder_name,
