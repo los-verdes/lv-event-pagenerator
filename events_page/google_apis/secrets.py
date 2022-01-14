@@ -39,7 +39,7 @@ class Secrets(metaclass=Singleton):
 
 
 def get_cloudflare_api_token():
-    return Secrets().get_cloudflare_api_token
+    return Secrets().cloudflare_api_token
 
 
 def get_github_pat():
