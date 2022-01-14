@@ -5,8 +5,10 @@ import re
 
 import logzero
 from logzero import logger
+
 from config import env
-from dispatch_build_workflow_run import dispatch_build_workflow_run, get_github_client
+from dispatch_build_workflow_run import (dispatch_build_workflow_run,
+                                         get_github_client)
 from google_apis.secrets import get_github_pat, get_webhook_token
 
 uri_regexp = re.compile(

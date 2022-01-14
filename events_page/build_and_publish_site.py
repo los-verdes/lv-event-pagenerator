@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from time import sleep
+
 import requests
 from CloudFlare import CloudFlare
 from flask_frozen import Freezer
@@ -57,7 +59,7 @@ def prime_cache(site_hostname, new_paths):
     return responses
 
 
-def build_static_site(site_hostname, cloudflare_zone):
+def build_static_site(site_hostname, cloudflare_zone, purge_delay_secs=30):
     freeze_result = freeze_site(app=create_app())
     storage.upload_build_to_gcs(
         client=storage.get_client(),
@@ -68,6 +70,8 @@ def build_static_site(site_hostname, cloudflare_zone):
             CloudFlare(token=get_cloudflare_api_token()),
             cloudflare_zone=cloudflare_zone,
         )
+        logger.info(f"Waiting for {purge_delay_secs=} before proceeding...")
+        sleep(purge_delay_secs)
     else:
         logger.warning(f"Skipping cache purge bits as {cloudflare_zone}")
     prime_cache(site_hostname=site_hostname, new_paths=freeze_result)
