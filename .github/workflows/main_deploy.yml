@@ -39,7 +39,6 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          cli_config_credentials_token: ${{ secrets.TFC_TOKEN }}
           terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
 
       - name: Init - terraform
@@ -51,7 +50,7 @@ jobs:
         working-directory: terraform
 
       - name: Apply - terraform
-        run: terraform apply -var-file=../losverdesatx-events.tfvars-auto-approve
+        run: terraform apply -var-file=../losverdesatx-events.tfvars -auto-approve
         working-directory: terraform
 
   load-events-env:
