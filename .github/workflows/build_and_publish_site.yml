@@ -1,7 +1,7 @@
 name: Build and Publish Site
 
 concurrency:
-  group: "build-and-publish-${{ github.ref }}"
+  group: "build-and-publish"
   cancel-in-progress: false
 
 on:
