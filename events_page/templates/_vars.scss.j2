@@ -10,7 +10,6 @@ $category_names: (
 {%- endfor %}
 );
 
-// {# "{{ class_name }}": "{{ url_for("static", filename=background_image) }}", #}
 $category_background_images: (
 {%- for class_name, background_image in event_category_background_images.items() %}
   "{{ class_name }}": "{{ background_image }}",
