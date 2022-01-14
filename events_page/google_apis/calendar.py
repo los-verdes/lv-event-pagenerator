@@ -176,7 +176,7 @@ class Calendar(object):
         self.categories_by_color_id = {}
         for name, event_category in event_categories.items():
             event_category["category_name"] = name
-            color_id = event_category["gcal"]["color_id"]
+            color_id = event_category["gcal_color"]["id"]
             self.categories_by_color_id[color_id] = event_category
         logger.debug(f"{self.categories_by_color_id=}")
 

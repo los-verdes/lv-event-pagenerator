@@ -1,45 +1,66 @@
 ---
 
+gcal_colors:
+  Unset: &Unset
+    id: "0"
+    background: null
+  Lavender: &Lavender
+    id: "1"
+    background: "#a4bdfc"
+  Sage: &Sage
+    id: "2"
+    background: "#33b679"
+  Grape: &Grape
+    id: "3"
+    background: "#8e24aa"
+  Flamingo: &Flamingo
+    id: "4"
+    background: "#e67c73"
+  Banana: &Banana
+    id: "5"
+    background: "#f6c026"
+  Tangerine: &Tangerine
+    id: "6"
+    background: "#f5511d"
+  Peacock: &Peacock
+    id: "7"
+    background: "#039be5"
+  Graphite: &Graphite
+    id: "8"
+    background: "#616161"
+  Blueberry: &Blueberry
+    id: "9"
+    background: "#3f51b5"
+  Basil: &Basil
+    id: "10"
+    background: "#0b8043"
+  Tomato: &Tomato
+    id: "11"
+    background: "#d60000"
+
 event_categories:
   "misc":
     cover_color: "#000000"
-    gcal:
-      color_id: "0"
-      background: "#a4bdfc"
-      name: null
-
+    gcal_color: *Unset
   "los-verdes":
     bg_color: "#000000"
     text_bg_color: "#00b140"
     text_fg_color: "#FFFFFF"
     default_cover_image: "https://drive.google.com/file/d/1dv2K9ep6wldSqYbhH8nizRQW2PTPwdLW/view?usp=sharing"
     always_shown_in_filters: true
-    gcal:
-      color_id: "1"
-      background: "#a4bdfc"
-      name: lavender
-
+    gcal_color: *Lavender
   "la-murga":
     cover_color: "#000000"
     always_shown_in_filters: true
-    gcal:
-      color_id: "2"
-      background: "#7ae7bf"
-      name: sage
+    gcal_color: *Sage
   "home-games":
     cover_color: "#dbadff"
     always_shown_in_filters: true
-    gcal:
-      color_id: "3"
-      background: "#a4bdfc"
-      name: grape
+    gcal_color: *Grape
   "away-games":
     cover_color: "#000000"
     always_shown_in_filters: true
-    gcal:
-      color_id: "4"
-      background: "#ff887c"
-      name: flamingo
+    gcal_color: *Flamingo
 
 mls_teams:
   atl:
