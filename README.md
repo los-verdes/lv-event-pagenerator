@@ -48,6 +48,14 @@ I think the easiest arrangement is to use event "colors" for selecting the categ
 ## Local Runs
 
 ```shellsession
-$ gcloud auth application-default login
-$ export EVENTS_PAGE_SA_EMAIL="$(terraform -chdir=terraform output -raw site_publisher_sa_email)"
-$ ./events_page/app.py
+gcloud auth application-default login
+export EVENTS_PAGE_SA_EMAIL="$(terraform -chdir=terraform output -raw site_publisher_sa_email)"
+./events_page/app.py
+```
+
+Terraform:
+
+```shellsession
+export TF_VAR_cloudflare_api_token="..."
+export TF_VAR_site_publisher_github_pat="..."
+```

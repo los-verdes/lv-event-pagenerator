@@ -18,6 +18,18 @@ variable "enabled_gcp_services" {
   ]
 }
 
+variable "cloudflare_api_token" {
+  sensitive = true
+}
+
+variable "cloudflare_zone" {
+}
+
+
+variable "site_publisher_github_pat" {
+  sensitive = true
+}
+
 # variable "gcp_billing_account_name" {}
 
 variable "gcp_billing_account_id" {
@@ -42,14 +54,16 @@ variable "gcp_project_editors" {
 variable "gcp_region" {
 }
 
+variable "gdrive_folder_name" {
+}
+
+variable "gdrive_settings_file_name" {
+}
+
 variable "page_description" {
   default = ""
 }
-
-variable "static_site_domain" {
-}
-
-variable "static_site_subdomain" {
+variable "static_site_hostname" {
 }
 
 variable "source_calendar_id" {

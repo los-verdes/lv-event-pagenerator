@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import os
-from google.auth import impersonated_credentials
 import google.auth
+from config import env
+from google.auth import impersonated_credentials
 from googleapiclient.discovery import build
 
 DEFAULT_SCOPES = [
@@ -9,14 +9,13 @@ DEFAULT_SCOPES = [
     "https://www.googleapis.com/auth/drive.readonly",
     "https://www.googleapis.com/auth/cloud-platform",
 ]
-BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
 def load_credentials(scopes=DEFAULT_SCOPES):
     credentials, _ = google.auth.default(scopes=scopes)
-    if not credentials.has_scopes(scopes) and os.getenv("EVENTS_PAGE_SA_EMAIL"):
+    if not credentials.has_scopes(scopes) and env.sa_email:
         source_credentials = credentials
-        target_principal = os.environ["EVENTS_PAGE_SA_EMAIL"]
+        target_principal = env.sa_email
         credentials = impersonated_credentials.Credentials(
             source_credentials=source_credentials,
             target_principal=target_principal,

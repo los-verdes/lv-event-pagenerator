@@ -3,16 +3,8 @@ resource "random_password" "webhook_token" {
   special = false
 }
 
-locals {
-  secret_ids = [
-    "events-page-webhook-token",
-    # Note: these CDN and GitHub PAT secret values are populated outside of Terraform to simplify bootstrapping those secret versions
-    "events-page-cdn-token",
-    "events-page-github-pat"
-  ]
-}
 resource "google_secret_manager_secret" "events_page" {
-  for_each  = toset(local.secret_ids)
+  for_each  = "events-page"
   secret_id = each.value
 
   replication {
@@ -20,17 +12,18 @@ resource "google_secret_manager_secret" "events_page" {
   }
 }
 
-resource "google_secret_manager_secret_version" "events_page_webhook_token" {
-  secret = google_secret_manager_secret.events_page["events-page-webhook-token"].id
+resource "google_secret_manager_secret_version" "events_page" {
+  secret = google_secret_manager_secret.events_page.id
   secret_data = jsonencode({
-    token = random_password.webhook_token.result
+    cloudflare_api_key = var.cloudflare_api_key
+    site_publisher_github_pat = var.site_publisher_github_pat
+    webhook_token = random_password.webhook_token.result
   })
 }
 
-resource "google_secret_manager_secret_iam_policy" "policy" {
-  for_each    = google_secret_manager_secret.events_page
-  project     = each.value.project
-  secret_id   = each.value.id
+resource "google_secret_manager_secret_iam_policy" "events_page" {
+  project     = google_secret_manager_secret.events_page.project
+  secret_id   = google_secret_manager_secret.events_page.id
   policy_data = data.google_iam_policy.secrets_access.policy_data
 }
 

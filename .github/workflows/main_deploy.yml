@@ -48,6 +48,9 @@ jobs:
       - name: Plan - terraform
         run: terraform plan -var-file=../losverdesatx-events.tfvars
         working-directory: terraform
+        env:
+          TF_VAR_cloudflare_api_token: ${{ secrets.cloudflare_api_token }}
+          TF_VAR_site_publisher_github_pat: ${{ secrets.site_publisher_github_pat }}
 
       - name: Apply - terraform
         run: terraform apply -var-file=../losverdesatx-events.tfvars -auto-approve

@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "static_site" {
-  name          = "${var.static_site_subdomain}.${var.static_site_domain}"
+  name          = var.static_site_hostname
   location      = "US"
   force_destroy = true
 
@@ -22,15 +22,15 @@ resource "google_storage_bucket_iam_member" "site_publisher_sa_obj_admin" {
   member = "serviceAccount:${google_service_account.site_publisher.email}"
 }
 
-# data "cloudflare_zone" "static_site" {
-#   name = var.static_site_domain
-# }
+data "cloudflare_zone" "static_site" {
+  name = var.cloudflare_zone
+}
 
-# resource "cloudflare_record" "static_site" {
-#   zone_id = data.cloudflare_zone.static_site.id
-#   name    = var.static_site_subdomain
-#   value   = "c.storage.googleapis.com"
-#   type    = "CNAME"
-#   ttl     = 1
-#   proxied = true
-# }
+resource "cloudflare_record" "static_site" {
+  zone_id = data.cloudflare_zone.static_site.id
+  name    = var.static_site_hostname
+  value   = "c.storage.googleapis.com"
+  type    = "CNAME"
+  ttl     = 1
+  proxied = true
+}

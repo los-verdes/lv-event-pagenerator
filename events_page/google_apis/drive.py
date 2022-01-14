@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 import io
-import time
 import mimetypes
 import os
 import re
+import time
 from datetime import datetime
 
 from googleapiclient.discovery import build
@@ -16,9 +16,6 @@ from google_apis import load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-DEFAULT_FOLDER_NAME = "lv-event-cover-images"
-DEFAULT_SETTINGS_FILE_NAME = "event_page_settings.yaml"
-
 
 def build_service(credentials=None):
     if credentials is None:
@@ -26,9 +23,7 @@ def build_service(credentials=None):
     return build("drive", "v3", credentials=credentials)
 
 
-def get_settings_file_id(
-    service, folder_name=DEFAULT_FOLDER_NAME, file_name=DEFAULT_SETTINGS_FILE_NAME
-):
+def get_settings_file_id(service, folder_name, file_name):
     files_in_folder = list_files_in_event_page_folder(
         service=service,
         folder_name=folder_name,
@@ -37,15 +32,11 @@ def get_settings_file_id(
     return settings_file_id
 
 
-def load_setting(
-    service, key, folder_name=DEFAULT_FOLDER_NAME, file_name=DEFAULT_SETTINGS_FILE_NAME
-):
+def load_setting(service, key, folder_name, file_name):
     return load_settings(service, folder_name, file_name).get(key)
 
 
-def load_settings(
-    service, folder_name=DEFAULT_FOLDER_NAME, file_name=DEFAULT_SETTINGS_FILE_NAME
-):
+def load_settings(service, folder_name, file_name):
     settings_file_id = get_settings_file_id(service, folder_name, file_name)
     print(f"load_settings_from_drive(): {settings_file_id=}")
     settings_fd = download_file_id(
@@ -73,7 +64,7 @@ def get_local_path_for_file(file_id, mime_type=None):
     )
 
 
-def download_all_images(service, folder_name=DEFAULT_FOLDER_NAME):
+def download_all_images(service, folder_name):
     files_in_folder = list_files_in_event_page_folder(
         service=service,
         folder_name=folder_name,
@@ -123,7 +114,7 @@ def download_file_id(service, file_id):
     return fd
 
 
-def get_event_page_folder(service, folder_name=DEFAULT_FOLDER_NAME):
+def get_event_page_folder(service, folder_name):
     get_parent_folder_q = (
         f"name = '{folder_name}' and mimeType = 'application/vnd.google-apps.folder'"
     )
@@ -134,7 +125,7 @@ def get_event_page_folder(service, folder_name=DEFAULT_FOLDER_NAME):
     return event_page_folder
 
 
-def list_files_in_event_page_folder(service, folder_name=DEFAULT_FOLDER_NAME):
+def list_files_in_event_page_folder(service, folder_name):
     event_page_folder = get_event_page_folder(
         service=service,
         folder_name=folder_name,
