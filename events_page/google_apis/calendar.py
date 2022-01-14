@@ -57,6 +57,7 @@ class Event(object):
 
     @property
     def category(self):
+        logger.info(f"{self.color_id=} => {self.categories_by_color_id.get(self.color_id)=}")
         if category := self.categories_by_color_id.get(self.color_id):
             return category
 
