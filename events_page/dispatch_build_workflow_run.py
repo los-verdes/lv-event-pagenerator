@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--repo_name",
-        default=env.github_repo.split("/", 1)[0],
+    default=env.github_repo.split("/", 1)[0],
     )
 
     parser.add_argument(

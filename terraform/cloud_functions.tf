@@ -1,5 +1,5 @@
 locals {
-  python_dir = "${path.module}/../events_page/"
+  python_dir    = "${path.module}/../events_page/"
   function_name = "push-webhook-receiver"
   webhook_url   = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
 
@@ -16,8 +16,8 @@ locals {
 }
 
 resource "local_file" "dotenv" {
-    filename = "${path.module}/../events_page/.env"
-    content     = join("\n", [for k, v in local.events_page_env: "${k}=${v}"])
+  filename = "${path.module}/../events_page/.env"
+  content  = join("\n", [for k, v in local.events_page_env : "${k}=${v}"])
 }
 
 data "google_storage_bucket" "cloud_functions" {
@@ -49,6 +49,7 @@ resource "google_cloudfunctions_function" "webhook" {
 
   available_memory_mb   = 128
   max_instances         = 5
+  timeout               = 300 # Nice five (5) minute timeout to give GitHub time to pick up our build workflow dispatch, etc.
   service_account_email = google_service_account.webhook_function.email
   source_archive_bucket = data.google_storage_bucket.cloud_functions.name
   source_archive_object = google_storage_bucket_object.webhook_archive.name
