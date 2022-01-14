@@ -133,7 +133,7 @@ def render_styles(settings, category_names, events=None):
     event_category_text_bg_colors = {}
 
     for event_category in settings["event_categories"].values():
-        class_name = f"category-{event_category['gcal']['color_id']}"
+        class_name = f"category-{event_category['gcal_color']['id']}"
 
         if cover_image_filename := event_category.get("cover_image_filename"):
             event_category_background_images[class_name] = cover_image_filename
