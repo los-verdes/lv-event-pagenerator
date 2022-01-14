@@ -45,4 +45,4 @@ jobs:
       - name: Build and Publish Site
         working-directory: events_page
         env: ${{ fromJSON(inputs.events_page_env) }}
-        run: ./build_and_publish_site.py
+        run: ./build_and_publish_site.py --quiet
