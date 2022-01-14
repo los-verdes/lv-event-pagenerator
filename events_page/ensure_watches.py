@@ -128,6 +128,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-w",
         "--web-hook-address",
+        default=env.webhook_url,
     )
     args = parser.parse_args()
 
