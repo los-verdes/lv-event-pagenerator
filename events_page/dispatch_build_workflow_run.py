@@ -21,14 +21,11 @@ if __name__ == "__main__":
         action="store_true",
     )
 
-    parser.add_argument(
-        "--github_org",
-        default=env.github_repo.split("/", 1)[0]
-    )
+    parser.add_argument("--github_org", default=env.github_repo.split("/", 1)[0])
 
     parser.add_argument(
         "--repo_name",
-    default=env.github_repo.split("/", 1)[0],
+        default=env.github_repo.split("/", 1)[1],
     )
 
     parser.add_argument(
