@@ -2,12 +2,12 @@
 
 <div class="mdl-cell mdl-cell--4-col" data-category="{{ event.category_name }}">
   <div
-    class="mdl-card mdl-shadow--2dp event-card {{ event.css_classes | default([]) | join(' ') }}{% if 'match_slug' in event %} event-card-{{ event.match_slug }}{% endif %}">
+    class="mdl-card mdl-shadow--2dp event-card {{ event.css_classes | default([]) | join(' ') }}{% if event.is_match %} event-card-{{ event.match_slug }}{% endif %}">
     <div class="mdl-card__title mdl-card--expand">
       <h4>
         <mark>{{ event.summary }}</mark>
         </br>
-        <mark><small>{{ event.start.strftime('%b %d') }} @ {{ event.start.strftime('%I:%M %p') }}</small></mark>
+        <mark><small>{{ event.start_dt.strftime('%b %d') }} @ {{ event.start_dt.strftime('%I:%M %p') }}</small></mark>
       </h4>
     </div>
     <div class="mdl-card__supporting-text">
@@ -18,14 +18,14 @@
           <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
               <i class="material-icons mdl-list__item-icon">event</i>
-              {{ event.start.strftime('%A, %b %d, %Y') }}
+              {{ event.start_dt.strftime('%A, %b %d, %Y') }}
             </span>
           </li>
 
           <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
               <i class="material-icons mdl-list__item-icon">schedule</i>
-              {{ event.start.strftime('%I:%M %p') }} - {{ event.end.strftime('%I:%M %p (%Z)') }}
+              {{ event.start_dt.strftime('%I:%M %p') }} - {{ event.end_dt.strftime('%I:%M %p (%Z)') }}
             </span>
           </li>
           {% if event.has_location %}

@@ -147,9 +147,9 @@ def render_styles(settings, category_names, events=None):
 
     if events is not None:
         for event in events:
-            class_name = f"event-{event['id']}"
+            class_name = event.event_specific_css_class
             # logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
-            if cover_image_filename := event.get("cover_image_filename"):
+            if cover_image_filename := event.cover_image_filename:
                 event_category_background_images[class_name] = cover_image_filename
 
     with app.app_context():

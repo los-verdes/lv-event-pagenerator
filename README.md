@@ -44,3 +44,9 @@ I think the easiest arrangement is to use event "colors" for selecting the categ
 # > syncs even if no push messages are received.
 # Reference: https://developers.google.com/calendar/api/guides/push#special-considerations
 ```
+
+## Local Runs
+
+```shellsession
+$ gcloud auth application-default login
+$ ./events_page/app.py

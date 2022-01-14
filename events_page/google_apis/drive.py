@@ -16,7 +16,6 @@ from google_apis import load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-DRIVE_RO_SCOPE = "https://www.googleapis.com/auth/drive.readonly"
 DEFAULT_FOLDER_NAME = "lv-event-cover-images"
 DEFAULT_SETTINGS_FILE_NAME = "event_page_settings.yaml"
 

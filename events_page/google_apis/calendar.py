@@ -6,7 +6,7 @@ from datetime import datetime
 from os.path import basename
 from urllib.parse import quote_plus
 from zoneinfo import ZoneInfo
-
+from functools import partial
 from dateutil.parser import parse
 from googleapiclient.discovery import build
 from logzero import setup_logger
@@ -14,13 +14,6 @@ from logzero import setup_logger
 from google_apis import load_credentials
 from google_apis.drive import get_local_path_for_file
 
-CALENDAR_RO_SCOPE = "https://www.googleapis.com/auth/calendar.readonly"
-
-
-zoom_url_regexp = re.compile(r"https://[a-zA-Z0-9]+\.zoom.us\/.*")
-game_regexp = re.compile(r"Austin FC (?P<vsat>vs|at) (?P<opponent>.*)")
-
-today = datetime.today()
 
 logger = setup_logger(name=__name__)
 
@@ -31,12 +24,145 @@ def build_service(credentials=None):
     return build("calendar", "v3", credentials=credentials)
 
 
+class Event(object):
+    today = datetime.today()
+    zoom_url_regexp = re.compile(r"https://[a-zA-Z0-9]+\.zoom.us\/.*")
+    game_regexp = re.compile(r"Austin FC (?P<vsat>vs|at) (?P<opponent>.*)")
+
+    def __init__(
+        self,
+        raw_event,
+        display_timezone,
+        categories_by_color_id,
+        mls_team_abbrs_by_name,
+    ) -> None:
+        self._event = raw_event
+        self.display_timezone = display_timezone
+        self.categories_by_color_id = categories_by_color_id
+        self.mls_team_abbrs_by_name = mls_team_abbrs_by_name
+
+    def __getattr__(self, key):
+        if value := self._event[key]:
+            return value
+        # convert key from snake to camel case
+        components = key.split("_")
+        # via: https://stackoverflow.com/a/19053800
+        # We capitalize the first letter of each component except the first one
+        # with the 'title' method and join them together.
+        camelKey = components[0] + "".join(x.title() for x in components[1:])
+        if value := self._event[camelKey]:
+            return value
+
+        raise AttributeError
+
+    @property
+    def category(self):
+        if category := self.categories_by_color_id.get(self.color_id):
+            return category
+
+        return dict()
+
+    @property
+    def category_name(self):
+        return self.category.get("category_name")
+
+    @property
+    def color_id(self):
+        return self._event.get("colorId", "0")
+
+    @property
+    def start_dt(self):
+        return self.parse_event_timestamp(self._event, "start")
+
+    @property
+    def end_dt(self):
+        return self.parse_event_timestamp(self._event, "end")
+
+    @property
+    def in_past(self):
+        return self.start_dt < self.today.replace(
+            tzinfo=ZoneInfo(self.display_timezone)
+        )
+
+    @property
+    def css_classes(self):
+        return [
+            f"category-{self.color_id}",
+            self.event_specific_css_class,
+        ]
+
+    @property
+    def event_specific_css_class(self):
+        return f"event-{self.id}"
+
+    @property
+    def has_location(self):
+        return bool(self.location)
+
+    @property
+    def location(self):
+        return self._event.get("location", "")
+
+    @property
+    def has_description(self):
+        return bool(self.description)
+
+    @property
+    def description(self):
+        return self._event.get("description", "")
+
+    @property
+    def description_lines(self):
+        return self.description.split("\n")
+
+    @property
+    def is_over_zoom(self):
+        return bool(self.zoom_url_regexp.match(self.location))
+
+    @property
+    def cover_image_filename(self):
+        if attachments := self._event.get("attachments"):
+            for attachment in attachments:
+                if attachment["mimeType"].startswith("image/"):
+                    logger.debug(f"{attachment=}")
+                    # TOOD: also ensure these files are downloaded at one point or another?
+                    return basename(
+                        get_local_path_for_file(
+                            attachment["fileId"], attachment["mimeType"]
+                        )
+                    )
+
+    @property
+    def is_match(self):
+        return self.game_regexp.match(self.summary) is not None
+
+    @property
+    def match_slug(self):
+        if summary_match := self.game_regexp.match(self.summary):
+            groups = summary_match.groupdict()
+            opp_abbr = self.mls_team_abbrs_by_name.get(groups["opponent"], "-")
+            if groups["vsat"] == "vs":
+                return f"atxvs{opp_abbr}"
+            else:
+                return f"{opp_abbr}vsatx"
+        return None
+
+    def parse_event_timestamp(self, event, timestamp_key):
+        parsed_dt = parse(
+            event[timestamp_key].get("dateTime", event[timestamp_key].get("date"))
+        )
+        parsed_dt = parsed_dt.replace(tzinfo=ZoneInfo(self.display_timezone))
+        return parsed_dt
+
+
 class Calendar(object):
     # Lazy caching by way of class attribute:
     events = None
     events_time_min = None
     events_time_max = None
     last_refresh = None
+
+    today = datetime.today()
 
     def __init__(
         self, service, calendar_id, display_timezone, event_categories, mls_teams
@@ -78,7 +204,7 @@ class Calendar(object):
     def current_event_category_names(self):
         if self.events is None:
             return list()
-        return [e["category_name"] for e in self.events]
+        return [e.category_name for e in self.events]
 
     @property
     def additional_category_names(self):
@@ -129,66 +255,14 @@ class Calendar(object):
         events = events_result.get("items", [])
         if not events:
             return []
-        for event in events:
-            color_id = event.get("colorId", "0")
-            # logger.debug(f"{color_id=} ({type(color_id)})")
-            event["color_id"] = color_id
-            event["css_classes"] = [
-                f"category-{event['color_id']}",
-                f"event-{event['id']}",
-            ]
-            if category := self.categories_by_color_id.get(event["color_id"]):
-                # logger.debug(f"{event['color_id']=} => {category=}")
-                event.update(category)
-
-            for key in ["start", "end"]:
-                event[key] = self.parse_event_timestamp(event, key)
-
-            if event["start"] < today.replace(tzinfo=ZoneInfo(self.display_timezone)):
-                event["in_past"] = True
-
-            event["has_location"] = True
-            if not event.get("location"):
-                event["has_location"] = False
-
-            event["has_description"] = False
-            if event.get("description") is not None:
-                event["has_description"] = True
-                event["description_lines"] = event.get("description", "").split("\n")
-
-            event["is_over_zoom"] = bool(
-                zoom_url_regexp.match(event.get("location", ""))
-            )
-
-            if attachments := event.get("attachments"):
-                for attachment in attachments:
-                    if attachment["mimeType"].startswith("image/"):
-                        # logger.debug(f"{attachment=}")
-                        # TOOD: also ensure these files are downloaded at one point or another?
-                        event["cover_image_filename"] = basename(
-                            get_local_path_for_file(
-                                attachment["fileId"], attachment["mimeType"]
-                            )
-                        )
-
-            if summary_match := game_regexp.match(event["summary"]):
-                groups = summary_match.groupdict()
-                opp_abbr = mls_team_abbrs_by_name.get(groups["opponent"], "-")
-                if groups["vsat"] == "vs":
-                    event["match_slug"] = f"atxvs{opp_abbr}"
-                else:
-                    event["match_slug"] = f"{opp_abbr}vsatx"
-            if event.get("category_name") is None:
-                event["category_name"] = "misc"
-        self.events = events
-        return self.events
-
-    def parse_event_timestamp(self, event, timestamp_key):
-        parsed_dt = parse(
-            event[timestamp_key].get("dateTime", event[timestamp_key].get("date"))
+        new_event = partial(
+            Event,
+            categories_by_color_id=self.categories_by_color_id,
+            display_timezone=self.display_timezone,
+            mls_team_abbrs_by_name=mls_team_abbrs_by_name,
         )
-        parsed_dt = parsed_dt.replace(tzinfo=ZoneInfo(self.display_timezone))
-        return parsed_dt
+        self.events = [new_event(e) for e in events]
+        return self.events
 
 
 def ensure_watch(
@@ -197,7 +271,7 @@ def ensure_watch(
     channel_id,
     web_hook_address,
     webhook_token,
-    expiration_in_days=None,
+    expiration_in_days=1,
 ):
     current_seconds = time.time()
     added_seconds = expiration_in_days * 24 * 60 * 60
