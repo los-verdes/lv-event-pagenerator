@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-    uses: jeffwecan/lv-event-pagenerator/.github/workflows/load_terraform_outputs.yml@main
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/load_events_env.yml@main
 
   ensure-watches:
     name: Ensure GCal and GDrive Watches
