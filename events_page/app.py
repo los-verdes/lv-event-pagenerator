@@ -100,31 +100,33 @@ def create_app():
     app.config.update(default_settings)
 
     drive_service = drive.build_service()
-    settings = drive.load_settings(drive_service, env.folder_name, env.file_name)
+    settings = drive.load_settings(drive_service, env.folder_name, env.settings_file_name)
 
     # Ensure all our category and event-specifc cover images are downloaded
     drive.download_all_images_in_folder(drive_service, env.folder_name)
-    settings["event_categories"] = drive.download_category_images(
-        drive_service, settings["event_categories"]
-    )
+    if "event_categories" in settings:
+        # Lookup category images metadata and download em:
+        settings["event_categories"] = drive.download_category_images(
+            drive_service, settings["event_categories"]
+        )
     app.config.update(settings)
 
     return app
 
 
 def get_base_url():
-    return f"https://{os.getenv('EVENTS_PAGE_HOSTNAME')}"
+    return f"https://{env.hostname}"
 
 
 def render_styles(settings, category_names, events=None):
-    category_names = list(
-        set(category_names)
-        | {
+    always_shown_categories = set()
+    if "event_categories" in settings:
+        always_shown_categories = {
             n
             for n, c in settings["event_categories"].items()
             if c.get("always_shown_in_filters")
         }
-    )
+    category_names = list(set(category_names) | always_shown_categories)
     event_category_background_images = {}
     event_category_background_colors = {}
     event_category_text_fg_colors = {}

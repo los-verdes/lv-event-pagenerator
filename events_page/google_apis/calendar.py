@@ -64,7 +64,7 @@ class Event(object):
 
     @property
     def category_name(self):
-        return self.category.get("category_name")
+        return self.category.get("category_name", "misc")
 
     @property
     def color_id(self):

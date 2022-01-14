@@ -1,35 +1,29 @@
 #!/usr/bin/env python
 import logging
-import os
 
 import logzero
 from googleapiclient.errors import HttpError
 from logzero import logger
 
+from config import env
 from google_apis import calendar, drive
 from webhook import get_webhook_token
-
-# DEFAULT_EXPIRATION_IN_DAYS = 1
-DEFAULT_EXPIRATION_IN_DAYS = 0.1
-DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
-DEFAULT_WEB_HOOK_ADDRESS = (
-    "https://us-central1-losverdesatx-events.cloudfunctions.net/push-webhook-receiver"
-)
-
 
 logzero.loglevel(logging.INFO)
 
 
-def ensure_watches(web_hook_address, webhook_token, calendar_id, settings_file_id):
+def ensure_watches(web_hook_address, webhook_token, calendar_id, settings_file_id, expiration_in_days):
     ensure_events_watch(
         web_hook_address=web_hook_address,
         webhook_token=webhook_token,
         calendar_id=calendar_id,
+        expiration_in_days=expiration_in_days,
     )
     ensure_drive_watch(
         web_hook_address=web_hook_address,
         webhook_token=webhook_token,
         settings_file_id=settings_file_id,
+        expiration_in_days=expiration_in_days,
     )
 
 
@@ -38,8 +32,8 @@ def ensure_watch(
     channel_id,
     web_hook_address,
     webhook_token,
+    expiration_in_days,
     watch_kwargs=None,
-    expiration_in_days=DEFAULT_EXPIRATION_IN_DAYS,
 ):
     if watch_kwargs is None:
         watch_kwargs = dict()
@@ -66,24 +60,26 @@ def ensure_watch(
         )
 
 
-def ensure_events_watch(web_hook_address, webhook_token, calendar_id):
+def ensure_events_watch(web_hook_address, webhook_token, calendar_id, expiration_in_days):
     ensure_watch(
         api_module=calendar,
         channel_id=f"events-page-{calendar_id.split('@', 1)[0]}-watch",
         web_hook_address=web_hook_address,
         webhook_token=webhook_token,
+        expiration_in_days=expiration_in_days,
         watch_kwargs=dict(
             calendar_id=calendar_id,
         ),
     )
 
 
-def ensure_drive_watch(web_hook_address, webhook_token, settings_file_id):
+def ensure_drive_watch(web_hook_address, webhook_token, settings_file_id, expiration_in_days):
     ensure_watch(
         api_module=drive,
         channel_id=f"events-page-{settings_file_id}-watch",
         web_hook_address=web_hook_address,
         webhook_token=webhook_token,
+        expiration_in_days=expiration_in_days,
         watch_kwargs=dict(
             file_id=settings_file_id,
         ),
@@ -106,22 +102,26 @@ if __name__ == "__main__":
     parser.add_argument(
         "-c",
         "--calendar-id",
-        default=os.getenv("EVENTS_PAGE_CALENDAR_ID", DEFAULT_CALENDAR_ID),
+        default=env.calendar_id,
     )
     parser.add_argument(
         "-s",
         "--settings-file-name",
-        default=drive.DEFAULT_SETTINGS_FILE_NAME,
+        default=env.settings_file_name,
     )
     parser.add_argument(
         "-g",
         "--gdrive-folder-name",
-        default=drive.DEFAULT_FOLDER_NAME,
+        default=env.folder_name,
+    )
+    parser.add_argument(
+        "-e",
+        "--expiration-in-days",
+        default=env.watch_expiration_in_days,
     )
     parser.add_argument(
         "-w",
         "--web-hook-address",
-        default=DEFAULT_WEB_HOOK_ADDRESS,
     )
     args = parser.parse_args()
 
@@ -138,4 +138,5 @@ if __name__ == "__main__":
         webhook_token=get_webhook_token(),
         calendar_id=args.calendar_id,
         settings_file_id=settings_file_id,
+        expiration_in_days=args.expiration_in_days,
     )

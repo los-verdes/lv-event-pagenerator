@@ -28,6 +28,9 @@ def get_settings_file_id(service, folder_name, file_name):
         service=service,
         folder_name=folder_name,
     )
+    if file_name not in files_in_folder:
+        return None
+
     settings_file_id = files_in_folder[file_name]["id"]
     return settings_file_id
 
@@ -38,6 +41,9 @@ def load_setting(service, key, folder_name, file_name):
 
 def load_settings(service, folder_name, file_name):
     settings_file_id = get_settings_file_id(service, folder_name, file_name)
+    if settings_file_id is None:
+        logger.warning(f"Unable to find file of id of {folder_name}/{file_name}. Using default settings!")
+        return dict()
     print(f"load_settings_from_drive(): {settings_file_id=}")
     settings_fd = download_file_id(
         service=service,
@@ -126,10 +132,20 @@ def get_event_page_folder(service, folder_name):
 
 
 def list_files_in_event_page_folder(service, folder_name):
-    event_page_folder = get_event_page_folder(
-        service=service,
-        folder_name=folder_name,
-    )
+    try:
+        event_page_folder = get_event_page_folder(
+            service=service,
+            folder_name=folder_name,
+        )
+
+    except HttpError as err:
+        if err.status_code != 404:
+            raise
+        logger.warning(
+            f"Unable to list event page folders, no files / relying on defaults and such: {err=}"
+        )
+        return dict()
+
     files = list_files(
         service=service, q=f"'{event_page_folder['id']}' in parents"
     ).get("files", [])

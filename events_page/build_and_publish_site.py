@@ -6,6 +6,7 @@ from flask_frozen import Freezer
 from logzero import logger
 
 from app import create_app
+from config import env
 from google_apis import secrets, storage
 
 
@@ -15,12 +16,12 @@ def freeze_site(app):
     return freeze_result
 
 
-def purge_cache(cf, cdn_zone_name):
-    logger.debug(f"Loading zone info for {cdn_zone_name=}")
-    zones = cf.zones.get(params={"per_page": 50, "name": cdn_zone_name})
+def purge_cache(cf, cloudflare_zone):
+    logger.debug(f"Loading zone info for {cloudflare_zone=}")
+    zones = cf.zones.get(params={"per_page": 50, "name": cloudflare_zone})
     if not zones:
         raise Exception(
-            f"Unable to find DNS zone ID for {cdn_zone_name=} at Cloudflare..."
+            f"Unable to find DNS zone ID for {cloudflare_zone=} at Cloudflare..."
         )
     zone = zones[0]
     zone_id = zone["id"]
@@ -55,17 +56,20 @@ def prime_cache(site_hostname, new_paths):
     return responses
 
 
-def build_static_site(site_hostname, cdn_zone_name):
+def build_static_site(site_hostname, cloudflare_zone):
     freeze_result = freeze_site(app=create_app())
     storage.upload_build_to_gcs(
         client=storage.get_client(),
         bucket_id=site_hostname,
     )
-    cdn_api_token = secrets.read_secret(secrets.CDN_TOKEN_SECRET_NAME)["token"]
-    purge_cache(
-        CloudFlare(token=cdn_api_token),
-        cdn_zone_name=cdn_zone_name,
-    )
+    if cloudflare_zone is not None:
+        cdn_api_token = secrets.read_secret(secrets.CDN_TOKEN_SECRET_NAME)["token"]
+        purge_cache(
+            CloudFlare(token=cdn_api_token),
+            cloudflare_zone=cloudflare_zone,
+        )
+    else:
+        logger.warning(f"Skipping cache purge bits as {cloudflare_zone}")
     prime_cache(site_hostname=site_hostname, new_paths=freeze_result)
 
 
@@ -85,11 +89,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         "--site-hostname",
+        default=env.hostname,
         help="Fully-qualified domain name of the published site. Used in cache purging / priming methods.",
     )
     parser.add_argument(
         "-z",
-        "--cdn-zone-name",
+        "--cloudflare-zone",
+        default=env.get("cloudflare_zone"),
         help="Name of zone at CDN provider (Cloudflare only provider currently considered / supported).",
     )
     args = parser.parse_args()
@@ -99,5 +105,5 @@ if __name__ == "__main__":
 
     build_static_site(
         site_hostname=args.site_hostname,
-        cdn_zone_name=args.cdn_zone_name,
+        cloudflare_zone=args.cloudflare_zone,
     )
