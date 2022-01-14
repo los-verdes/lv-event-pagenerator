@@ -59,6 +59,6 @@ jobs:
           key: events-page-dotenv-${{ github.sha }}
 
       - name: Dispatch build-and-publish-site workflow
-        run: just dispatch-build-run  # pass in github.repo here...
+        run: just dispatch-build-run  # pass in github.repo here... or get default args from dotenv
         env:
           GITHUB_PAT: ${{ secrets.site_publisher_github_pat }}

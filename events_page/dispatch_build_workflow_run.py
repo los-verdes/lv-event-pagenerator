@@ -4,6 +4,7 @@ from textwrap import dedent
 
 from logzero import logger
 
+from config import env
 from github import dispatch_build_workflow_run, get_github_client
 
 if __name__ == "__main__":
@@ -22,12 +23,12 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--github_org",
-        default="jeffwecan",
+        default=env.github_repo.split("/", 1)[0]
     )
 
     parser.add_argument(
         "--repo_name",
-        default="lv-event-pagenerator",
+        default=env.github_repo.split("/", 1)[0],
     )
 
     parser.add_argument(
