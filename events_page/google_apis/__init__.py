@@ -13,9 +13,9 @@ DEFAULT_SCOPES = [
 
 def load_credentials(scopes=DEFAULT_SCOPES):
     credentials, _ = google.auth.default(scopes=scopes)
-    if env.sa_email:
+    if sa_email := env.get('sa_email'):
         source_credentials = credentials
-        target_principal = env.sa_email
+        target_principal = sa_email
         credentials = impersonated_credentials.Credentials(
             source_credentials=source_credentials,
             target_principal=target_principal,
