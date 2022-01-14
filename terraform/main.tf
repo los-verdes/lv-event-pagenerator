@@ -1,4 +1,3 @@
-
 terraform {
   backend "gcs" {
     bucket = "losverdesatx-events-tfstate"

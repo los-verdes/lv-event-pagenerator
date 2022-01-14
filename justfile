@@ -29,7 +29,7 @@ tf-auto-apply: tf-plan
   just run-tf 'apply -auto-approve'
 
 tf-targeted-apply target:
-  just run-tf 'apply -auto-approve -target={{ target }}'
+  just run-tf 'apply -lock=false -auto-approve -target={{ target }}'
 
 tf-unlock lock_id:
   just run-tf "force-unlock -force '{{ lock_id }}'"
