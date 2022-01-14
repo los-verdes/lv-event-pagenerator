@@ -2,7 +2,7 @@ name: Build and Publish Site
 
 concurrency:
   group: "build-and-publish-${{ github.ref }}"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 on:
   workflow_call:
