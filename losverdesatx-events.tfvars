@@ -1,0 +1,12 @@
+gcp_billing_account_id   = "019767-2A54C9-AE07C6"
+# gcp_billing_account_name = "Los Verdes"
+gcp_project_editors      = []
+gcp_project_id           = "losverdesatx-events"
+gcp_project_name         = "Los Verdes events page!"
+gcp_project_owners       = []
+gcp_region               = "us-central1"
+github_repo              = "jeffwecan/lv-event-pagenerator"
+page_description         = "Los Verdes Event Page"
+source_calendar_id       = "information@losverdesatx.org"
+static_site_domain       = "asfasfsafsasfa.org"
+static_site_subdomain    = "los-verdes-events"
