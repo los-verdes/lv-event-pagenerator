@@ -52,6 +52,12 @@ jobs:
           TF_VAR_cloudflare_api_token: ${{ secrets.cloudflare_api_token }}
           TF_VAR_site_publisher_github_pat: ${{ secrets.site_publisher_github_pat }}
 
+      - name: Utilize pip cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('events_page/requirements.txt') }}
+
       - name: Cache the dotenv file emitted by Terraform
         uses: actions/cache@v2
         with:
@@ -59,6 +65,6 @@ jobs:
           key: events-page-dotenv-${{ github.sha }}
 
       - name: Dispatch build-and-publish-site workflow
-        run: just dispatch-build-run  # pass in github.repo here... or get default args from dotenv
+        run: just dispatch-build-run # pass in github.repo here... or get default args from dotenv
         env:
           GITHUB_PAT: ${{ secrets.site_publisher_github_pat }}

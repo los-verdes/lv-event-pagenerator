@@ -30,6 +30,12 @@ jobs:
           workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
           service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
+      - name: Utilize pip cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('events_page/requirements.txt') }}
+
       - name: Cache the dotenv file emitted by Terraform
         id: cache
         uses: actions/cache@v2
