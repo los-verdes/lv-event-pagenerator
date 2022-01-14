@@ -26,7 +26,7 @@ module "github_oidc" {
 
 resource "google_service_account" "site_publisher" {
   account_id   = "gh-publisher-${var.static_site_subdomain}"
-  display_name = var.service_account_description
+  display_name = var.page_description
 }
 
 resource "google_project_iam_member" "site_publisher_viewer" {

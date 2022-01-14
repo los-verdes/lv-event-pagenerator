@@ -18,7 +18,7 @@ resource "google_storage_bucket_object" "webhook_archive" {
 
 resource "google_service_account" "webhook_function" {
   account_id   = "webhook-${var.static_site_subdomain}"
-  display_name = var.service_account_description
+  display_name = var.page_description
 }
 
 locals {
