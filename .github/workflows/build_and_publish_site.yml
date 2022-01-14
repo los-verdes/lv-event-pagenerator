@@ -39,6 +39,4 @@ jobs:
           service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Build and Publish Site
-        working-directory: events_page
-        env: ${{ fromJSON(inputs.events_page_env) }}
         run: just build-and-publish

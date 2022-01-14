@@ -48,5 +48,4 @@ jobs:
           service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Ensure GCal and GDrive Watches
-        working-directory: events_page
         run: just ensure-watches
