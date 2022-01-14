@@ -64,7 +64,7 @@
         <span class="mdl-navigation__link">
           <b>last data refresh</b>
           <br>
-          {{ (calendar.last_refresh | replace_tz).strftime('%c') }}
+          {{ (calendar.last_refresh | replace_tz).strftime('%c %Z') }}
         </span>
       </nav>
     </div>

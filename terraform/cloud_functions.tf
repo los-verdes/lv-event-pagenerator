@@ -26,12 +26,14 @@ locals {
   webhook_url   = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
 
   events_page_env = {
-    EVENTS_PAGE_CLOUDFLARE_ZONE = var.cloudflare_zone
-    EVENTS_PAGE_CALENDAR_ID     = var.calendar_id
-    EVENTS_PAGE_GITHUB_REPO     = var.github_repo
-    EVENTS_PAGE_HOSTNAME        = google_storage_bucket.static_site.name
-    EVENTS_PAGE_SECRET_NAME     = google_secret_manager_secret_version.events_page.name
-    EVENTS_PAGE_WEBHOOK_URL     = local.webhook_url
+    EVENTS_PAGE_CLOUDFLARE_ZONE    = var.cloudflare_zone
+    EVENTS_PAGE_CALENDAR_ID        = var.calendar_id
+    EVENTS_PAGE_FOLDER_NAME        = var.gdrive_folder_name
+    EVENTS_PAGE_SETTINGS_FILE_NAME = var.gdrive_settings_file_name
+    EVENTS_PAGE_GITHUB_REPO        = var.github_repo
+    EVENTS_PAGE_HOSTNAME           = google_storage_bucket.static_site.name
+    EVENTS_PAGE_SECRET_NAME        = google_secret_manager_secret_version.events_page.name
+    EVENTS_PAGE_WEBHOOK_URL        = local.webhook_url
   }
 }
 
