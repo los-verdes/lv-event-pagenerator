@@ -32,9 +32,9 @@ def process_push_notification(request):
     if push["resource_uri"].startswith("https://www.googleapis.com/calendar"):
         logger.debug("calendar push!")
 
-    workflow_run = dispatch_build()
-    logger.debug(f"dispatch_build() result: {workflow_run=}")
-    return workflow_run
+    dispatched_workflow_run = dispatch_build()
+    logger.debug(f"dispatch_build() result: {dispatched_workflow_run=}")
+    return f"{dispatched_workflow_run.id=}: {dispatched_workflow_run.status=}"
 
 
 def dispatch_build():
