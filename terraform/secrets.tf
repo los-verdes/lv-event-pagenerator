@@ -14,7 +14,7 @@ resource "google_secret_manager_secret" "events_page" {
 resource "google_secret_manager_secret_version" "events_page" {
   secret = google_secret_manager_secret.events_page.id
   secret_data = jsonencode({
-    cloudflare_api_token        = var.cloudflare_api_token
+    cloudflare_api_token      = var.cloudflare_api_token
     site_publisher_github_pat = var.site_publisher_github_pat
     webhook_token             = random_password.webhook_token.result
   })
