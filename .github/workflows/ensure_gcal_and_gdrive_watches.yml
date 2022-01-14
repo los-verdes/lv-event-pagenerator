@@ -5,17 +5,10 @@ on:
     - cron:  '0 */4 * * *'
 
 jobs:
-  load-events-env:
-    permissions:
-      contents: "read"
-      id-token: "write"
-    uses: jeffwecan/lv-event-pagenerator/.github/workflows/load_events_env.yml@main
-
   ensure-watches:
     name: Ensure GCal and GDrive Watches
     needs: load-events-env
     runs-on: ubuntu-latest
-    environment: prod-site
     permissions:
       contents: "read"
       id-token: "write"

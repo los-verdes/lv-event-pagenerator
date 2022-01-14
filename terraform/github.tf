@@ -19,7 +19,7 @@ module "github_oidc" {
   sa_mapping = {
     "gh-site-publisher" = {
       sa_name   = google_service_account.site_publisher.name
-      attribute = "attribute.environment/prod-site"
+      attribute = "attribute.ref/refs/heads/main"
     }
     "gh-terraform-applier" = {
       sa_name   = google_service_account.gh_terraform_applier.name
