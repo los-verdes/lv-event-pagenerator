@@ -23,8 +23,6 @@ def dispatch_build_workflow_run(
     github_client,
     workflow_filename: str,
     github_ref: str,
-    site_hostname: str,
-    cdn_zone_name: str,
 ) -> AttrDict:
     """Class-scoped fixture that dispatches the build workflow and returns the resulting workflow run."""
     # First get the full list of existing workflow runs (used subsequently to determine which workflow run is
@@ -42,10 +40,7 @@ def dispatch_build_workflow_run(
         )
         extant_workflow_run_ids = []
 
-    dispatch_inputs = {
-        "site_hostname": site_hostname,
-        "cdn_zone_name": cdn_zone_name,
-    }
+    dispatch_inputs = {}
 
     logger.debug(
         f"Dispatching {workflow_filename} with {github_ref=} and {dispatch_inputs=}"
@@ -175,18 +170,6 @@ if __name__ == "__main__":
         ),
     )
 
-    parser.add_argument(
-        "-s",
-        "--site-hostname",
-        help="Fully-qualified domain name of the published site. Used in cache purging / priming methods.",
-    )
-
-    parser.add_argument(
-        "-z",
-        "--cdn-zone-name",
-        help="Name of zone at CDN provider (Cloudflare only provider currently considered / supported).",
-    )
-
     args = parser.parse_args()
 
     if args.quiet:
@@ -202,7 +185,5 @@ if __name__ == "__main__":
         github_client=github_client,
         github_ref=args.github_ref,
         workflow_filename=args.workflow_filename,
-        site_hostname=args.site_hostname,
-        cdn_zone_name=args.cdn_zone_name,
     )
     logger.debug(f"result: {workflow_run=}")

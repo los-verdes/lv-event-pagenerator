@@ -5,9 +5,8 @@ import re
 
 import logzero
 from logzero import logger
-
-from dispatch_build_workflow_run import (dispatch_build_workflow_run,
-                                         get_github_client)
+from config import env
+from dispatch_build_workflow_run import dispatch_build_workflow_run, get_github_client
 from google_apis.secrets import get_github_pat, get_webhook_token
 
 uri_regexp = re.compile(
@@ -39,21 +38,17 @@ def process_push_notification(request):
 
 
 def dispatch_build():
-    github_org, repo_name = os.environ["EVENTS_PAGE_GITHUB_REPO"].split("/", 1)
+    github_org, repo_name = env.github_repo.split("/", 1)
     github_client = get_github_client(
         owner=github_org,
         repo=repo_name,
         token=get_github_pat(),
     )
 
-    site_hostname = os.environ["EVENTS_PAGE_HOSTNAME"]
-    cdn_zone_name = os.environ["EVENTS_PAGE_BASE_DOMAIN"]
     workflow_run = dispatch_build_workflow_run(
         github_client=github_client,
         github_ref="main",
         workflow_filename="trigger_site_build.yml",
-        site_hostname=site_hostname,
-        cdn_zone_name=cdn_zone_name,
     )
     return workflow_run
 

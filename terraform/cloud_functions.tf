@@ -35,31 +35,31 @@ locals {
   }
 }
 
-# resource "google_cloudfunctions_function" "webhook" {
-#   name        = local.function_name
-#   description = "Listens for calendar-event-related drive changes"
-#   runtime     = "python39"
+resource "google_cloudfunctions_function" "webhook" {
+  name        = local.function_name
+  description = "Listens for calendar-event-related drive changes"
+  runtime     = "python39"
 
-#   available_memory_mb   = 128
-#   max_instances         = 5
-#   service_account_email = google_service_account.webhook_function.email
-#   source_archive_bucket = data.google_storage_bucket.cloud_functions.name
-#   source_archive_object = google_storage_bucket_object.webhook_archive.name
-#   trigger_http          = true
-#   entry_point           = "process_push_notification"
+  available_memory_mb   = 128
+  max_instances         = 5
+  service_account_email = google_service_account.webhook_function.email
+  source_archive_bucket = data.google_storage_bucket.cloud_functions.name
+  source_archive_object = google_storage_bucket_object.webhook_archive.name
+  trigger_http          = true
+  entry_point           = "process_push_notification"
 
-#   environment_variables = local.events_page_env
+  environment_variables = local.events_page_env
 
-#   build_environment_variables = {
-#     GOOGLE_FUNCTION_SOURCE = "webhook.py"
-#   }
-# }
+  build_environment_variables = {
+    GOOGLE_FUNCTION_SOURCE = "webhook.py"
+  }
+}
 
-# resource "google_cloudfunctions_function_iam_member" "webhook_allow_all" {
-#   project        = google_cloudfunctions_function.webhook.project
-#   region         = google_cloudfunctions_function.webhook.region
-#   cloud_function = google_cloudfunctions_function.webhook.name
+resource "google_cloudfunctions_function_iam_member" "webhook_allow_all" {
+  project        = google_cloudfunctions_function.webhook.project
+  region         = google_cloudfunctions_function.webhook.region
+  cloud_function = google_cloudfunctions_function.webhook.name
 
-#   role   = "roles/cloudfunctions.invoker"
-#   member = "allUsers"
-# }
+  role   = "roles/cloudfunctions.invoker"
+  member = "allUsers"
+}

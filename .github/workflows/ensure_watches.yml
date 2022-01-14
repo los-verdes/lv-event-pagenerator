@@ -49,9 +49,4 @@ jobs:
       - name: Ensure GCal and GDrive Watches
         working-directory: events_page
         env: ${{ fromJSON(needs.load-events-env.outputs.events_page_env) }}
-        run: |
-          # TODO: figure out canonical location for settings-file-name and such when finalizing setting arrangements
-          ./ensure_watches.py \
-            --calendar-id="${{ env.EVENTS_PAGE_CALENDAR_ID }}" \
-            --settings-file-name='event_page_settings.yaml' \
-            --gdrive-folder-name='lv-event-cover-images'
+        run: ./ensure_watches.py

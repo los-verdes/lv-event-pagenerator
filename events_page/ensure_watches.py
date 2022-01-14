@@ -12,7 +12,9 @@ from google_apis.secrets import get_webhook_token
 logzero.loglevel(logging.INFO)
 
 
-def ensure_watches(web_hook_address, webhook_token, calendar_id, settings_file_id, expiration_in_days):
+def ensure_watches(
+    web_hook_address, webhook_token, calendar_id, settings_file_id, expiration_in_days
+):
     ensure_events_watch(
         web_hook_address=web_hook_address,
         webhook_token=webhook_token,
@@ -60,7 +62,9 @@ def ensure_watch(
         )
 
 
-def ensure_events_watch(web_hook_address, webhook_token, calendar_id, expiration_in_days):
+def ensure_events_watch(
+    web_hook_address, webhook_token, calendar_id, expiration_in_days
+):
     ensure_watch(
         api_module=calendar,
         channel_id=f"events-page-{calendar_id.split('@', 1)[0]}-watch",
@@ -73,7 +77,9 @@ def ensure_events_watch(web_hook_address, webhook_token, calendar_id, expiration
     )
 
 
-def ensure_drive_watch(web_hook_address, webhook_token, settings_file_id, expiration_in_days):
+def ensure_drive_watch(
+    web_hook_address, webhook_token, settings_file_id, expiration_in_days
+):
     ensure_watch(
         api_module=drive,
         channel_id=f"events-page-{settings_file_id}-watch",
@@ -138,5 +144,5 @@ if __name__ == "__main__":
         webhook_token=get_webhook_token(),
         calendar_id=args.calendar_id,
         settings_file_id=settings_file_id,
-        expiration_in_days=args.expiration_in_days,
+        expiration_in_days=float(args.expiration_in_days),
     )

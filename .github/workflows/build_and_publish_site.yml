@@ -45,7 +45,4 @@ jobs:
       - name: Build and Publish Site
         working-directory: events_page
         env: ${{ fromJSON(inputs.events_page_env) }}
-        run: |
-          ./build_and_publish_site.py \
-            --site-hostname="${{ env.EVENTS_PAGE_HOSTNAME }}" \
-            --cdn-zone-name="${{ env.EVENTS_PAGE_BASE_DOMAIN }}"
+        run: ./build_and_publish_site.py
