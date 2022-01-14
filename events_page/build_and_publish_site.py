@@ -7,7 +7,8 @@ from logzero import logger
 
 from app import create_app
 from config import env
-from google_apis import secrets, storage
+from google_apis import storage
+from google_apis.secrets import get_cloudflare_api_token
 
 
 def freeze_site(app):
@@ -63,9 +64,8 @@ def build_static_site(site_hostname, cloudflare_zone):
         bucket_id=site_hostname,
     )
     if cloudflare_zone is not None:
-        cdn_api_token = secrets.read_secret(secrets.CDN_TOKEN_SECRET_NAME)["token"]
         purge_cache(
-            CloudFlare(token=cdn_api_token),
+            CloudFlare(token=get_cloudflare_api_token()),
             cloudflare_zone=cloudflare_zone,
         )
     else:

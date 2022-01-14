@@ -6,9 +6,9 @@ import re
 import logzero
 from logzero import logger
 
-from dispatch_build_workflow_run import dispatch_build_workflow_run, get_github_client
-from google_apis import secrets
-
+from dispatch_build_workflow_run import (dispatch_build_workflow_run,
+                                         get_github_client)
+from google_apis.secrets import get_github_pat, get_webhook_token
 
 uri_regexp = re.compile(
     r"https://www.googleapis.com/drive/v3/files/(?P<file_id>[^?]+).*"
@@ -74,14 +74,6 @@ def parse_push(req_headers):
     logger.debug(f"{bool(push.get('channel_token') == webhook_token)=}")
     assert push.get("channel_token") == webhook_token, "channel token mismatch 💥🚨"
     return push
-
-
-def get_webhook_token():
-    return secrets.read_secret(secrets.WEBHOOK_TOKEN_SECRET_NAME)["token"]
-
-
-def get_github_pat():
-    return secrets.read_secret(secrets.GITHUB_PAT_SECRET_NAME)["token"]
 
 
 def local_invocation():
