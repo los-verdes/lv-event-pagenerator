@@ -1,8 +1,8 @@
 name: Deploy Infrastructure
 
-# concurrency:
-#   group: "deploy-infrastructure"
-#   cancel-in-progress: true
+concurrency:
+  group: "deploy-infrastructure"
+  cancel-in-progress: false
 
 on:
   push:
