@@ -25,6 +25,11 @@ jobs:
       - name: Setup just
         uses: extractions/setup-just@v1
 
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
       - name: Read .terraform-version
         id: read_tf_version
         run: just set-tf-ver-output
@@ -53,9 +58,7 @@ jobs:
           path: events_page/.env
           key: events-page-dotenv-${{ github.sha }}
 
-  trigger-site-build:
-    needs: deploy-infrastructure
-    permissions:
-      contents: "read"
-      id-token: "write"
-    uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
+      - name: Dispatch build-and-publish-site workflow
+        run: just dispatch-build-run  # pass in github.repo here...
+        env:
+          GITHUB_PAT: ${{ secrets.site_publisher_github_pat }}

@@ -34,11 +34,27 @@ jobs:
           workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
           service_account: "gh-terraform-applier@losverdesatx-events.iam.gserviceaccount.com"
 
-      - name: Retrieve cached dotenv file
+      - name: Cache the dotenv file emitted by Terraform
+        id: cache
         uses: actions/cache@v2
         with:
           path: events_page/.env
           key: events-page-dotenv-${{ github.sha }}
+
+      - name: Read .terraform-version
+        if: steps.cache.outputs.cache-hit != 'true'
+        id: read_tf_version
+        run: just set-tf-ver-output
+
+      - name: Setup Terraform
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ steps.read_tf_version.outputs.terraform_version }}
+
+      - name: Ensure events_page dotenv File Present
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: just export-env
 
       - name: Build and Publish Site
         run: just build-and-publish
