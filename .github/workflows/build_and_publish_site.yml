@@ -5,6 +5,7 @@ concurrency:
   cancel-in-progress: false
 
 on:
+  workflow_dispatch: {}
   workflow_call:
     inputs:
       events_page_env:
@@ -20,29 +21,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - id: "auth"
-        name: "Authenticate to Google Cloud"
-        uses: "google-github-actions/auth@v0"
-        with:
-          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
-          service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
-
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v0.2.1"
-
-      - name: "Use gcloud CLI"
-        run: "gcloud info"
+      - name: Setup just
+        uses: extractions/setup-just@v1
 
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
 
-      - name: Install Python Dependencies
-        working-directory: events_page
-        run: pip3 install --requirement=requirements.txt
+      - name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v0"
+        with:
+          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
+          service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Build and Publish Site
         working-directory: events_page
         env: ${{ fromJSON(inputs.events_page_env) }}
-        run: ./build_and_publish_site.py --quiet
+        run: just build-and-publish

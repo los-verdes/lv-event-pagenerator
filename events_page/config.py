@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import os
+import re
 
+from logzero import logger
 
 # phases of the 🌙
 DEFAULT_CALENDAR_ID = "ht3jlfaac5lfd6263ulfh4tql8@group.calendar.google.com"
@@ -14,6 +16,8 @@ DEFAULT_WATCH_EXPIRATION_IN_DAYS = "0.1"
 
 
 class Config(object):
+    key_re = re.compile(r"^EVENTS_PAGE_(?P<key>.*)")
+
     defaults = dict(
         calendar_id=DEFAULT_CALENDAR_ID,
         display_timezone=DEFAULT_DISPLAY_TIMEZONE,
@@ -39,5 +43,14 @@ class Config(object):
 
         raise AttributeError
 
+    def to_dict(self):
+        config_dict = self.defaults
+        for k, v in os.environ.items():
+            if key_match := self.key_re.match(k):
+                friendly_key = key_match.groupdict()["key"].lower()
+                config_dict[friendly_key] = v
+        return config_dict
+
 
 env = Config()
+logger.debug(f"Config loaded from environment: {env.to_dict()=}")
