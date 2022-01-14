@@ -47,6 +47,12 @@ jobs:
           TF_VAR_cloudflare_api_token: ${{ secrets.cloudflare_api_token }}
           TF_VAR_site_publisher_github_pat: ${{ secrets.site_publisher_github_pat }}
 
+      - name: Cache the dotenv file emitted by Terraform
+        uses: actions/cache@v2
+        with:
+          path: events_page/.env
+          key: events-page-dotenv-${{ github.sha }}
+
   trigger-site-build:
     needs: deploy-infrastructure
     permissions:
