@@ -13,12 +13,10 @@ BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
 def load_credentials(scopes=DEFAULT_SCOPES):
-    credentials, project = google.auth.default(scopes=scopes)
-    if not credentials.has_scopes(scopes):
+    credentials, _ = google.auth.default(scopes=scopes)
+    if not credentials.has_scopes(scopes) and os.getenv("EVENTS_PAGE_SA_EMAIL"):
         source_credentials = credentials
-        target_principal = (
-            "gh-publisher-los-verdes-events@losverdesatx-events.iam.gserviceaccount.com"
-        )
+        target_principal = os.environ["EVENTS_PAGE_SA_EMAIL"]
         credentials = impersonated_credentials.Credentials(
             source_credentials=source_credentials,
             target_principal=target_principal,

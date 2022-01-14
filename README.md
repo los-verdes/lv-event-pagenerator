@@ -49,4 +49,5 @@ I think the easiest arrangement is to use event "colors" for selecting the categ
 
 ```shellsession
 $ gcloud auth application-default login
+$ export EVENTS_PAGE_SA_EMAIL="$(terraform -chdir=terraform output -raw site_publisher_sa_email)"
 $ ./events_page/app.py
