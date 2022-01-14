@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import re
+from dotenv import load_dotenv
 
 from logzero import logger
 
@@ -52,5 +53,6 @@ class Config(object):
         return config_dict
 
 
+load_dotenv()
 env = Config()
 logger.debug(f"Config loaded from environment: {env.to_dict()=}")

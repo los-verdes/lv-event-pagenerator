@@ -6,13 +6,14 @@ import re
 import time
 from datetime import datetime
 
+from config import env
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
 from logzero import logger
 from ruamel import yaml
 
-from google_apis import load_credentials
+from google_apis import Singleton, load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -21,6 +22,31 @@ def build_service(credentials=None):
     if credentials is None:
         credentials = load_credentials()
     return build("drive", "v3", credentials=credentials)
+
+
+class DriveSettings(metaclass=Singleton):
+    _settings = dict()
+    _drive_service = None
+
+    def __init__(self, drive_service=None) -> None:
+        self._drive_service = drive_service
+        if self._drive_service is None:
+            self._drive_service = build_service()
+        if not self._settings:
+            self.refresh()
+
+    def refresh(self):
+        logger.warning('DriveSettings refresh!')
+        self._settings = load_settings(
+            self._drive_service, env.folder_name, env.settings_file_name
+        )
+
+    @property
+    def settings(self):
+        return self._settings
+
+    def __getattr__(self, key):
+        return self.settings.get(key)
 
 
 def get_settings_file_id(service, folder_name, file_name):
@@ -42,7 +68,9 @@ def load_setting(service, key, folder_name, file_name):
 def load_settings(service, folder_name, file_name):
     settings_file_id = get_settings_file_id(service, folder_name, file_name)
     if settings_file_id is None:
-        logger.warning(f"Unable to find file of id of {folder_name}/{file_name}. Using default settings!")
+        logger.warning(
+            f"Unable to find file of id of {folder_name}/{file_name}. Using default settings!"
+        )
         return dict()
     print(f"load_settings_from_drive(): {settings_file_id=}")
     settings_fd = download_file_id(
@@ -81,6 +109,8 @@ def download_all_images_in_folder(service, folder_name):
     print(f"download_images_from_drive(): {image_files=}")
     for image_file in image_files:
         download_image(service, image_file)
+
+    logger.debug(f"download_all_images_in_folder() => {image_files=}")
     return image_files
 
 
@@ -170,7 +200,7 @@ def list_files(service, q):
     return file_list_resp
 
 
-def download_category_images(drive_service, event_categories):
+def add_category_image_file_metadata(drive_service, event_categories):
     parsed_categories = dict()
     uri_regexp = re.compile(r"https://drive.google.com/file/d/(?P<file_id>[^?]+)/.*")
     for name, event_category in event_categories.items():
@@ -178,17 +208,32 @@ def download_category_images(drive_service, event_categories):
         if cover_image_uri_matches := uri_regexp.match(default_cover_image):
             cover_image_file_id = cover_image_uri_matches.groupdict()["file_id"]
 
-            file = drive_service.files().get(fileId=cover_image_file_id).execute()
-            image_file = download_image(
-                drive_service,
-                file,
-            )
-            event_category["cover_image_filename"] = os.path.basename(
-                image_file["local_path"]
+            event_category["file_metadata"] = (
+                drive_service.files().get(fileId=cover_image_file_id).execute()
             )
         parsed_categories[name] = event_category
 
     return parsed_categories
+
+
+def download_category_images(drive_service, event_categories):
+    downloaded_images = []
+    for name, event_category in event_categories.items():
+        if "file_metadata" not in event_category:
+            logger.debug(
+                f"No file_metadata key for {name}. Assuming we have no image to download and continuing..."
+            )
+            continue
+        image_file = download_image(
+            drive_service,
+            event_category["file_metadata"],
+        )
+        local_path = os.path.basename(image_file["local_path"])
+        downloaded_images.append(local_path)
+        event_category["cover_image_filename"] = local_path
+
+    logger.debug(f"download_category_images() => {download_image=}")
+    return downloaded_images
 
 
 def ensure_watch(

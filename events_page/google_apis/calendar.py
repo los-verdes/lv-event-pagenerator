@@ -2,20 +2,40 @@
 import base64
 import re
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from functools import partial
 from os.path import basename
 from urllib.parse import quote_plus
 from zoneinfo import ZoneInfo
 
+from config import env
 from dateutil.parser import parse
 from googleapiclient.discovery import build
 from logzero import setup_logger
 
 from google_apis import load_credentials
-from google_apis.drive import get_local_path_for_file
+from google_apis.drive import DriveSettings, get_local_path_for_file
 
 logger = setup_logger(name=__name__)
+
+
+def load_calendar(service, calendar_id):
+    calendar = Calendar(
+        service=service,
+        calendar_id=calendar_id,
+        display_timezone=env.display_timezone,
+        event_categories=DriveSettings().event_categories,
+        mls_teams=DriveSettings().mls_teams,
+    )
+
+    # TODO: Should actually probably pull events <=24 hours ago start time so we don't drop events right after they start....
+    events_time_min = datetime.utcnow().isoformat() + "Z"  # 'Z' indicates UTC time
+    events_time_max = (datetime.utcnow() + timedelta(days=365)).isoformat() + "Z"
+    calendar.load_events(
+        time_min=events_time_min,
+        time_max=events_time_max,
+    )
+    return calendar
 
 
 def build_service(credentials=None):
@@ -41,8 +61,14 @@ class Event(object):
         self.categories_by_color_id = categories_by_color_id
         self.mls_team_abbrs_by_name = mls_team_abbrs_by_name
 
+    def get(self, key, default=None):
+        try:
+            return getattr(self, key)
+        except AttributeError:
+            return default
+
     def __getattr__(self, key):
-        if value := self._event[key]:
+        if value := self._event.get(key):
             return value
         # convert key from snake to camel case
         components = key.split("_")
@@ -50,14 +76,16 @@ class Event(object):
         # We capitalize the first letter of each component except the first one
         # with the 'title' method and join them together.
         camelKey = components[0] + "".join(x.title() for x in components[1:])
-        if value := self._event[camelKey]:
+        if value := self._event.get(camelKey):
             return value
 
-        raise AttributeError
+        raise AttributeError(f"no {key=} in <Event raw_event... >")
 
     @property
     def category(self):
-        logger.info(f"{self.color_id=} => {self.categories_by_color_id.get(self.color_id)=}")
+        logger.info(
+            f"{self.color_id=} => {self.categories_by_color_id.get(self.color_id)=}"
+        )
         if category := self.categories_by_color_id.get(self.color_id):
             return category
 
@@ -236,7 +264,7 @@ class Calendar(object):
 
         self.events_time_min = time_min
         self.events_time_max = time_max
-        self.last_refresh = datetime.now()
+        self.last_refresh = datetime.now(tz=ZoneInfo(env.display_timezone))
 
         mls_team_abbrs_by_name = {v["name"]: k for k, v in self.mls_teams.items()}
         logger.info(f"Getting the all events from {time_min} to {time_max}...")

@@ -1,27 +1,5 @@
-data "google_storage_bucket" "cloud_functions" {
-  name = "gcf-sources-${google_project.events_page.number}-${var.gcp_region}"
-}
-
-data "archive_file" "webhook_function" {
-  type             = "zip"
-  output_file_mode = "0666"
-  output_path      = "${path.module}/webhook_function.zip"
-  source_dir       = "${path.module}/../events_page/"
-}
-
-resource "google_storage_bucket_object" "webhook_archive" {
-  name   = "terraform/functions/webhook_${data.archive_file.webhook_function.output_sha}.zip"
-  bucket = data.google_storage_bucket.cloud_functions.name
-  source = data.archive_file.webhook_function.output_path
-}
-
-
-resource "google_service_account" "webhook_function" {
-  account_id   = "webhook"
-  display_name = var.page_description
-}
-
 locals {
+  python_dir = "${path.module}/../events_page/"
   function_name = "push-webhook-receiver"
   webhook_url   = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
 
@@ -35,6 +13,33 @@ locals {
     EVENTS_PAGE_SECRET_NAME        = google_secret_manager_secret_version.events_page.name
     EVENTS_PAGE_WEBHOOK_URL        = local.webhook_url
   }
+}
+
+resource "local_file" "dotenv" {
+    filename = "${path.module}/../events_page/.env"
+    content     = join("\n", [for k, v in local.events_page_env: "${k}=${v}"])
+}
+
+data "google_storage_bucket" "cloud_functions" {
+  name = "gcf-sources-${google_project.events_page.number}-${var.gcp_region}"
+}
+
+data "archive_file" "webhook_function" {
+  type             = "zip"
+  output_file_mode = "0666"
+  output_path      = "${path.module}/webhook_function.zip"
+  source_dir       = dirname(local_file.dotenv.filename)
+}
+
+resource "google_storage_bucket_object" "webhook_archive" {
+  name   = "terraform/functions/webhook_${data.archive_file.webhook_function.output_sha}.zip"
+  bucket = data.google_storage_bucket.cloud_functions.name
+  source = data.archive_file.webhook_function.output_path
+}
+
+resource "google_service_account" "webhook_function" {
+  account_id   = "webhook"
+  display_name = var.page_description
 }
 
 resource "google_cloudfunctions_function" "webhook" {

@@ -1,8 +1,16 @@
 
 set dotenv-load := true
-py_dir := "events_page"
-tf_dir := "terraform"
 
+# alias template-sites := template-styles-from-drive-settings
+
+tfvars_file := "losverdesatx-events.tfvars"
+tf_dir := "terraform"
+py_dir := "events_page"
+
+
+
+run-tf command:
+    terraform -chdir="{{ tf_dir }}" {{ command }} -var-file='../{{ tfvars_file }}'
 
 tf-init:
   #!/bin/bash
@@ -12,35 +20,40 @@ tf-init:
   fi
 
 tf-plan: tf-init
-  terraform -chdir="{{ tf_dir }}" plan
+  just run-tf plan
 
-tf-apply: tf-plan
-  terraform -chdir="{{ tf_dir }}" apply
+tf-apply:
+  just run-tf apply
 
 tf-auto-apply: tf-plan
-  terraform -chdir="{{ tf_dir }}" apply -auto-approve
+  just run-tf 'apply -auto-approve'
+
+tf-targeted-apply target:
+  just run-tf 'apply -auto-approve -target={{ target }}'
+
+tf-unlock lock_id:
+  just run-tf "force-unlock -force '{{ lock_id }}'"
 
 set-tf-ver-output:
   echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
 
 export-env: tf-init
-  #!/bin/bash
-  > .env
-  EVENTS_PAGE_ENV="$(terraform -chdir=terraform output -json events_page_env)"
-  while read -rd $'' line
-  do
-      export "$line"
-      echo "$line" >> .env
-  done < <(jq -r <<<"$EVENTS_PAGE_ENV" \
-          'to_entries|map("\(.key)=\(.value)\u0000")[]')
+  just tf-targeted-apply 'local_file.dotenv'
+
+render-templated-styles:
+  cd "{{ py_dir }}" && ./render_templated_styles.py
 
 install-python-reqs:
   cd "{{ py_dir }}" && pip3 install --requirement=requirements.txt
 
-build-and-publish: export-env install-python-reqs
+build-and-publish: install-python-reqs export-env render-templated-styles
   echo "build-and-publish"
   cd "{{ py_dir }}" && ./build_and_publish_site.py
   # --quiet
+
+# serve: install-python-reqs export-env render-templated-styles
+serve: render-templated-styles
+  cd "{{ py_dir }}" && ./app.py
 
 ensure-watches: export-env
   ./event_page/ensure_watches.py

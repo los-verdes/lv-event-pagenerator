@@ -5,15 +5,7 @@ import google.auth
 from google.cloud.secretmanager import SecretManagerServiceClient
 from logzero import logger
 from config import env
-
-
-class Singleton(type):
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
+from google_apis import Singleton
 
 
 class Secrets(metaclass=Singleton):

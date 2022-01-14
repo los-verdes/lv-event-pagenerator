@@ -47,11 +47,11 @@ jobs:
           TF_VAR_cloudflare_api_token: ${{ secrets.cloudflare_api_token }}
           TF_VAR_site_publisher_github_pat: ${{ secrets.site_publisher_github_pat }}
 
-  # trigger-site-build:
-  #   needs: load-events-env
-  #   permissions:
-  #     contents: "read"
-  #     id-token: "write"
-  #   uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
-  #   with:
-  #     events_page_env: ${{ needs.load-events-env.outputs.events_page_env }}
+  trigger-site-build:
+    needs: deploy-infrastructure
+    permissions:
+      contents: "read"
+      id-token: "write"
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/build_and_publish_site.yml@main
+    with:
+      events_page_env: ${{ needs.load-events-env.outputs.events_page_env }}
