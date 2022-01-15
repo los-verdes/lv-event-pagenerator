@@ -1,6 +1,5 @@
-# calendar_id               = "information@losverdesatx.org"
 # gcp_billing_account_name = "Los Verdes"
-calendar_id               = "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
+calendar_id               = "information@losverdesatx.org"
 cloudflare_zone           = "asfasfsafsasfa.org"
 gcp_billing_account_id    = "019767-2A54C9-AE07C6"
 gcp_project_editors       = []
