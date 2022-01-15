@@ -19,6 +19,10 @@ module "github_oidc" {
   }
   attribute_condition = "assertion.repository=='${var.github_repo}'"
   sa_mapping = {
+    "gh-test-site-cleaner" = {
+      sa_name   = google_service_account.test_site_publisher.name
+      attribute = "attribute.workflow/cleanup-test-site-prefix"
+    }
     "gh-test-site-publisher" = {
       sa_name   = google_service_account.test_site_publisher.name
       attribute = "attribute.workflow/pull-request-tests"
