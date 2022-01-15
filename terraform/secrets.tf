@@ -34,7 +34,7 @@ data "google_iam_policy" "secrets_access" {
       "serviceAccount:${google_service_account.webhook_function.email}",
       "serviceAccount:${google_service_account.site_publisher.email}",
       # TODO: ideally we'll pass config outside this secret and drop this access later...
-      "serviceAccount:${google_service_account.test_site_publisher.email}",
+      # "serviceAccount:${google_service_account.test_site_publisher.email}",
     ]
   }
 }
