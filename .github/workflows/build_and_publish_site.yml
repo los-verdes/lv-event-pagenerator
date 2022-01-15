@@ -65,3 +65,4 @@ jobs:
     secrets:
       BROWSERSTACK_USERNAME:  ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}
