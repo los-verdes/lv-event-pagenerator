@@ -1,4 +1,4 @@
-name: Cleanup Test Site Prefix
+name: cleanup-test-site-prefix
 
 on:
   pull_request:
