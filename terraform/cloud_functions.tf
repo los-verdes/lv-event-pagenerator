@@ -1,5 +1,4 @@
 locals {
-  python_dir    = "${path.module}/../events_page/"
   function_name = "push-webhook-receiver"
   webhook_url   = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
 
@@ -16,7 +15,7 @@ data "archive_file" "webhook_function" {
   type             = "zip"
   output_file_mode = "0666"
   output_path      = "${path.module}/webhook_function.zip"
-  source_dir       = dirname(local_file.dotenv.filename)
+  source_dir       = "${path.module}/../events_page/"
 }
 
 resource "google_storage_bucket_object" "webhook_archive" {
