@@ -76,7 +76,7 @@ jobs:
 
       - name: Echo site_url output
         run: |
-          echo "site_url output: ${{ steps.build-and-publish-test-site.outputs.site_url }}
+          echo "site_url output: ${{ steps.build-and-publish-test-site.outputs.site_url }}"
 
   run-browserstack-tests:
     name: Run BrowserStack Tests
@@ -123,7 +123,7 @@ jobs:
         env:
           # EVENTS_PAGE_CALENDAR_ID: "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
           EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
-    
+
       - name: Upload screenshots
         uses: actions/upload-artifact@latest
         with:
