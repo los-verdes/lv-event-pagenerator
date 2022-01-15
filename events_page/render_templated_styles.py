@@ -30,6 +30,8 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
     category_name_filters |= set(get_always_shown_categories(event_categories))
     category_name_filters = list(category_name_filters)
 
+    logger.info(f"render_scss_vars_template() => {category_name_filters=}")
+
     event_category_background_images = {}
     event_category_background_colors = {}
     event_category_text_fg_colors = {}
@@ -98,8 +100,7 @@ def render_templated_styles(app, gcal_service, drive_service):
         event_categories=event_categories,
         team_colors=get_team_colors(drive_service),
     )
-    all_downloaded_images = download_all_remote_images(drive_service, event_categories)
-    logger.info(f"render_templated_styles() => {all_downloaded_images}")
+    download_all_remote_images(drive_service, event_categories)
 
 
 if __name__ == "__main__":

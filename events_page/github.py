@@ -1,13 +1,10 @@
 #!/usr/bin/env python
-import flask
 from fastcore.basics import AttrDict
 from fastcore.net import ExceptionsHTTP
-from flask_githubapp import GitHubApp
 from ghapi.all import GhApi
+from github3 import GitHub
 from logzero import logger
 from tenacity import retry, stop_after_attempt, wait_fixed
-
-from github3 import GitHub
 
 
 def get_github_client(owner, repo, app_id, app_key, install_id):
