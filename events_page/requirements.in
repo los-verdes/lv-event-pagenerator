@@ -13,6 +13,7 @@ google-cloud-storage
 gunicorn
 libsass
 logzero
+pyhcl
 python-dateutil
 requests
 ruamel.yaml

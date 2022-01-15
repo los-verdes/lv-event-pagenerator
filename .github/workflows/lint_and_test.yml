@@ -75,4 +75,7 @@ jobs:
 
       - name: Build and Publish Site
         id: build-and-publish
-        run: just build-and-publish
+        run: |
+          just \
+            --set export_tf_vars true
+            build-and-publish

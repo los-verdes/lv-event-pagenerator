@@ -29,6 +29,7 @@ class Config(object):
         calendar_id=DEFAULT_CALENDAR_ID,
         display_timezone=DEFAULT_DISPLAY_TIMEZONE,
         folder_name=DEFAULT_FOLDER_NAME,
+        gcs_bucket_prefix="",
         hostname=DEFAULT_HOSTNAME,
         purge_delay_secs=DEFAULT_PURGE_DELAY_SECS,
         settings_file_name=DEFAULT_SETTINGS_FILE_NAME,
@@ -70,8 +71,8 @@ class Config(object):
             return environ_value
         if config_value := self._secretsmanager_config.get(key):
             return config_value
-        if default_value := self.defaults.get(key):
-            return default_value
+        if key in self.defaults:
+            return self.defaults[key]
 
         raise AttributeError(f"no {key=} anywhere for <Config ...>!")
 

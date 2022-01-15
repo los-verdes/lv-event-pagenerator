@@ -47,4 +47,7 @@ jobs:
           service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Cleanup Test Site Prefix
-        run: just cleanup-test-site-prefix
+        run: |
+          just \
+            --set export_tf_vars true
+            cleanup-test-site-prefix

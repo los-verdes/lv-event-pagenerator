@@ -66,18 +66,25 @@ def hex2rgb(hex, alpha=None):
         return f"rgba({rgb[0]}, {rgb[1]}, {rgb[2]}, {alpha})"
 
 
+def get_base_url():
+    if prefix := cfg.gcs_bucket_prefix:
+        return f"https://{cfg.hostname}/{prefix}"
+    return f"https://{cfg.hostname}"
+
+
 def create_app():
     cfg.load()
 
     # TODO: do this default settings thing better?
     default_app_config = dict(
         display_timezone=cfg.display_timezone,
-        FREEZER_BASE_URL=f"https://{cfg.hostname}",
+        FREEZER_BASE_URL=get_base_url(),
         FREEZER_STATIC_IGNORE=["*.scss", ".webassets-cache/*", ".DS_Store"],
         FREEZER_RELATIVE_URLS=True,
         FREEZER_REMOVE_EXTRA_FILES=True,
     )
     app.config.update(default_app_config)
+    logger.info(f"create_app() => {app.config=}")
     return app
 
 

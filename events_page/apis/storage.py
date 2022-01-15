@@ -28,8 +28,11 @@ def upload_build_to_gcs(client, bucket_id, prefix):
 def remove_subpath_from_gcs(client, bucket_id, prefix):
     bucket = client.get_bucket(bucket_id)
     blobs_to_delete = bucket.list_blobs(prefix=prefix)
-    bucket.delete_blobs(blobs_to_delete)
-    logger.info(f"{len(blobs_to_delete)=} deleted from gs://{bucket_id}/{prefix}")
+    for blob in blobs_to_delete:
+        blob.delete()
+    # bucket.delete_blobs(blobs_to_delete)
+    # logger.info(f"{len(list(blobs_to_delete))=} deleted from gs://{bucket_id}/{prefix}")
+    logger.info(f"All blobs deleted from gs://{bucket_id}/{prefix}")
 
 
 def upload_local_directory_to_gcs(client, local_path, bucket, gcs_path):

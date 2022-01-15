@@ -64,7 +64,9 @@ def build_static_site():
     return freeze_result
 
 
-def build_and_publish_site(site_hostname, cloudflare_zone, purge_delay_secs):
+def build_and_publish_site(
+    site_hostname, cloudflare_zone, purge_delay_secs, gcs_bucket_prefix
+):
     render_templated_styles(
         app=create_app(),
         gcal_service=gcal.build_service(),
@@ -77,7 +79,7 @@ def build_and_publish_site(site_hostname, cloudflare_zone, purge_delay_secs):
     storage.upload_build_to_gcs(
         client=storage.get_client(),
         bucket_id=site_hostname,
-        prefix=cfg.gcs_bucket_prefix,
+        prefix=gcs_bucket_prefix,
     )
     if cloudflare_zone is not None:
         purge_cache(
@@ -103,6 +105,12 @@ if __name__ == "__main__":
     parser = cli.build_parser()
     args = cli.parse_args(parser)
     parser.add_argument(
+        "-g",
+        "--gcs-bucket-prefix",
+        default=cfg.gcs_bucket_prefix,
+        help="The GCS bucket prefix to publish the static site under.",
+    )
+    parser.add_argument(
         "-s",
         "--site-hostname",
         default=cfg.hostname,
@@ -126,10 +134,13 @@ if __name__ == "__main__":
         site_hostname=args.site_hostname,
         cloudflare_zone=args.cloudflare_zone,
         purge_delay_secs=args.purge_delay_secs,
+        gcs_bucket_prefix=args.gcs_bucket_prefix,
     )
-    if os.getenv('CI'):
-        output_name = 'site_url'
-        logger.info(f"In CI, setting GitHub Actions output: {output_name}={args.site_hostname}")
+    if os.getenv("CI"):
+        output_name = "site_url"
+        logger.info(
+            f"In CI, setting GitHub Actions output: {output_name}={args.site_hostname}"
+        )
         print("::set-output name={output_name}::{args.site_hostname}")
 
     logger.info(f"Publication of site to {args.site_hostname} completed! 🎉")
