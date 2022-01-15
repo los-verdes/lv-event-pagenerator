@@ -33,7 +33,7 @@ jobs:
       - name: Utilize pip cache
         uses: actions/cache@v2
         with:
-          path: ${{ env.pythonLocation }}
+          path: ~/.cache/pip
           key: ${{ env.pythonLocation }}-${{ hashFiles('events_page/requirements.txt') }}
 
       - name: Utilize .terraform cache
