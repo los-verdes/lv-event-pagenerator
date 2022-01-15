@@ -15,7 +15,7 @@ module "github_oidc" {
     "attribute.repository"  = "assertion.repository"
     "attribute.ref"         = "assertion.ref"
     "attribute.environment" = "assertion.environment"
-    "attribute.workflow" = "assertion.workflow"
+    "attribute.workflow"    = "assertion.workflow"
   }
   attribute_condition = "assertion.repository=='${var.github_repo}'"
   sa_mapping = {

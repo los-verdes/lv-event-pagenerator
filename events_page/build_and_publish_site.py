@@ -65,12 +65,17 @@ def build_static_site():
 
 
 def build_and_publish_site(
-    site_hostname, cloudflare_zone, purge_delay_secs, gcs_bucket_prefix
+    site_hostname,
+    cloudflare_zone,
+    purge_delay_secs,
+    gcs_bucket_prefix,
+    gdrive_folder_name,
 ):
     render_templated_styles(
         app=create_app(),
         gcal_service=gcal.build_service(),
         drive_service=drive.build_service(),
+        gdrive_folder_name=cfg.gdrive_folder_name,
     )
 
     static_site_files = build_static_site()
@@ -149,6 +154,7 @@ if __name__ == "__main__":
         cloudflare_zone=args.cloudflare_zone,
         purge_delay_secs=args.purge_delay_secs,
         gcs_bucket_prefix=args.gcs_bucket_prefix,
+        gdrive_folder_name=cfg.gdrive_folder_name,
     )
 
     logger.info(f"Publication of site to {args.site_hostname} completed! 🎉")

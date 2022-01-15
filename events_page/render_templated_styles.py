@@ -77,17 +77,15 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
         f.write(rendered_scss)
 
 
-def download_all_remote_images(drive_service, event_categories):
+def download_all_remote_images(drive_service, event_categories, folder_name):
     downloaded_images = dict()
-    downloaded_images.update(
-        download_all_images_in_folder(drive_service, cfg.gdrive_folder_name)
-    )
+    downloaded_images.update(download_all_images_in_folder(drive_service, folder_name))
     downloaded_images.update(download_category_images(drive_service, event_categories))
     logger.info(f"download_all_remote_images() => {downloaded_images=}")
     return downloaded_images
 
 
-def render_templated_styles(app, gcal_service, drive_service):
+def render_templated_styles(app, gcal_service, drive_service, gdrive_folder_name):
     logger.info("Rendering templated styles...")
     event_categories = cfg.event_categories
     event_categories = add_category_image_file_metadata(
@@ -102,7 +100,7 @@ def render_templated_styles(app, gcal_service, drive_service):
         event_categories=event_categories,
         team_colors=TeamColors(),
     )
-    download_all_remote_images(drive_service, event_categories)
+    download_all_remote_images(drive_service, event_categories, gdrive_folder_name)
 
 
 if __name__ == "__main__":
@@ -116,4 +114,5 @@ if __name__ == "__main__":
         app=create_app(),
         gcal_service=gcal.build_service(),
         drive_service=build_service(),
+        gdrive_folder_name=cfg.gdrive_folder_name,
     )
