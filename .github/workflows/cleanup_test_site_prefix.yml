@@ -48,4 +48,4 @@ jobs:
         id: cleanup-test-site-prefix
         run: just cleanup-test-site-prefix
         env:
-          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ jobs.publish-test-site.environment }}
+          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}
