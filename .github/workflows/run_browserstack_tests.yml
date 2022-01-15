@@ -62,20 +62,22 @@ jobs:
             name: test-screenshot
             path: events_page/webdriver_test_screenshot.png
 
+      # Next few bits lifted mostly directly from: https://github.com/devicons/public-upload-to-imgur
       - name: Upload screenshot to imgur
         uses: devicons/public-upload-to-imgur@v2.2.1
         id: imgur_step
         with:
           path: ./events_page/webdriver_test_screenshot.png
           client_id: ${{ secrets.IMGUR_CLIENT_ID }}
-        - name: Comment on the PR about the result
-          uses: github-actions-up-and-running/pr-comment@v1.0.1  # you can use any action that you want. This is only an example
-          env:
-            # recall that this action returns a JSON.stringified array
-            IMG_URL: ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }}  # get the output of the step above using its id
-            MESSAGE: |
-              Screenshot from build / run ID `${{ github.run_id }}`:
-              ![Image]({0}) # markdown syntax for displaying a picture
-          with:
-            repo-token: ${{ secrets.GITHUB_TOKEN }}
-            message: ${{format(env.MESSAGE, env.IMG_URL)}}  # add the url into the string
+          
+      - name: Comment on the PR about the result
+        uses: github-actions-up-and-running/pr-comment@v1.0.1  # you can use any action that you want. This is only an example
+        env:
+          # recall that this action returns a JSON.stringified array
+          IMG_URL: ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }}  # get the output of the step above using its id
+          MESSAGE: |
+            Screenshot from build / run ID `${{ github.run_id }}`:
+            ![Image]({0}) # markdown syntax for displaying a picture
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          message: ${{format(env.MESSAGE, env.IMG_URL)}}  # add the url into the string
