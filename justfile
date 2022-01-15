@@ -14,7 +14,7 @@ run-tf CMD:
 tf-init:
   just run-tf init
 
-tf-auto-apply: tf-init
+tf-auto-apply:
   just run-tf 'apply -auto-approve'
 
 run-py +command:

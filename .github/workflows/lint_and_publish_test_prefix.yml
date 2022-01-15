@@ -1,4 +1,4 @@
-name: Lint and Publish Test Site Prefix
+name: pull-request-tests
 
 on:
   pull_request:
