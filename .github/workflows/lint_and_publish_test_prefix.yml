@@ -82,7 +82,7 @@ jobs:
 
   run-browserstack-tests:
     name: Run BrowserStack Tests
-    uses: jeffwecan/lv-event-pagenerator/.github/workflows/run_browserstack_tests.yml@main
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/run_browserstack_tests.yml@release/v0-RC1
     needs: publish-test-site-prefix
     with:
       site_url: ${{ needs.publish-test-site-prefix.outputs.site_url }}
