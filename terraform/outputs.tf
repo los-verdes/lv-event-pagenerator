@@ -30,7 +30,7 @@ output "calendar_id" {
   value = var.calendar_id
 }
 
-output "token" {
+output "webhook_token" {
   sensitive = true
   value     = random_password.webhook_token.result
 }
