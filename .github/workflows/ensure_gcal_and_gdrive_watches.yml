@@ -7,7 +7,6 @@ on:
 jobs:
   ensure-watches:
     name: Ensure GCal and GDrive Watches
-    needs: load-events-env
     runs-on: ubuntu-latest
     permissions:
       contents: "read"
