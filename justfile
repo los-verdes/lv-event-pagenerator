@@ -3,7 +3,7 @@ tfvars_file := "losverdesatx-events.tfvars"
 tf_subdir   := "./terraform"
 
 set-tf-ver-output:
-  echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
+  echo "::set-output name=terraform_version::$(cat {{ tf_subdir }}/.terraform-version)"
 
 run-tf CMD:
   terraform -chdir="{{ justfile_directory() + "/" + tf_subdir }}" \
