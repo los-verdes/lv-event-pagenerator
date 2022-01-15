@@ -130,17 +130,18 @@ if __name__ == "__main__":
     )
     args = cli.parse_args(parser)
 
-    build_and_publish_site(
-        site_hostname=args.site_hostname,
-        cloudflare_zone=args.cloudflare_zone,
-        purge_delay_secs=args.purge_delay_secs,
-        gcs_bucket_prefix=args.gcs_bucket_prefix,
-    )
     if os.getenv("CI"):
         output_name = "site_url"
         logger.info(
             f"In CI, setting GitHub Actions output: {output_name}={args.site_hostname}"
         )
         print("::set-output name={output_name}::{args.site_hostname}")
+
+    build_and_publish_site(
+        site_hostname=args.site_hostname,
+        cloudflare_zone=args.cloudflare_zone,
+        purge_delay_secs=args.purge_delay_secs,
+        gcs_bucket_prefix=args.gcs_bucket_prefix,
+    )
 
     logger.info(f"Publication of site to {args.site_hostname} completed! 🎉")
