@@ -35,7 +35,7 @@ build-and-publish: install-python-reqs
   echo "export_tf_vars: {{ export_tf_vars }}"
   just --set export_tf_vars "{{ export_tf_vars }}" run-py './build_and_publish_site.py --quiet'
 
-cleanup-test-site-prefix:
+cleanup-test-site-prefix: install-python-reqs
   echo "export_tf_vars: {{ export_tf_vars }}"
   just --set export_tf_vars "{{ export_tf_vars }}" run-py './remove_subpath_from_gcs.py --quiet'
 
