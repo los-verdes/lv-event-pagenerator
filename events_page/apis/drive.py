@@ -99,6 +99,7 @@ def get_local_path_for_file(file_id, mime_type=None):
 
 
 def download_all_images_in_folder(service, folder_name):
+    downloaded_images = {}
     files_in_folder = list_files_in_event_page_folder(
         service=service,
         folder_name=folder_name,
@@ -108,8 +109,9 @@ def download_all_images_in_folder(service, folder_name):
     ]
     for image_file in image_files:
         download_image(service, image_file)
+        downloaded_images[image_file["name"]] = image_file["local_path"]
     logger.debug(f"download_all_images_in_folder() => {image_files=}")
-    return image_files
+    return downloaded_images
 
 
 def download_image(service, image_file):
@@ -214,7 +216,7 @@ def add_category_image_file_metadata(drive_service, event_categories):
 
 
 def download_category_images(drive_service, event_categories):
-    downloaded_images = []
+    downloaded_images = {}
     for name, event_category in event_categories.items():
         if "file_metadata" not in event_category:
             logger.debug(
@@ -225,11 +227,12 @@ def download_category_images(drive_service, event_categories):
             drive_service,
             event_category["file_metadata"],
         )
+        downloaded_images[image_file["name"]] = image_file["local_path"]
+
         local_path = os.path.basename(image_file["local_path"])
-        downloaded_images.append(local_path)
         event_category["cover_image_filename"] = local_path
 
-    logger.debug(f"download_category_images() => {download_image=}")
+    logger.debug(f"download_category_images() => {downloaded_images=}")
     return downloaded_images
 
 
