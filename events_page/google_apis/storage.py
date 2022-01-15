@@ -15,12 +15,12 @@ def get_client(credentials=None):
     return storage.Client()
 
 
-def upload_build_to_gcs(client, bucket_id):
+def upload_build_to_gcs(client, bucket_id, subpath=""):
     bucket = client.get_bucket(bucket_id)
     build_dir_path = os.path.abspath(os.path.join(BASE_DIR, "..", "build/"))
-    upload_local_directory_to_gcs(
-        client, build_dir_path, bucket, ""
-    )
+    logger.info(f"Uploading {build_dir_path=} to {bucket=} ({subpath=})")
+    upload_local_directory_to_gcs(client, build_dir_path, bucket, subpath)
+    logger.info(f"{build_dir_path=} upload to {bucket=} ({subpath=}) completed!")
 
 
 def upload_local_directory_to_gcs(client, local_path, bucket, gcs_path):

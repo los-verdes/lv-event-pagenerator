@@ -84,7 +84,7 @@ def download_all_remote_images(drive_service, event_categories):
 
 
 def render_templated_styles(app, gcal_service, drive_service):
-
+    logger.info("Rendering templated styles...")
     event_categories = DriveSettings(drive_service).event_categories
     event_categories = add_category_image_file_metadata(
         drive_service=drive_service, event_categories=event_categories

@@ -239,14 +239,13 @@ def download_category_images(drive_service, event_categories):
 def ensure_watch(
     service, channel_id, web_hook_address, webhook_token, file_id, expiration_in_days=1
 ):
-    # exp_dt = datetime.utcnow() + timedelta(days=int(args.expiration_in_days))
     current_seconds = time.time()
     added_seconds = expiration_in_days * 24 * 60 * 60
     expiration_seconds = current_seconds + added_seconds
     expiration = round(expiration_seconds * 1000)
-    drive_id = service.files().get(fileId=file_id).execute()["id"]
-    logger.debug(
-        f"Ensure GDrive watch ({expiration=}) ({drive_id=}) changes is in-place now..."
+    file = service.files().get(fileId=file_id).execute()
+    logger.info(
+        f"Ensuring GDrive watch for {file=} and with {expiration=} is in-place..."
     )
     page_token_resp = service.changes().getStartPageToken().execute()
     logger.debug(f"{page_token_resp=}")
@@ -265,8 +264,8 @@ def ensure_watch(
     )
     response = request.execute()
     resp_expiration_dt = datetime.fromtimestamp(int(response["expiration"]) // 1000)
-    logger.debug(
-        f"Watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
+    logger.info(
+        f"Drive file watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
     )
 
     return response

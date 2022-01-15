@@ -9,8 +9,10 @@ from logzero import logger
 
 from app import create_app
 from config import cfg
-from google_apis import storage
+from google_apis import calendar as gcal
+from google_apis import drive, storage
 from google_apis.secrets import get_cloudflare_api_token
+from render_templated_styles import render_templated_styles
 
 
 def freeze_site(app):
@@ -28,16 +30,12 @@ def purge_cache(cf, cloudflare_zone):
         )
     zone = zones[0]
     zone_id = zone["id"]
-    logger.debug(f"{zone_id}: {zone=}")
+    logger.debug(f"{zone_id=}")
 
-    # purge_files = [f"https://{base_hostname}{p}" for p in purge_paths]
-    # logger.debug(
-    #     f"Sending purge_cache request for {zone_id=} at prefixes: {purge_files=}"
-    # )
     purge_data = {
         "purge_everything": True,
     }
-    logger.debug(f"Sending purge_cache request for {zone_id=} with {purge_data=}")
+    logger.info(f"Sending purge_cache request for {zone_id=} with {purge_data=}")
     purge_response = cf.zones.purge_cache.post(
         zone["id"],
         data=purge_data,
@@ -47,6 +45,7 @@ def purge_cache(cf, cloudflare_zone):
 
 
 def prime_cache(site_hostname, new_paths):
+    logger.info(f"Priming cache / checking responses for {len(new_paths)=}")
     responses = []
     for new_path in new_paths:
         response = requests.get(
@@ -59,8 +58,14 @@ def prime_cache(site_hostname, new_paths):
     return responses
 
 
-def build_static_site(site_hostname, cloudflare_zone, purge_delay_secs=30):
+def build_static_site():
+    logger.info("Freezing site...")
     freeze_result = freeze_site(app=create_app())
+    logger.info(f"build_static_site() => {freeze_result}")
+    return freeze_result
+
+
+def publish_static_site(static_site_files, site_hostname, cloudflare_zone, purge_delay_secs):
     storage.upload_build_to_gcs(
         client=storage.get_client(),
         bucket_id=site_hostname,
@@ -73,8 +78,8 @@ def build_static_site(site_hostname, cloudflare_zone, purge_delay_secs=30):
         logger.info(f"Waiting for {purge_delay_secs=} before proceeding...")
         sleep(purge_delay_secs)
     else:
-        logger.warning(f"Skipping cache purge bits as {cloudflare_zone}")
-    prime_cache(site_hostname=site_hostname, new_paths=freeze_result)
+        logger.warning(f"Skipping cache purge bits as {cloudflare_zone} is unset...")
+    prime_cache(site_hostname=site_hostname, new_paths=static_site_files)
 
 
 if __name__ == "__main__":
@@ -104,12 +109,30 @@ if __name__ == "__main__":
         default=cfg.get("cloudflare_zone"),
         help="Name of zone at CDN provider (Cloudflare only provider currently considered / supported).",
     )
+    parser.add_argument(
+        "-p",
+        "--purge-delay-secs",
+        default=cfg.purge_delay_secs,
+        help="How long to wait to test site response after purging cache post-publication",
+    )
     args = parser.parse_args()
 
     if args.quiet:
         logzero.loglevel(logging.INFO)
 
-    build_static_site(
+    render_templated_styles(
+        app=create_app(),
+        gcal_service=gcal.build_service(),
+        drive_service=drive.build_service(),
+    )
+
+    static_site_files = build_static_site()
+
+    publish_static_site(
+        static_site_files=static_site_files,
         site_hostname=args.site_hostname,
         cloudflare_zone=args.cloudflare_zone,
+        purge_delay_secs=args.purge_delay_secs,
     )
+
+    logger.info(f"Publication of site to {args.site_hostname} completed! 🎉")

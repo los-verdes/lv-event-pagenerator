@@ -153,7 +153,7 @@ class Event(object):
         if attachments := self._event.get("attachments"):
             for attachment in attachments:
                 if attachment["mimeType"].startswith("image/"):
-                    logger.debug(f"{attachment['title']=} {attachment['mimeType']=}")
+                    # logger.debug(f"{attachment['title']=} {attachment['mimeType']=}")
                     # TOOD: also ensure these files are downloaded at one point or another?
                     return basename(
                         get_local_path_for_file(
@@ -207,7 +207,7 @@ class Calendar(object):
             event_category["category_name"] = name
             color_id = event_category["gcal_color"]["id"]
             self.categories_by_color_id[color_id] = event_category
-        logger.debug(f"{self.categories_by_color_id=}")
+        # logger.debug(f"{self.categories_by_color_id=}")
 
         self.default_category_names = [
             c["category_name"]
@@ -306,8 +306,8 @@ def ensure_watch(
     added_seconds = expiration_in_days * 24 * 60 * 60
     expiration_seconds = current_seconds + added_seconds
     expiration = round(expiration_seconds * 1000)
-    logger.debug(
-        f"Ensure GCal events watch ({expiration=}) ({calendar_id=}) changes is in-place now..."
+    logger.info(
+        f"Ensuring GCal events watch for {calendar_id=} and with {expiration=} is in-place..."
     )
     request = service.events().watch(
         calendarId=calendar_id,
@@ -328,8 +328,8 @@ def ensure_watch(
     logger.debug(f"{response=}")
 
     resp_expiration_dt = datetime.fromtimestamp(int(response["expiration"]) // 1000)
-    logger.debug(
-        f"Watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
+    logger.info(
+        f"Calendar events watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
     )
 
     return response

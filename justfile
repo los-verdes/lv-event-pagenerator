@@ -43,17 +43,16 @@ render-templated-styles:
 install-python-reqs:
   cd "{{ py_dir }}" && pip3 install --requirement=requirements.txt
 
-build-and-publish: install-python-reqs render-templated-styles
+build-and-publish: install-python-reqs
   echo "build-and-publish"
-  cd "{{ py_dir }}" && ./build_and_publish_site.py
-  # --quiet
+  cd "{{ py_dir }}" && ./build_and_publish_site.py --quiet
 
 # serve: install-python-reqs export-env render-templated-styles
 serve: render-templated-styles
   cd "{{ py_dir }}" && ./app.py
 
 ensure-watches: install-python-reqs
-  ./event_page/ensure_watches.py
+  cd "{{ py_dir }}" && ./ensure_watches.py --quiet
 
 dispatch-build-run: install-python-reqs
-  cd "{{ py_dir }}" && ./dispatch_build_workflow_run.py
+  cd "{{ py_dir }}" && ./dispatch_build_workflow_run.py  --quiet

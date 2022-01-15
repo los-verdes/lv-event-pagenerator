@@ -58,10 +58,13 @@ if __name__ == "__main__":
         token=os.environ["GITHUB_PAT"],
     )
 
-    logger.info(f"Dispatching workflow for {args.github_org}/{args.github_repo} using workflow: {args.workflow_filename}")
-    workflow_run = dispatch_build_workflow_run(
+    logger.info(
+        f"Dispatching {args.workflow_filename} for {args.github_org}/{args.repo_name}..."
+    )
+    dispatched_workflow_run = dispatch_build_workflow_run(
         github_client=github_client,
         github_ref=args.github_ref,
         workflow_filename=args.workflow_filename,
     )
-    logger.debug(f"result: {workflow_run=}")
+    logger.debug(f"result: {dispatched_workflow_run=}")
+    logger.info(f"{dispatched_workflow_run.id=}: {dispatched_workflow_run.status=}")

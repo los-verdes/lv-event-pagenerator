@@ -9,15 +9,15 @@ from google_apis import Singleton
 
 
 class Secrets(metaclass=Singleton):
-    secret_name = "events-page"
     _secrets = None
 
     def __init__(self, credentials=None) -> None:
-        # breakpoint()
+        default_credentials, project = google.auth.default()
+        logger.debug(f"Default credentials project: {project}")
+        self.secret_name = f"projects/{project}/secrets/events-page/versions/latest"
+        logger.debug(f"Secret name: {self.secret_name=}")
         if credentials is None:
-            credentials, project = google.auth.default()
-            logger.debug(f"Default credentials project: {project}")
-
+            credentials = default_credentials
         self._client = SecretManagerServiceClient(credentials=credentials)
 
     @property
@@ -28,12 +28,10 @@ class Secrets(metaclass=Singleton):
         response = self._client.access_secret_version(
             request={"name": self.secret_name}
         )
-        logger.debug(f"{response=}")
-        breakpoint()
         payload = response.payload.data.decode("UTF-8")
-        self._secret = json.loads(payload)
-        logger.debug(f"{self._secret.keys()=}")
-        return self._secret
+        self._secrets = json.loads(payload)
+        logger.debug(f"{self._secrets.keys()=}")
+        return self._secrets
 
     def __getattr__(self, key):
         return self.secrets.get(key)
