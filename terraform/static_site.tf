@@ -30,7 +30,9 @@ resource "google_storage_bucket_iam_member" "test_site_publisher_sa_obj_admin" {
   condition {
     title       = "tests-prefix-only"
     description = "Only allow object admin under a tests/ prefix"
-    expression  = "resource.name.startsWith(“projects/_/buckets/${google_storage_bucket.static_site.name}/objects/tests”)"
+    expression  = <<-expression
+      resource.name.startsWith(“projects/_/buckets/${google_storage_bucket.static_site.name}/objects/tests”)
+      expression
   }
 }
 data "cloudflare_zone" "static_site" {
