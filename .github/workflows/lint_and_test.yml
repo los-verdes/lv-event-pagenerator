@@ -75,4 +75,4 @@ jobs:
         id: build-and-publish
         run: just build-and-publish
         env:
-          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ jobs.publish-test-site.environment.name }}
+          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ jobs.publish-test-site.environment }}
