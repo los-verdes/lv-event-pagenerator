@@ -40,7 +40,7 @@ jobs:
       - name: Cleanup Test Site Prefix
         run: |
           just \
-            --set export_tf_vars true
+            --set export_tf_vars true \
             cleanup-test-site-prefix
         env:
           EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
