@@ -81,7 +81,7 @@ jobs:
   run-browserstack-tests:
     name: Run BrowserStack Tests
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/run_browserstack_tests.yml@browser_based_tests
-    # needs: publish-test-site-prefix
+    needs: publish-test-site-prefix
     permissions:
       contents: "read"
       id-token: "write"

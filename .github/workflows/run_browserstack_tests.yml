@@ -77,7 +77,10 @@ jobs:
           # recall that this action returns a JSON.stringified array
           IMG_URL: ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }}  # get the output of the step above using its id
           MESSAGE: |
-            Screenshot from build / run ID `${{ github.run_id }}`:
-            ![Image]({0}) # markdown syntax for displaying a picture
+            ### Build / Run ID `${{ github.run_id }}` Results
+
+            #### Screenshot
+
+            ![screenshot from the run ID ${{ github.run_id }} build]({0})
         with:
           message: ${{format(env.MESSAGE, env.IMG_URL)}}  # add the url into the string
