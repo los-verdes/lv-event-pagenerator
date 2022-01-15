@@ -38,19 +38,21 @@ resource "google_service_account" "test_site_publisher" {
   display_name = var.page_description
 }
 
+resource "google_project_iam_member" "test_site_publisher_viewer" {
+  project = google_project.events_page.id
+  role    = "roles/viewer"
+  member  = "serviceAccount:${google_service_account.test_site_publisher.email}"
+}
+
 resource "google_service_account" "site_publisher" {
   account_id   = "site-publisher"
   display_name = var.page_description
 }
 
-resource "google_project_iam_member" "site_publishers_viewer" {
-  for_each = toset([
-    google_service_account.test_site_publisher.email,
-    google_service_account.site_publisher.email,
-  ])
+resource "google_project_iam_member" "site_publisher_viewer" {
   project = google_project.events_page.id
   role    = "roles/viewer"
-  member  = "serviceAccount:${each.value}"
+  member  = "serviceAccount:${google_service_account.site_publisher.email}"
 }
 
 resource "google_service_account" "gh_terraform_applier" {
