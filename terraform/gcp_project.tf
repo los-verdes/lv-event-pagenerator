@@ -5,7 +5,22 @@ resource "google_project" "events_page" {
 }
 
 resource "google_project_service" "events_page" {
-  for_each                   = toset(var.enabled_gcp_services)
+  for_each = toset([
+    "appengine.googleapis.com",
+    "calendar-json.googleapis.com",  # Google Calendar API
+    "cloudapis.googleapis.com",      # Google Cloud APIs
+    "cloudbuild.googleapis.com",     # Cloud Build API
+    "cloudfunctions.googleapis.com", # Cloud Functions API
+    "cloudresourcemanager.googleapis.com",
+    "cloudscheduler.googleapis.com",
+    "containerregistry.googleapis.com", # Container Registry API
+    "drive.googleapis.com",             # Google Drive API
+    "iam.googleapis.com",
+    "iamcredentials.googleapis.com", # IAM Credentials API
+    "pubsub.googleapis.com",
+    "secretmanager.googleapis.com", # Secret Manager API
+    "sts.googleapis.com",
+  ])
   service                    = each.value
   disable_dependent_services = true
 

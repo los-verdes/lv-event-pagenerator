@@ -1,23 +1,3 @@
-variable "enabled_gcp_services" {
-  type = list(string)
-  default = [
-    "appengine.googleapis.com",
-    "calendar-json.googleapis.com",  # Google Calendar API
-    "cloudapis.googleapis.com",      # Google Cloud APIs
-    "cloudbuild.googleapis.com",     # Cloud Build API
-    "cloudfunctions.googleapis.com", # Cloud Functions API
-    "cloudresourcemanager.googleapis.com",
-    "cloudscheduler.googleapis.com",
-    "containerregistry.googleapis.com", # Container Registry API
-    "drive.googleapis.com",             # Google Drive API
-    "iam.googleapis.com",
-    "iamcredentials.googleapis.com", # IAM Credentials API
-    "pubsub.googleapis.com",
-    "secretmanager.googleapis.com", # Secret Manager API
-    "sts.googleapis.com",
-  ]
-}
-
 variable "cloudflare_api_token" {
   sensitive = true
 }
