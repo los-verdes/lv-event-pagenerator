@@ -5,6 +5,9 @@ variable "cloudflare_api_token" {
 variable "cloudflare_zone" {
 }
 
+variable "github_app_id" {}
+
+variable "github_install_id" {}
 
 variable "site_publisher_gh_app_key" {
   sensitive = true
