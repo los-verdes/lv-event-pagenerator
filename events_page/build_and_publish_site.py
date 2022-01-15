@@ -81,7 +81,7 @@ def build_and_publish_site(
         bucket_id=site_hostname,
         prefix=gcs_bucket_prefix,
     )
-    if cloudflare_zone is not None:
+    if cloudflare_zone is not None and not gcs_bucket_prefix:
         purge_cache(
             CloudFlare(token=get_cloudflare_api_token()),
             cloudflare_zone=cloudflare_zone,
@@ -89,7 +89,9 @@ def build_and_publish_site(
         logger.info(f"Waiting for {purge_delay_secs=} before proceeding...")
         sleep(purge_delay_secs)
     else:
-        logger.warning(f"Skipping cache purge bits as {cloudflare_zone} is unset...")
+        logger.warning(
+            f"Skipping cache purge bits as {cloudflare_zone} is unset and/or we're deploying to a prefix {gcs_bucket_prefix=}..."
+        )
 
     logger.warning(
         '"priming" the cache may be causing more issues than it is worth, skipping for now...'

@@ -32,8 +32,8 @@ def parse_args(parser):
         from config import cfg
         with open(tfvars_path) as f:
             tfvars = hcl.load(f)
-            if isinstance(tfvars, dict):
-                cfg.defaults.update(tfvars)
-            logger.info(f"Config after defaults loaded from {tfvars_path=}: {cfg.to_dict()=}")
-            raise Exception(f"Unable to use {tfvars=} in Config defaults; not a map...")
+            if not isinstance(tfvars, dict):
+                logger.info(f"Config after defaults loaded from {tfvars_path=}: {cfg.to_dict()=}")
+                raise Exception(f"Unable to use {tfvars=} in Config defaults; not a map...")
+            cfg.defaults.update(tfvars)
     return args
