@@ -38,7 +38,7 @@ class DriveSettings(metaclass=Singleton):
     def refresh(self):
         logger.warning("DriveSettings refresh!")
         self._settings = load_settings(
-            self._drive_service, cfg.folder_name, cfg.settings_file_name
+            self._drive_service, cfg.gdrive_folder_name, cfg.gdrive_settings_file_name
         )
 
     @property

@@ -1,0 +1,86 @@
+name: Run BrowserStack Tests
+
+on:
+  workflow_call:
+    secrets:
+      BROWSERSTACK_USERNAME:
+        required: true
+      BROWSERSTACK_ACCESS_KEY:
+        required: true
+      IMGUR_CLIENT_ID:
+        required: true
+
+jobs:
+  run-browserstack-tests:
+    name: Run BrowserStack Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: 'BrowserStack Env Setup'
+        uses: 'browserstack/github-actions/setup-env@master'
+        with:
+          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
+          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          build-name: ${{ github.run_id }}
+          project-name: ${{ github.repository }}
+
+      - name: Setup just
+        uses: extractions/setup-just@v1
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Utilize pip cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ env.pythonLocation }}-${{ hashFiles('events_page/requirements.txt') }}
+
+      - name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v0"
+        with:
+          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
+          service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
+
+      - name: Run Tests
+        id: build-and-publish-test-site
+        run: |
+          just \
+            --set export_tf_vars true \
+            test
+        env:
+          # EVENTS_PAGE_CALENDAR_ID: "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
+          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
+
+      - name: Upload screenshot as artifact
+        uses: actions/upload-artifact@v2
+        with:
+            name: test-screenshot
+            path: events_page/webdriver_test_screenshot.png
+
+      # Next few bits lifted mostly directly from: https://github.com/devicons/public-upload-to-imgur
+      - name: Upload screenshot to imgur
+        uses: devicons/public-upload-to-imgur@v2.2.1
+        id: imgur_step
+        with:
+          path: ./events_page/webdriver_test_screenshot.png
+          client_id: ${{ secrets.IMGUR_CLIENT_ID }}
+
+      - name: Comment on the PR about the result
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        env:
+          # recall that this action returns a JSON.stringified array
+          IMG_URL: ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }}  # get the output of the step above using its id
+          MESSAGE: |
+            ### Build / Run ID `${{ github.run_id }}` Results
+
+            #### Screenshot
+
+            ![screenshot from the run ID ${{ github.run_id }} build]({0})
+        with:
+          message: ${{format(env.MESSAGE, env.IMG_URL)}}  # add the url into the string

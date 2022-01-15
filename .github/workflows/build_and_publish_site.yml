@@ -53,3 +53,17 @@ jobs:
       - name: Echo site_url output
         run: |
           echo "site_url output: ${{ steps.build-and-publish.outputs.site_url }}"
+
+  run-browserstack-tests:
+    name: Run BrowserStack Tests
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/reusable-workflow.yml@main
+    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
+    needs: build-and-publish-site
+    permissions:
+      contents: "read"
+      id-token: "write"
+      pull-requests: "write"
+    secrets:
+      BROWSERSTACK_USERNAME:  ${{ secrets.BROWSERSTACK_USERNAME }}
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      IMGUR_CLIENT_ID: ${{ secrets.IMGUR_CLIENT_ID }}

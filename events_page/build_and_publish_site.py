@@ -89,9 +89,14 @@ def build_and_publish_site(
         logger.info(f"Waiting for {purge_delay_secs=} before proceeding...")
         sleep(purge_delay_secs)
     else:
-        logger.warning(
-            f"Skipping cache purge bits as {cloudflare_zone} is unset and/or we're deploying to a prefix {gcs_bucket_prefix=}..."
-        )
+        if cloudflare_zone is None:
+            logger.warning(
+                f"Skipping cache purge bits as {cloudflare_zone=} is unset..."
+            )
+        if gcs_bucket_prefix:
+            logger.warning(
+                f"Skipping cache purge bits as we're deploying to a prefix {gcs_bucket_prefix=}..."
+            )
 
     logger.warning(
         '"priming" the cache may be causing more issues than it is worth, skipping for now...'
