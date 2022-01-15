@@ -1,15 +1,3 @@
-locals {
-  function_name = "push-webhook-receiver"
-  webhook_url   = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
-
-  events_page_env = {
-    EVENTS_PAGE_SECRET_NAME = google_secret_manager_secret_version.events_page.name
-    # TODO: get these some other way...
-    GITHUBAPP_ID         = "164885"
-    GITHUBAPP_INSTALL_ID = "22283839"
-  }
-}
-
 data "google_storage_bucket" "cloud_functions" {
   name = "gcf-sources-${google_project.events_page.number}-${var.gcp_region}"
 }
@@ -46,13 +34,16 @@ resource "google_cloudfunctions_function" "webhook" {
   trigger_http          = true
   entry_point           = "process_push_notification"
 
-  environment_variables = local.events_page_env
+  environment_variables = {
+    EVENTS_PAGE_SECRET_NAME = google_secret_manager_secret_version.events_page.name
+  }
 
   build_environment_variables = {
     GOOGLE_FUNCTION_SOURCE = "webhook.py"
   }
 }
 
+# TODO: can we narrow this down to just GCP/Google authenticated robots?
 resource "google_cloudfunctions_function_iam_member" "webhook_allow_all" {
   project        = google_cloudfunctions_function.webhook.project
   region         = google_cloudfunctions_function.webhook.region

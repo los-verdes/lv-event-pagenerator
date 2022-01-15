@@ -90,11 +90,13 @@ def get_local_path_from_file_id(service, file_id):
 
 def get_local_path_for_file(file_id, mime_type=None):
     local_filename = f"{file_id}{mimetypes.guess_extension(mime_type)}"
-    return os.path.join(
-        BASE_DIR,
-        "..",
-        "static",
-        local_filename,
+    return os.path.abspath(
+        os.path.join(
+            BASE_DIR,
+            "..",
+            "static",
+            local_filename,
+        )
     )
 
 
@@ -109,7 +111,7 @@ def download_all_images_in_folder(service, folder_name):
     ]
     for image_file in image_files:
         download_image(service, image_file)
-        downloaded_images[image_file["name"]] = image_file["local_path"]
+        downloaded_images[image_file["name"]] = os.path.basename(image_file["local_path"])
     logger.debug(f"download_all_images_in_folder() => {image_files=}")
     return downloaded_images
 
@@ -227,9 +229,9 @@ def download_category_images(drive_service, event_categories):
             drive_service,
             event_category["file_metadata"],
         )
-        downloaded_images[image_file["name"]] = image_file["local_path"]
 
         local_path = os.path.basename(image_file["local_path"])
+        downloaded_images[image_file["name"]] = local_path
         event_category["cover_image_filename"] = local_path
 
     logger.debug(f"download_category_images() => {downloaded_images=}")
