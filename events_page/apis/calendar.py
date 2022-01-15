@@ -13,44 +13,12 @@ from dateutil.parser import parse
 from googleapiclient.discovery import build
 from logzero import setup_logger
 
-from apis import Singleton, load_credentials
+from apis import load_credentials
 from apis.drive import get_local_path_for_file
 from apis.mls import TeamColors
+from apis.constants import CalendarColors
 
 logger = setup_logger(name=__name__)
-
-
-class Colors(metaclass=Singleton):
-    _event_colors = {
-        "unset": {"background": None, "id": "0"},
-        "banana": {"background": "#f6c026", "id": "5"},
-        "basil": {"background": "#0b8043", "id": "10"},
-        "blueberry": {"background": "#3f51b5", "id": "9"},
-        "flamingo": {"background": "#e67c73", "id": "4"},
-        "grape": {"background": "#8e24aa", "id": "3"},
-        "graphite": {"background": "#616161", "id": "8"},
-        "lavender": {"background": "#a4bdfc", "id": "1"},
-        "peacock": {"background": "#039be5", "id": "7"},
-        "sage": {"background": "#33b679", "id": "2"},
-        "tangerine": {"background": "#f5511d", "id": "6"},
-        "tomato": {"background": "#d60000", "id": "11"},
-    }
-
-    @classmethod
-    def get_id_by_name(cls, name):
-        for n, color in cls._event_colors.items():
-            if name.lower() == n:
-                return color["id"]
-
-    def get(self, key, default=None):
-        try:
-            return getattr(self, key)
-        except AttributeError:
-            return default
-
-    def __getattr__(self, color_name):
-        color_name = color_name.lower()
-        return self._event_colors.get(color_name)
 
 
 def load_calendar(service, calendar_id):
@@ -236,7 +204,7 @@ class Calendar(object):
         self.categories_by_color_id = {}
         for name, event_category in event_categories.items():
             event_category["category_name"] = name
-            color_id = Colors.get_id_by_name(event_category["gcal_color_name"])
+            color_id = CalendarColors.get_id_by_name(event_category["gcal_color_name"])
             self.categories_by_color_id[color_id] = event_category
         # logger.debug(f"{self.categories_by_color_id=}")
 

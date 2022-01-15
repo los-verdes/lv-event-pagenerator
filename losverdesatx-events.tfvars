@@ -19,34 +19,39 @@ static_site_hostname      = "los-verdes-events.asfasfsafsasfa.org"
 event_categories = {
   # Default category (what is used if no explicit color is set for the matching calendar event)
   misc = {
-    cover_color     = "#000000"
     gcal_color_name = "unset"
+
+    cover_color     = "#000000"
   }
 
   los-verdes = {
+    gcal_color_name         = "lavender"
+
     always_shown_in_filters = true
     bg_color                = "#000000"
     default_cover_image     = "https://drive.google.com/file/d/1dv2K9ep6wldSqYbhH8nizRQW2PTPwdLW/view?usp=sharing"
-    gcal_color_name         = "lavender"
     text_bg_color           = "#00b140"
     text_fg_color           = "#FFFFFF"
   }
 
   la-murga = {
+    gcal_color_name         = "sage"
+
     always_shown_in_filters = true
     cover_color             = "#000000"
-    gcal_color_name         = "sage"
   }
 
   home-games = {
+    gcal_color_name         = "grape"
+
     always_shown_in_filters = true
     cover_color             = "#dbadff"
-    gcal_color_name         = "grape"
   }
 
   away-games = {
+    gcal_color_name         = "flamingo"
+
     always_shown_in_filters = true
     cover_color             = "#000000"
-    gcal_color_name         = "flamingo"
   }
 }

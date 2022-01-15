@@ -205,12 +205,12 @@ def add_category_image_file_metadata(drive_service, event_categories):
     uri_regexp = re.compile(r"https://drive.google.com/file/d/(?P<file_id>[^?]+)/.*")
     for name, event_category in event_categories.items():
         default_cover_image = event_category.get("default_cover_image", "")
-        if cover_image_uri_matches := uri_regexp.match(default_cover_image):
-            cover_image_file_id = cover_image_uri_matches.groupdict()["file_id"]
-
-            event_category["file_metadata"] = (
-                drive_service.files().get(fileId=cover_image_file_id).execute()
-            )
+        if default_cover_image is not None and uri_regexp.match(default_cover_image):
+            if cover_image_uri_matches := uri_regexp.match(default_cover_image):
+                cover_image_file_id = cover_image_uri_matches.groupdict()["file_id"]
+                event_category["file_metadata"] = (
+                    drive_service.files().get(fileId=cover_image_file_id).execute()
+                )
         parsed_categories[name] = event_category
 
     return parsed_categories

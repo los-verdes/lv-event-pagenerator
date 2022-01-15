@@ -2,7 +2,7 @@
 import json
 import os
 import re
-
+from apis.constants import CalendarColors
 from logzero import logger
 
 from apis import load_credentials
@@ -38,11 +38,21 @@ class Config(object):
 
     @property
     def event_categories(self):
-        return json.loads(self.get("event_categories", ""))
+        event_categories = self.get("event_categories", "")
+        if isinstance(event_categories, str):
+            event_categories = json.loads(event_categories)
+
+        if isinstance(event_categories, dict):
+            for name, event_category in event_categories.items():
+                event_category["category_name"] = name
+                event_categories[name]["gcal_color"] = CalendarColors().get(
+                    event_category["gcal_color_name"]
+                )
+        return event_categories
 
     def get(self, key, default=None):
         try:
-            return getattr(self, key)
+            return self.__getattr__(key)
         except AttributeError:
             return default
 

@@ -1,3 +1,4 @@
 .webassets-cache/
 build/
 .env
+static/

@@ -17,6 +17,7 @@ tf-auto-apply: tf-init
   just run-tf 'apply -auto-approve'
 
 run-py +command:
+  # export EVENTS_PAGE_SA_EMAIL="$(terraform -chdir=terraform output -raw site_publisher_sa_email)"
   cd "{{ py_dir }}" && {{ command }}
 
 install-python-reqs:
