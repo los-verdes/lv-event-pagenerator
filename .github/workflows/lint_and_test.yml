@@ -41,8 +41,10 @@ jobs:
   publish-test-site-prefix:
     name: Publish Test Site Prefix
     runs-on: ubuntu-latest
+    env:
+      EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}
     environment:
-      name:  ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}
+      name:  ${{ env.EVENTS_PAGE_GCS_BUCKET_PREFIX }}
       url: ${{ steps.build-and-publish.outputs.site_url }}
     permissions:
       contents: "read"
@@ -74,5 +76,3 @@ jobs:
       - name: Build and Publish Site
         id: build-and-publish
         run: just build-and-publish
-        env:
-          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}

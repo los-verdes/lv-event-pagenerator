@@ -15,8 +15,10 @@ jobs:
   cleanup-test-site-prefix:
     name: Cleanup Test Site Prefix
     runs-on: ubuntu-latest
+    env:
+      EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}
     environment:
-      name:  ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}
+      name:  ${{ env.EVENTS_PAGE_GCS_BUCKET_PREFIX }}
     permissions:
       contents: "read"
       id-token: "write"
@@ -45,7 +47,4 @@ jobs:
           service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Cleanup Test Site Prefix
-        id: cleanup-test-site-prefix
         run: just cleanup-test-site-prefix
-        env:
-          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}
