@@ -135,7 +135,7 @@ if __name__ == "__main__":
         logger.info(
             f"In CI, setting GitHub Actions output: {output_name}={args.site_hostname}"
         )
-        print("::set-output name={output_name}::{args.site_hostname}")
+        print(f"::set-output name={output_name}::{args.site_hostname}")
 
     build_and_publish_site(
         site_hostname=args.site_hostname,

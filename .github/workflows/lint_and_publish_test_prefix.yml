@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ format('tests/pr-{0}', github.event.number) }}
-      url: ${{ steps.build-and-publish.outputs.site_url }}
+      url: ${{ steps.build-and-publish-test-site.outputs.site_url }}
     permissions:
       contents: "read"
       id-token: "write"
@@ -64,11 +64,11 @@ jobs:
           workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
           service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
-      - name: Build and Publish Site
-        id: build-and-publish
+      - name: Build and Publish Test Site
+        id: build-and-publish-test-site
         run: |
           just \
-            --set export_tf_vars true
+            --set export_tf_vars true \
             build-and-publish
         env:
           EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
