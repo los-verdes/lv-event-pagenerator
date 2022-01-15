@@ -111,12 +111,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         "--settings-file-name",
-        default=cfg.settings_file_name,
+        default=cfg.gdrive_settings_file_name,
     )
     parser.add_argument(
         "-g",
         "--gdrive-folder-name",
-        default=cfg.folder_name,
+        default=cfg.gdrive_folder_name,
     )
     parser.add_argument(
         "-e",

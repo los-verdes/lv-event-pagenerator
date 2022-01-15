@@ -80,7 +80,7 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
 def download_all_remote_images(drive_service, event_categories):
     downloaded_images = dict()
     downloaded_images.update(
-        download_all_images_in_folder(drive_service, cfg.folder_name)
+        download_all_images_in_folder(drive_service, cfg.gdrive_folder_name)
     )
     downloaded_images.update(download_category_images(drive_service, event_categories))
     logger.info(f"download_all_remote_images() => {downloaded_images=}")

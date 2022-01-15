@@ -28,11 +28,11 @@ class Config(object):
     defaults = dict(
         calendar_id=DEFAULT_CALENDAR_ID,
         display_timezone=DEFAULT_DISPLAY_TIMEZONE,
-        folder_name=DEFAULT_FOLDER_NAME,
+        gdrive_folder_name=DEFAULT_FOLDER_NAME,
         gcs_bucket_prefix="",
         hostname=DEFAULT_HOSTNAME,
         purge_delay_secs=DEFAULT_PURGE_DELAY_SECS,
-        settings_file_name=DEFAULT_SETTINGS_FILE_NAME,
+        gdrive_settings_file_name=DEFAULT_SETTINGS_FILE_NAME,
         watch_expiration_in_days=DEFAULT_WATCH_EXPIRATION_IN_DAYS,
     )
     _secretsmanager_config = dict()
