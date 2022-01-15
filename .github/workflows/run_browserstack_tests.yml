@@ -72,7 +72,7 @@ jobs:
 
       - name: Comment on the PR about the result
         if: github.event_name == 'pull_request'
-        uses:  mshick/add-pr-comment@v1
+        uses: marocchino/sticky-pull-request-comment@v2
         env:
           # recall that this action returns a JSON.stringified array
           IMG_URL: ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }}  # get the output of the step above using its id
@@ -80,7 +80,4 @@ jobs:
             Screenshot from build / run ID `${{ github.run_id }}`:
             ![Image]({0}) # markdown syntax for displaying a picture
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: 'github-actions[bot]'
           message: ${{format(env.MESSAGE, env.IMG_URL)}}  # add the url into the string
-          allow-repeats: false
