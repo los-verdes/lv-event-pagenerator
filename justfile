@@ -13,11 +13,7 @@ run-tf command:
     terraform -chdir="{{ tf_dir }}" {{ command }} -var-file='../{{ tfvars_file }}'
 
 tf-init:
-  #!/bin/bash
-  if [[ ! -d "{{ tf_dir }}/.terraform" ]]
-  then
-    terraform -chdir="{{ tf_dir }}" init
-  fi
+  terraform -chdir="{{ tf_dir }}" init
 
 tf-plan: tf-init
   just run-tf plan
