@@ -69,9 +69,10 @@ jobs:
         with:
           path: ./events_page/webdriver_test_screenshot.png
           client_id: ${{ secrets.IMGUR_CLIENT_ID }}
-          
+
       - name: Comment on the PR about the result
-        uses: github-actions-up-and-running/pr-comment@v1.0.1  # you can use any action that you want. This is only an example
+        if: github.event_name == 'pull_request'
+        uses:  mshick/add-pr-comment@v1
         env:
           # recall that this action returns a JSON.stringified array
           IMG_URL: ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }}  # get the output of the step above using its id
@@ -80,4 +81,6 @@ jobs:
             ![Image]({0}) # markdown syntax for displaying a picture
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: 'github-actions[bot]'
           message: ${{format(env.MESSAGE, env.IMG_URL)}}  # add the url into the string
+          allow-repeats: false
