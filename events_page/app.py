@@ -8,7 +8,7 @@ from logzero import logger, setup_logger
 from webassets.filter import get_filter
 
 from config import cfg
-from google_apis import calendar as gcal
+from apis import calendar as gcal
 
 
 setup_logger(name=__name__)

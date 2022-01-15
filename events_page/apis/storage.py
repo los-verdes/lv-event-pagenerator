@@ -4,7 +4,7 @@ import glob
 import os
 from logzero import logger
 
-from google_apis import load_credentials
+from apis import load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 

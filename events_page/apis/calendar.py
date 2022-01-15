@@ -13,8 +13,8 @@ from dateutil.parser import parse
 from googleapiclient.discovery import build
 from logzero import setup_logger
 
-from google_apis import load_credentials
-from google_apis.drive import DriveSettings, get_local_path_for_file
+from apis import load_credentials
+from apis.drive import DriveSettings, get_local_path_for_file
 
 logger = setup_logger(name=__name__)
 

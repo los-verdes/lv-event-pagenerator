@@ -5,7 +5,7 @@ import google.auth
 from google.cloud.secretmanager import SecretManagerServiceClient
 from logzero import logger
 
-from google_apis import Singleton
+from apis import Singleton
 
 
 class Secrets(metaclass=Singleton):

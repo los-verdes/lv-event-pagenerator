@@ -5,10 +5,14 @@ import flask
 from logzero import logger
 
 from config import cfg
-from google_apis import calendar as gcal
-from google_apis.drive import (DriveSettings, add_category_image_file_metadata,
-                               build_service, download_all_images_in_folder,
-                               download_category_images)
+from apis import calendar as gcal
+from apis.drive import (
+    DriveSettings,
+    add_category_image_file_metadata,
+    build_service,
+    download_all_images_in_folder,
+    download_category_images,
+)
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -104,26 +108,11 @@ def render_templated_styles(app, gcal_service, drive_service):
 
 
 if __name__ == "__main__":
-    import argparse
-    import logging
-
-    import logzero
-
+    import cli
     from app import create_app
 
     cfg.load()
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-q",
-        "--quiet",
-        help="modify output verbosity",
-        action="store_true",
-    )
-    args = parser.parse_args()
-
-    if args.quiet:
-        logzero.loglevel(logging.INFO)
+    args = cli.parse_args(cli.build_parser())
 
     render_templated_styles(
         app=create_app(),

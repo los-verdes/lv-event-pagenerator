@@ -5,9 +5,8 @@ import logzero
 from googleapiclient.errors import HttpError
 from logzero import logger
 
-from config import cfg
-from google_apis import calendar, drive
-from google_apis.secrets import get_webhook_token
+from apis import calendar, drive
+from apis.secrets import get_webhook_token
 
 logzero.loglevel(logging.INFO)
 
@@ -93,20 +92,16 @@ def ensure_drive_watch(
 
 
 if __name__ == "__main__":
-    import argparse
     import logging
 
     import logzero
 
-    cfg.load()
+    import cli
+    from config import cfg
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-q",
-        "--quiet",
-        help="modify output verbosity",
-        action="store_true",
-    )
+    cfg.load()
+    parser = cli.build_parser()
+    args = cli.parse_args(parser)
     parser.add_argument(
         "-c",
         "--calendar-id",
@@ -132,10 +127,7 @@ if __name__ == "__main__":
         "--web-hook-address",
         default=cfg.webhook_url,
     )
-    args = parser.parse_args()
-
-    if args.quiet:
-        logzero.loglevel(logging.INFO)
+    args = cli.parse_args(parser)
 
     settings_file_id = drive.get_settings_file_id(
         service=drive.build_service(),

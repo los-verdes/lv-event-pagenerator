@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 import re
-from google_apis import load_credentials
+from apis import load_credentials
 from logzero import logger
 
 # phases of the 🌙
@@ -40,7 +40,7 @@ class Config(object):
             return default
 
     def load(self):
-        from google_apis.secrets import get_secretsmanager_config
+        from apis.secrets import get_secretsmanager_config
 
         if not self._secretsmanager_config:
             self._secretsmanager_config = get_secretsmanager_config(

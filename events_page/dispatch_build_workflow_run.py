@@ -3,25 +3,16 @@ from textwrap import dedent
 
 from logzero import logger
 
-from config import cfg
-from github import dispatch_build_workflow_run, get_github_client
-from google_apis.secrets import get_gh_app_key
+from apis.github import dispatch_build_workflow_run, get_github_client
+from apis.secrets import get_gh_app_key
 
 if __name__ == "__main__":
-    import argparse
-    import logging
-
-    import logzero
+    import cli
+    from config import cfg
 
     cfg.load()
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-q",
-        "--quiet",
-        help="modify output verbosity",
-        action="store_true",
-    )
+    parser = cli.build_parser()
+    args = cli.parse_args(parser)
 
     parser.add_argument("--github_org", default=cfg.github_repo.split("/", 1)[0])
 
@@ -46,11 +37,7 @@ if __name__ == "__main__":
             """
         ),
     )
-
-    args = parser.parse_args()
-
-    if args.quiet:
-        logzero.loglevel(logging.INFO)
+    args = cli.parse_args(parser)
 
     github_client = get_github_client(
         owner=args.github_org,

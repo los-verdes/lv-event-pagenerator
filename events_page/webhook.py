@@ -7,9 +7,8 @@ import logzero
 from logzero import logger
 
 from config import cfg
-from dispatch_build_workflow_run import (dispatch_build_workflow_run,
-                                         get_github_client)
-from google_apis.secrets import get_gh_app_key, get_webhook_token
+from dispatch_build_workflow_run import dispatch_build_workflow_run, get_github_client
+from apis.secrets import get_gh_app_key, get_webhook_token
 
 uri_regexp = re.compile(
     r"https://www.googleapis.com/drive/v3/files/(?P<file_id>[^?]+).*"

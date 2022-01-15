@@ -1,23 +1,22 @@
-py_dir := "events_page"
-tf_dir := "terraform"
+py_dir      := "events_page"
 tfvars_file := "losverdesatx-events.tfvars"
-
-
-tf-init:
-  terraform -chdir="{{ tf_dir }}" init
-
-run-tf command: tf-init
-    terraform -chdir="{{ tf_dir }}" {{ command }} -var-file='../{{ tfvars_file }}'
-
-tf-auto-apply:
-  just run-tf plan
-  just run-tf 'apply -auto-approve'
+tf_subdir   := "./terraform"
 
 set-tf-ver-output:
   echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
 
+run-tf CMD:
+  terraform -chdir="{{ justfile_directory() + "/" + tf_subdir }}" \
+    {{ CMD }} \
+    {{ if CMD != "init" { "-var-file=../" + tfvars_file } else { "" } }}
 
-run-py command:
+tf-init:
+  just run-tf init
+
+tf-auto-apply: tf-init
+  just run-tf 'apply -auto-approve'
+
+run-py +command:
   cd "{{ py_dir }}" && {{ command }}
 
 install-python-reqs:

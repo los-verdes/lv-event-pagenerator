@@ -13,7 +13,7 @@ from googleapiclient.http import MediaIoBaseDownload
 from logzero import logger
 from ruamel import yaml
 
-from google_apis import Singleton, load_credentials
+from apis import Singleton, load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -36,7 +36,7 @@ class DriveSettings(metaclass=Singleton):
             self.refresh()
 
     def refresh(self):
-        logger.warning('DriveSettings refresh!')
+        logger.warning("DriveSettings refresh!")
         self._settings = load_settings(
             self._drive_service, cfg.folder_name, cfg.settings_file_name
         )

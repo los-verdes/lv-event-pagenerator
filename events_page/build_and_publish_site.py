@@ -8,10 +8,9 @@ from flask_frozen import Freezer
 from logzero import logger
 
 from app import create_app
-from config import cfg
-from google_apis import calendar as gcal
-from google_apis import drive, storage
-from google_apis.secrets import get_cloudflare_api_token
+from apis import calendar as gcal
+from apis import drive, storage
+from apis.secrets import get_cloudflare_api_token
 from render_templated_styles import render_templated_styles
 
 
@@ -88,20 +87,16 @@ def publish_static_site(
 
 
 if __name__ == "__main__":
-    import argparse
     import logging
 
     import logzero
 
-    cfg.load()
+    import cli
+    from config import cfg
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-q",
-        "--quiet",
-        help="modify output verbosity",
-        action="store_true",
-    )
+    cfg.load()
+    parser = cli.build_parser()
+    args = cli.parse_args(parser)
     parser.add_argument(
         "-s",
         "--site-hostname",
@@ -120,7 +115,7 @@ if __name__ == "__main__":
         default=cfg.purge_delay_secs,
         help="How long to wait to test site response after purging cache post-publication",
     )
-    args = parser.parse_args()
+    args = cli.parse_args(parser)
 
     if args.quiet:
         logzero.loglevel(logging.INFO)
