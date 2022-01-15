@@ -2,6 +2,11 @@ name: Run BrowserStack Tests
 
 on:
   workflow_call:
+    inputs:
+      site_url:
+        default: "unknown"
+        required: false
+        type: string
     secrets:
       BROWSERSTACK_USERNAME:
         required: true
@@ -78,6 +83,8 @@ jobs:
           IMG_URL: ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }}  # get the output of the step above using its id
           MESSAGE: |
             ### Build / Run ID `${{ github.run_id }}` Results
+
+            - Published to: [${{ inputs.site_url }}](${{ inputs.username }})
 
             #### Screenshot
 
