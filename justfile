@@ -1,54 +1,37 @@
-
-set dotenv-load := true
-
-# alias template-sites := template-styles-from-drive-settings
-
-tfvars_file := "losverdesatx-events.tfvars"
-tf_dir := "terraform"
 py_dir := "events_page"
+tf_dir := "terraform"
+tfvars_file := "losverdesatx-events.tfvars"
 
-
-
-run-tf command:
-    terraform -chdir="{{ tf_dir }}" {{ command }} -var-file='../{{ tfvars_file }}'
 
 tf-init:
   terraform -chdir="{{ tf_dir }}" init
 
-tf-plan: tf-init
+run-tf command: tf-init
+    terraform -chdir="{{ tf_dir }}" {{ command }} -var-file='../{{ tfvars_file }}'
+
+tf-auto-apply:
   just run-tf plan
-
-tf-apply:
-  just run-tf apply
-
-tf-auto-apply: tf-plan
   just run-tf 'apply -auto-approve'
-
-tf-targeted-apply target:
-  just run-tf 'apply -lock=false -auto-approve -target={{ target }}'
-
-tf-unlock lock_id:
-  just run-tf "force-unlock -force '{{ lock_id }}'"
 
 set-tf-ver-output:
   echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
 
-render-templated-styles:
-  cd "{{ py_dir }}" && ./render_templated_styles.py
+
+run-py command:
+  cd "{{ py_dir }}" && {{ command }}
 
 install-python-reqs:
-  cd "{{ py_dir }}" && pip3 install --requirement=requirements.txt --quiet
-
-build-and-publish: install-python-reqs
-  echo "build-and-publish"
-  cd "{{ py_dir }}" && ./build_and_publish_site.py --quiet
-
-# serve: install-python-reqs export-env render-templated-styles
-serve: render-templated-styles
-  cd "{{ py_dir }}" && ./app.py
+  just run-py 'pip3 install --requirement=requirements.txt --quiet'
 
 ensure-watches: install-python-reqs
-  cd "{{ py_dir }}" && ./ensure_watches.py --quiet
+  just run-py './ensure_watches.py --quiet'
 
 dispatch-build-run: install-python-reqs
-  cd "{{ py_dir }}" && ./dispatch_build_workflow_run.py  --quiet
+  just run-py './dispatch_build_workflow_run.py  --quiet'
+
+build-and-publish: install-python-reqs
+  just run-py './build_and_publish_site.py --quiet'
+
+serve:
+  just run-py './render_templated_styles.py'
+  just run-py './app.py'
