@@ -8,7 +8,7 @@ from flask_frozen import Freezer
 from logzero import logger
 
 from app import create_app
-from config import env
+from config import cfg
 from google_apis import storage
 from google_apis.secrets import get_cloudflare_api_token
 
@@ -83,6 +83,8 @@ if __name__ == "__main__":
 
     import logzero
 
+    cfg.load()
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-q",
@@ -93,13 +95,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         "--site-hostname",
-        default=env.hostname,
+        default=cfg.hostname,
         help="Fully-qualified domain name of the published site. Used in cache purging / priming methods.",
     )
     parser.add_argument(
         "-z",
         "--cloudflare-zone",
-        default=env.get("cloudflare_zone"),
+        default=cfg.get("cloudflare_zone"),
         help="Name of zone at CDN provider (Cloudflare only provider currently considered / supported).",
     )
     args = parser.parse_args()

@@ -4,7 +4,7 @@ import os
 import flask
 from logzero import logger
 
-from config import env
+from config import cfg
 from google_apis import calendar as gcal
 from google_apis.drive import (DriveSettings, add_category_image_file_metadata,
                                build_service, download_all_images_in_folder,
@@ -49,7 +49,7 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
 
     for event in calendar.events:
         class_name = event.event_specific_css_class
-        logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
+        # logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
         if cover_image_filename := event.cover_image_filename:
             event_category_background_images[class_name] = cover_image_filename
 
@@ -78,7 +78,7 @@ def get_team_colors(drive_service):
 
 
 def download_all_remote_images(drive_service, event_categories):
-    downloaded_images = download_all_images_in_folder(drive_service, env.folder_name)
+    downloaded_images = download_all_images_in_folder(drive_service, cfg.folder_name)
     downloaded_images += download_category_images(drive_service, event_categories)
     return downloaded_images
 
@@ -93,7 +93,7 @@ def render_templated_styles(app, gcal_service, drive_service):
         app=app,
         calendar=gcal.load_calendar(
             service=gcal_service,
-            calendar_id=env.calendar_id,
+            calendar_id=cfg.calendar_id,
         ),
         event_categories=event_categories,
         team_colors=get_team_colors(drive_service),
@@ -109,6 +109,8 @@ if __name__ == "__main__":
     import logzero
 
     from app import create_app
+
+    cfg.load()
 
     parser = argparse.ArgumentParser()
     parser.add_argument(

@@ -37,9 +37,6 @@ tf-unlock lock_id:
 set-tf-ver-output:
   echo "::set-output name=terraform_version::$(cat ./.terraform-version)"
 
-export-env: tf-init
-  just tf-targeted-apply 'local_file.dotenv'
-
 render-templated-styles:
   cd "{{ py_dir }}" && ./render_templated_styles.py
 

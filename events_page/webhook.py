@@ -6,9 +6,8 @@ import re
 import logzero
 from logzero import logger
 
-from config import env
-from dispatch_build_workflow_run import (dispatch_build_workflow_run,
-                                         get_github_client)
+from config import cfg
+from dispatch_build_workflow_run import dispatch_build_workflow_run, get_github_client
 from google_apis.secrets import get_github_pat, get_webhook_token
 
 uri_regexp = re.compile(
@@ -27,6 +26,7 @@ def process_push_notification(request):
         Response object using
         `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
     """
+    cfg.load()
     push = parse_push(req_headers=request.headers)
     logger.info(f"push received: {push=}")
     logger.info(f"{request.url=} {os.getenv('FUNCTION_NAME')=}")
@@ -40,7 +40,7 @@ def process_push_notification(request):
 
 
 def dispatch_build():
-    github_org, repo_name = env.github_repo.split("/", 1)
+    github_org, repo_name = cfg.github_repo.split("/", 1)
     github_client = get_github_client(
         owner=github_org,
         repo=repo_name,

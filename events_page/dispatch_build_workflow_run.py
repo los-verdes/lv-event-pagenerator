@@ -4,7 +4,7 @@ from textwrap import dedent
 
 from logzero import logger
 
-from config import env
+from config import cfg
 from github import dispatch_build_workflow_run, get_github_client
 
 if __name__ == "__main__":
@@ -12,6 +12,8 @@ if __name__ == "__main__":
     import logging
 
     import logzero
+
+    cfg.load()
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -21,11 +23,11 @@ if __name__ == "__main__":
         action="store_true",
     )
 
-    parser.add_argument("--github_org", default=env.github_repo.split("/", 1)[0])
+    parser.add_argument("--github_org", default=cfg.github_repo.split("/", 1)[0])
 
     parser.add_argument(
         "--repo_name",
-        default=env.github_repo.split("/", 1)[1],
+        default=cfg.github_repo.split("/", 1)[1],
     )
 
     parser.add_argument(

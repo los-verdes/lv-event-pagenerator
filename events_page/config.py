@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import os
 import re
-from dotenv import load_dotenv
-
+from google_apis import load_credentials
 from logzero import logger
 
 # phases of the 🌙
@@ -28,6 +27,7 @@ class Config(object):
         settings_file_name=DEFAULT_SETTINGS_FILE_NAME,
         watch_expiration_in_days=DEFAULT_WATCH_EXPIRATION_IN_DAYS,
     )
+    _secretsmanager_config = dict()
 
     def get(self, key, default=None):
         try:
@@ -35,14 +35,21 @@ class Config(object):
         except AttributeError:
             return default
 
+    def load(self):
+        from google_apis.secrets import get_secretsmanager_config
+
+        self._secretsmanager_config = get_secretsmanager_config(credentials=load_credentials())
+
     def __getattr__(self, key):
         environ_key = f"EVENTS_PAGE_{key.upper()}"
         if environ_value := os.getenv(environ_key):
             return environ_value
-        if environ_value := self.defaults.get(key):
-            return environ_value
+        if config_value := self._secretsmanager_config.get(key):
+            return config_value
+        if default_value := self.defaults.get(key):
+            return default_value
 
-        raise AttributeError
+        raise AttributeError(f"no {key=} anywhere for <Config ...>!")
 
     def to_dict(self):
         config_dict = self.defaults
@@ -53,6 +60,5 @@ class Config(object):
         return config_dict
 
 
-load_dotenv()
-env = Config()
-logger.debug(f"Config loaded from environment: {env.to_dict()=}")
+cfg = Config()
+logger.debug(f"Config loaded from environment: {cfg.to_dict()=}")

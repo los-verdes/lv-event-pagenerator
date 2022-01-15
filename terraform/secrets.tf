@@ -17,6 +17,7 @@ resource "google_secret_manager_secret_version" "events_page" {
     cloudflare_api_token      = var.cloudflare_api_token
     site_publisher_github_pat = var.site_publisher_github_pat
     webhook_token             = random_password.webhook_token.result
+    config = jsonencode(local.application_config)
   })
 }
 

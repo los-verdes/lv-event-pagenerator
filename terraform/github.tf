@@ -39,22 +39,6 @@ resource "google_project_iam_member" "site_publisher_viewer" {
   member  = "serviceAccount:${google_service_account.site_publisher.email}"
 }
 
-# TODO: make this more ganular:
-# │ Error: Error acquiring the state lock
-# │
-# │ Error message: 2 errors occurred:
-# │ 	* writing "gs://losverdesatx-events-tfstate/env/production/default.tflock"
-# │ failed: googleapi: Error 403:
-# │ site-publisher@losverdesatx-events.iam.gserviceaccount.com does not have
-# │ storage.objects.create access to the Google Cloud Storage object.,
-# │ forbidden
-# │ 	* storage: object doesn't exist
-# resource "google_storage_bucket_iam_member" "site_publisher_tfstate_person" {
-#   bucket = local.tfstate_bucket
-#   role   = "roles/storage.objectAdmin"
-#   member = "serviceAccount:${google_service_account.site_publisher.email}"
-# }
-
 resource "google_service_account" "gh_terraform_applier" {
   account_id   = "gh-terraform-applier"
   display_name = "Identity used for privileged deploys within GitHub Actions workflow runs"

@@ -6,8 +6,8 @@ output "events_page_secret_name" {
   value = google_secret_manager_secret_version.events_page.name
 }
 
-output "events_page_env" {
-  value = local.events_page_env
+output "application_config" {
+  value = local.application_config
 }
 
 output "gh_terraform_applier_sa_email" {

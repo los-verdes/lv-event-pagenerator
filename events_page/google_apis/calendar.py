@@ -8,7 +8,7 @@ from os.path import basename
 from urllib.parse import quote_plus
 from zoneinfo import ZoneInfo
 
-from config import env
+from config import cfg
 from dateutil.parser import parse
 from googleapiclient.discovery import build
 from logzero import setup_logger
@@ -23,7 +23,7 @@ def load_calendar(service, calendar_id):
     calendar = Calendar(
         service=service,
         calendar_id=calendar_id,
-        display_timezone=env.display_timezone,
+        display_timezone=cfg.display_timezone,
         event_categories=DriveSettings().event_categories,
         mls_teams=DriveSettings().mls_teams,
     )
@@ -83,9 +83,9 @@ class Event(object):
 
     @property
     def category(self):
-        logger.info(
-            f"{self.color_id=} => {self.categories_by_color_id.get(self.color_id)=}"
-        )
+        # logger.info(
+        #     f"{self.color_id=} => {self.categories_by_color_id.get(self.color_id)=}"
+        # )
         if category := self.categories_by_color_id.get(self.color_id):
             return category
 
@@ -153,7 +153,7 @@ class Event(object):
         if attachments := self._event.get("attachments"):
             for attachment in attachments:
                 if attachment["mimeType"].startswith("image/"):
-                    logger.debug(f"{attachment=}")
+                    logger.debug(f"{attachment['title']=} {attachment['mimeType']=}")
                     # TOOD: also ensure these files are downloaded at one point or another?
                     return basename(
                         get_local_path_for_file(
@@ -264,7 +264,7 @@ class Calendar(object):
 
         self.events_time_min = time_min
         self.events_time_max = time_max
-        self.last_refresh = datetime.now(tz=ZoneInfo(env.display_timezone))
+        self.last_refresh = datetime.now(tz=ZoneInfo(cfg.display_timezone))
 
         mls_team_abbrs_by_name = {v["name"]: k for k, v in self.mls_teams.items()}
         logger.info(f"Getting the all events from {time_min} to {time_max}...")

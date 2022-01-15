@@ -7,7 +7,7 @@ from flask_assets import Bundle, Environment
 from logzero import logger, setup_logger
 from webassets.filter import get_filter
 
-from config import env
+from config import cfg
 from google_apis import calendar as gcal
 
 
@@ -36,7 +36,7 @@ def events():
         "index.html",
         calendar=gcal.load_calendar(
             service=gcal.build_service(),
-            calendar_id=env.calendar_id,
+            calendar_id=cfg.calendar_id,
         ),
     )
 
@@ -67,10 +67,12 @@ def hex2rgb(hex, alpha=None):
 
 
 def create_app():
+    cfg.load()
+
     # TODO: do this default settings thing better?
     default_app_config = dict(
-        display_timezone=env.display_timezone,
-        FREEZER_BASE_URL=f"https://{env.hostname}",
+        display_timezone=cfg.display_timezone,
+        FREEZER_BASE_URL=f"https://{cfg.hostname}",
         FREEZER_STATIC_IGNORE=["*.scss", ".webassets-cache/*", ".DS_Store"],
         FREEZER_RELATIVE_URLS=True,
         FREEZER_REMOVE_EXTRA_FILES=True,

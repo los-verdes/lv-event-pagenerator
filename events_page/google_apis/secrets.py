@@ -4,23 +4,32 @@ import json
 import google.auth
 from google.cloud.secretmanager import SecretManagerServiceClient
 from logzero import logger
-from config import env
+
 from google_apis import Singleton
 
 
 class Secrets(metaclass=Singleton):
+    secret_name = "events-page"
     _secrets = None
+
+    def __init__(self, credentials=None) -> None:
+        # breakpoint()
+        if credentials is None:
+            credentials, project = google.auth.default()
+            logger.debug(f"Default credentials project: {project}")
+
+        self._client = SecretManagerServiceClient(credentials=credentials)
 
     @property
     def secrets(self):
         if self._secrets is not None:
             return self._secrets
 
-        credentials, project = google.auth.default()
-        logger.debug(f"Default credentials project: {project}")
-        logger.debug(f"Retriving {env.secret_name=}")
-        client = SecretManagerServiceClient(credentials=credentials)
-        response = client.access_secret_version(request={"name": env.secret_name})
+        response = self._client.access_secret_version(
+            request={"name": self.secret_name}
+        )
+        logger.debug(f"{response=}")
+        breakpoint()
         payload = response.payload.data.decode("UTF-8")
         self._secret = json.loads(payload)
         logger.debug(f"{self._secret.keys()=}")
@@ -31,7 +40,9 @@ class Secrets(metaclass=Singleton):
 
 
 def get_cloudflare_api_token():
-    return Secrets().cloudflare_api_token
+    cloudflare_api_token = Secrets().cloudflare_api_token
+    logger.debug(f"{cloudflare_api_token=}")
+    return cloudflare_api_token
 
 
 def get_github_pat():
@@ -40,3 +51,9 @@ def get_github_pat():
 
 def get_webhook_token():
     return Secrets().webhook_token
+
+
+def get_secretsmanager_config(credentials):
+    if config := Secrets(credentials).config:
+        return json.loads(config)
+    return dict()

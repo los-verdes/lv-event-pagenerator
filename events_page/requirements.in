@@ -13,7 +13,7 @@ gunicorn
 libsass
 logzero
 python-dateutil
-python-dotenv
+# python-dotenv
 requests
 ruamel.yaml
 tenacity

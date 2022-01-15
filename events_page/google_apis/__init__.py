@@ -1,6 +1,7 @@
 #!/usr/bin/env python
+import os
+
 import google.auth
-from config import env
 from google.auth import impersonated_credentials
 from googleapiclient.discovery import build
 
@@ -13,7 +14,7 @@ DEFAULT_SCOPES = [
 
 def load_credentials(scopes=DEFAULT_SCOPES):
     credentials, _ = google.auth.default(scopes=scopes)
-    if sa_email := env.get("sa_email"):
+    if sa_email := os.getenv("EVENTS_PAGE_SA_EMAIL"):
         source_credentials = credentials
         target_principal = sa_email
         credentials = impersonated_credentials.Credentials(

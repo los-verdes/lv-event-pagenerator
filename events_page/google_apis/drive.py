@@ -6,7 +6,7 @@ import re
 import time
 from datetime import datetime
 
-from config import env
+from config import cfg
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
@@ -38,7 +38,7 @@ class DriveSettings(metaclass=Singleton):
     def refresh(self):
         logger.warning('DriveSettings refresh!')
         self._settings = load_settings(
-            self._drive_service, env.folder_name, env.settings_file_name
+            self._drive_service, cfg.folder_name, cfg.settings_file_name
         )
 
     @property

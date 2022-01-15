@@ -5,7 +5,7 @@ import logzero
 from googleapiclient.errors import HttpError
 from logzero import logger
 
-from config import env
+from config import cfg
 from google_apis import calendar, drive
 from google_apis.secrets import get_webhook_token
 
@@ -98,6 +98,8 @@ if __name__ == "__main__":
 
     import logzero
 
+    cfg.load()
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-q",
@@ -108,27 +110,27 @@ if __name__ == "__main__":
     parser.add_argument(
         "-c",
         "--calendar-id",
-        default=env.calendar_id,
+        default=cfg.calendar_id,
     )
     parser.add_argument(
         "-s",
         "--settings-file-name",
-        default=env.settings_file_name,
+        default=cfg.settings_file_name,
     )
     parser.add_argument(
         "-g",
         "--gdrive-folder-name",
-        default=env.folder_name,
+        default=cfg.folder_name,
     )
     parser.add_argument(
         "-e",
         "--expiration-in-days",
-        default=env.watch_expiration_in_days,
+        default=cfg.watch_expiration_in_days,
     )
     parser.add_argument(
         "-w",
         "--web-hook-address",
-        default=env.webhook_url,
+        default=cfg.webhook_url,
     )
     args = parser.parse_args()
 
