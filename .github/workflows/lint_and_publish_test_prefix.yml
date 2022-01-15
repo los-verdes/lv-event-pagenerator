@@ -1,16 +1,9 @@
-name: Lint and Test
+name: Lint and Publish Test Site Prefix
 
 on:
   pull_request:
     branches: [main]
     types: [reopened, opened, synchronize, edited]
-  workflow_dispatch:
-    inputs:
-      gcs_prefix:
-        default: "test"
-        description: "GCS prefix/subpath the static site contents will be stagged under."
-        type: string
-        required: true
 
 concurrency:
   group: ${{ github.ref }}
@@ -41,10 +34,8 @@ jobs:
   publish-test-site-prefix:
     name: Publish Test Site Prefix
     runs-on: ubuntu-latest
-    env:
-      EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}
     environment:
-      name:  ${{ env.EVENTS_PAGE_GCS_BUCKET_PREFIX }}
+      name: ${{ format('tests/pr-{0}', github.event.number) }}
       url: ${{ steps.build-and-publish.outputs.site_url }}
     permissions:
       contents: "read"
@@ -79,3 +70,5 @@ jobs:
           just \
             --set export_tf_vars true
             build-and-publish
+        env:
+          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
