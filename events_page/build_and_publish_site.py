@@ -65,7 +65,9 @@ def build_static_site():
     return freeze_result
 
 
-def publish_static_site(static_site_files, site_hostname, cloudflare_zone, purge_delay_secs):
+def publish_static_site(
+    static_site_files, site_hostname, cloudflare_zone, purge_delay_secs
+):
     storage.upload_build_to_gcs(
         client=storage.get_client(),
         bucket_id=site_hostname,
@@ -79,7 +81,10 @@ def publish_static_site(static_site_files, site_hostname, cloudflare_zone, purge
         sleep(purge_delay_secs)
     else:
         logger.warning(f"Skipping cache purge bits as {cloudflare_zone} is unset...")
-    prime_cache(site_hostname=site_hostname, new_paths=static_site_files)
+    logger.warning(
+        '"priming" the cache may be causing more issues than it is worth, skipping for now...'
+    )
+    # prime_cache(site_hostname=site_hostname, new_paths=static_site_files)
 
 
 if __name__ == "__main__":

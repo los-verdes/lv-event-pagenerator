@@ -2,21 +2,23 @@
 from fastcore.basics import AttrDict
 from fastcore.net import ExceptionsHTTP
 from ghapi.all import GhApi
-from github3 import GitHub
+from github3 import GitHub, session
 from logzero import logger
 from tenacity import retry, stop_after_attempt, wait_fixed
 
 
 def get_github_client(owner, repo, app_id, app_key, install_id):
-    gh3 = GitHub()
-    gh3.login_as_app_installation(
+    gh_session = session.GitHubSession()
+    gh_session.auth = session.TokenAuth("placeholder")
+    GitHub(gh_session).login_as_app_installation(
         app_key.encode("utf-8"), app_id, install_id, expire_in=300
     )
-    logger.debug(f"{gh3.session.auth}")
+
+    logger.debug(f"{gh_session.auth}")
     return GhApi(
         owner=owner,
         repo=repo,
-        token=gh3.session.auth.token,
+        token=gh_session.auth.token,
     )
 
 
