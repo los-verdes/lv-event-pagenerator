@@ -59,6 +59,9 @@ jobs:
     if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
     needs: build-and-publish-site
     runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      id-token: "write"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -84,6 +87,12 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ env.pythonLocation }}-${{ hashFiles('events_page/requirements.txt') }}
+
+      - name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v0"
+        with:
+          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
+          service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Run Tests
         id: build-and-publish-test-site
