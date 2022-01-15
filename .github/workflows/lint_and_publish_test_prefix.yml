@@ -125,7 +125,7 @@ jobs:
           EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
 
       - name: Upload screenshots
-        uses: actions/upload-artifact@latest
+        uses: actions/upload-artifact@v2
         with:
             name: test-screenshot
             path: webdriver_test_screenshot.png

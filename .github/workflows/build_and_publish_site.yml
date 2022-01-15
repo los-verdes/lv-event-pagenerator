@@ -53,3 +53,56 @@ jobs:
       - name: Echo site_url output
         run: |
           echo "site_url output: ${{ steps.build-and-publish.outputs.site_url }}"
+
+  run-browserstack-tests:
+    name: Run BrowserStack Tests
+    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
+    needs: build-and-publish-site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: 'BrowserStack Env Setup'
+        uses: 'browserstack/github-actions/setup-env@master'
+        with:
+          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
+          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          build-name: ${{ github.run_id }}
+          project-name: ${{ github.repository }}
+
+      - name: Setup just
+        uses: extractions/setup-just@v1
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Utilize pip cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ env.pythonLocation }}-${{ hashFiles('events_page/requirements.txt') }}
+
+      - name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v0"
+        with:
+          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
+          service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
+
+      - name: Run Tests
+        id: build-and-publish-test-site
+        run: |
+          just \
+            --set export_tf_vars true \
+            test
+        env:
+          # EVENTS_PAGE_CALENDAR_ID: "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
+          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v2
+        with:
+            name: test-screenshot
+            path: webdriver_test_screenshot.png
