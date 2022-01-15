@@ -34,5 +34,7 @@ locals {
     github_repo        = var.github_repo
     hostname           = google_storage_bucket.static_site.name
     webhook_url        = local.webhook_url
+    github_app_id      = var.github_app_id
+    github_install_id  = var.github_install_id
   }
 }

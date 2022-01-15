@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-import os
 from textwrap import dedent
 
 from logzero import logger
 
 from config import cfg
 from github import dispatch_build_workflow_run, get_github_client
+from google_apis.secrets import get_gh_app_key
 
 if __name__ == "__main__":
     import argparse
@@ -55,9 +55,9 @@ if __name__ == "__main__":
     github_client = get_github_client(
         owner=args.github_org,
         repo=args.repo_name,
-        app_id=int(os.environ['GITHUBAPP_ID']),
-        app_key='\n'.join(os.environ["GITHUBAPP_KEY"].split('\\n')),
-        install_id=os.environ['GITHUBAPP_INSTALL_ID'],
+        app_id=int(cfg.githubapp_id),
+        app_key=get_gh_app_key(),
+        install_id=int(cfg.githubapp_install_id),
     )
 
     logger.info(

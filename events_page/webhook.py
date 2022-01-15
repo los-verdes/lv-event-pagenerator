@@ -7,7 +7,8 @@ import logzero
 from logzero import logger
 
 from config import cfg
-from dispatch_build_workflow_run import dispatch_build_workflow_run, get_github_client
+from dispatch_build_workflow_run import (dispatch_build_workflow_run,
+                                         get_github_client)
 from google_apis.secrets import get_gh_app_key, get_webhook_token
 
 uri_regexp = re.compile(
@@ -44,9 +45,9 @@ def dispatch_build():
     github_client = get_github_client(
         owner=github_org,
         repo=repo_name,
-        app_id=os.environ['GITHUBAPP_ID'],
+        app_id=int(cfg.githubapp_id),
         app_key=get_gh_app_key(),
-        install_id=os.environ['GITHUBAPP_INSTALL_ID'],
+        install_id=int(cfg.githubapp_install_id),
     )
 
     workflow_run = dispatch_build_workflow_run(
