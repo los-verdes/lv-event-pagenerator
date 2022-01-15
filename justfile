@@ -37,7 +37,7 @@ render-templated-styles:
   cd "{{ py_dir }}" && ./render_templated_styles.py
 
 install-python-reqs:
-  cd "{{ py_dir }}" && pip3 install --requirement=requirements.txt
+  cd "{{ py_dir }}" && pip3 install --requirement=requirements.txt --quiet
 
 build-and-publish: install-python-reqs
   echo "build-and-publish"
