@@ -85,7 +85,7 @@ jobs:
     permissions:
       contents: "read"
       id-token: "write"
-      pull requests: "write"
+      pull-requests: "write"
     secrets:
       BROWSERSTACK_USERNAME:  ${{ secrets.BROWSERSTACK_USERNAME }}
       BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
