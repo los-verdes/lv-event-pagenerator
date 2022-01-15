@@ -44,7 +44,9 @@ def get_cloudflare_api_token():
 
 
 def get_gh_app_key():
-    return Secrets().site_publisher_gh_app_key
+    gh_app_key = Secrets().site_publisher_gh_app_key
+    gh_app_key = gh_app_key.split("\\n")
+    return "\n".join(gh_app_key)
 
 
 def get_webhook_token():
