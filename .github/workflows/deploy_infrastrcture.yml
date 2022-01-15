@@ -25,17 +25,6 @@ jobs:
       - name: Setup just
         uses: extractions/setup-just@v1
 
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-
-      - name: Utilize pip cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ env.pythonLocation }}-${{ hashFiles('events_page/requirements.txt') }}
-
       - name: Utilize .terraform cache
         uses: actions/cache@v2
         with:
@@ -63,8 +52,3 @@ jobs:
           TF_VAR_github_repo: ${{ github.repo }}
           TF_VAR_cloudflare_api_token: ${{ secrets.cloudflare_api_token }}
           TF_VAR_site_publisher_github_pat: ${{ secrets.site_publisher_github_pat }}
-
-      - name: Dispatch build-and-publish-site workflow
-        run: just dispatch-build-run # pass in github.repo here... or get default args from dotenv
-        env:
-          GITHUB_PAT: ${{ secrets.site_publisher_github_pat }}

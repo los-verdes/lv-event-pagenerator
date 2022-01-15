@@ -6,7 +6,10 @@ concurrency:
 
 on:
   workflow_dispatch: {}
-  workflow_call: {}
+  workflow_run:
+    workflows: [Deploy Infrastructure]
+    types:
+      - "completed"
 
 jobs:
   build-and-publish-site:
