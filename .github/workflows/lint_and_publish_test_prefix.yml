@@ -79,7 +79,7 @@ jobs:
           echo "site_url output: ${{ steps.build-and-publish-test-site.outputs.site_url }}
 
   run-browserstack-tests:
-    name: 'BrowserStack Test on Ubuntu'
+    name: Run BrowserStack Tests
     needs: publish-test-site-prefix
     runs-on: ubuntu-latest
     steps:
@@ -114,7 +114,7 @@ jobs:
           workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
           service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
-      - name: Test Site
+      - name: Run Tests
         id: build-and-publish-test-site
         run: |
           just \
@@ -123,12 +123,7 @@ jobs:
         env:
           # EVENTS_PAGE_CALENDAR_ID: "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
           EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
-
-      - name: 'BrowserStackLocal Setup'
-        uses: 'browserstack/github-actions/setup-local@master'
-        with:
-          local-testing: start
-          local-identifier: random
+    
       - name: Upload screenshots
         uses: actions/upload-artifact@latest
         with:
