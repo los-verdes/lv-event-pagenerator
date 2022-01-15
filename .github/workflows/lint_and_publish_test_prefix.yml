@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
 
       - name: Super Linter
-        uses: github/super-linter@slim-v4
+        uses: github/super-linter/slim@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_TERRAFORM_TERRASCAN: false  # TODO: toggle on after patching up these violations...
@@ -74,6 +74,6 @@ jobs:
           # EVENTS_PAGE_CALENDAR_ID: "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
           EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
 
-      - name: Debug echo site_url
+      - name: Echo site_url output
         run: |
           echo "site_url output: ${{ steps.build-and-publish-test-site.outputs.site_url }}"

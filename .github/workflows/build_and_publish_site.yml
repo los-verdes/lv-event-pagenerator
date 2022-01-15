@@ -49,3 +49,7 @@ jobs:
       - name: Build and Publish Site
         id: build-and-publish
         run: just build-and-publish
+
+      - name: Echo site_url output
+        run: |
+          echo "site_url output: ${{ steps.build-and-publish.outputs.site_url }}"
