@@ -20,12 +20,13 @@ def ensure_watches(
         calendar_id=calendar_id,
         expiration_in_days=expiration_in_days,
     )
-    ensure_drive_watch(
-        web_hook_address=web_hook_address,
-        webhook_token=webhook_token,
-        settings_file_id=settings_file_id,
-        expiration_in_days=expiration_in_days,
-    )
+    # TODO: maybe we don't want to complciate things with a settings file in gdrive...
+    # ensure_drive_watch(
+    #     web_hook_address=web_hook_address,
+    #     webhook_token=webhook_token,
+    #     settings_file_id=settings_file_id,
+    #     expiration_in_days=expiration_in_days,
+    # )
 
 
 def ensure_watch(

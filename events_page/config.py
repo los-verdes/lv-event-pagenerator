@@ -1,8 +1,11 @@
 #!/usr/bin/env python
+import json
 import os
 import re
-from apis import load_credentials
+
 from logzero import logger
+
+from apis import load_credentials
 
 # phases of the 🌙
 DEFAULT_CALENDAR_ID = "ht3jlfaac5lfd6263ulfh4tql8@group.calendar.google.com"
@@ -32,6 +35,10 @@ class Config(object):
         watch_expiration_in_days=DEFAULT_WATCH_EXPIRATION_IN_DAYS,
     )
     _secretsmanager_config = dict()
+
+    @property
+    def event_categories(self):
+        return json.loads(self.get("event_categories", ""))
 
     def get(self, key, default=None):
         try:

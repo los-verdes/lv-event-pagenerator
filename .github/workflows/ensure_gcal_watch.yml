@@ -1,4 +1,4 @@
-name: Ensure GCal and GDrive Watches
+name: Ensure GCal Watches
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   ensure-watches:
-    name: Ensure GCal and GDrive Watches
+    name: Ensure GCal Watches
     runs-on: ubuntu-latest
     permissions:
       contents: "read"
@@ -35,5 +35,5 @@ jobs:
           workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
           service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
-      - name: Ensure GCal and GDrive Watches
+      - name: Ensure GCal Watches
         run: just ensure-watches

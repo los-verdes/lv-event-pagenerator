@@ -13,10 +13,44 @@ from dateutil.parser import parse
 from googleapiclient.discovery import build
 from logzero import setup_logger
 
-from apis import load_credentials
-from apis.drive import DriveSettings, get_local_path_for_file
+from apis import Singleton, load_credentials
+from apis.drive import get_local_path_for_file
+from apis.mls import TeamColors
 
 logger = setup_logger(name=__name__)
+
+
+class Colors(metaclass=Singleton):
+    _event_colors = {
+        "unset": {"background": None, "id": "0"},
+        "banana": {"background": "#f6c026", "id": "5"},
+        "basil": {"background": "#0b8043", "id": "10"},
+        "blueberry": {"background": "#3f51b5", "id": "9"},
+        "flamingo": {"background": "#e67c73", "id": "4"},
+        "grape": {"background": "#8e24aa", "id": "3"},
+        "graphite": {"background": "#616161", "id": "8"},
+        "lavender": {"background": "#a4bdfc", "id": "1"},
+        "peacock": {"background": "#039be5", "id": "7"},
+        "sage": {"background": "#33b679", "id": "2"},
+        "tangerine": {"background": "#f5511d", "id": "6"},
+        "tomato": {"background": "#d60000", "id": "11"},
+    }
+
+    @classmethod
+    def get_id_by_name(cls, name):
+        for n, color in cls._event_colors.items():
+            if name.lower() == n:
+                return color["id"]
+
+    def get(self, key, default=None):
+        try:
+            return getattr(self, key)
+        except AttributeError:
+            return default
+
+    def __getattr__(self, color_name):
+        color_name = color_name.lower()
+        return self._event_colors.get(color_name)
 
 
 def load_calendar(service, calendar_id):
@@ -24,8 +58,7 @@ def load_calendar(service, calendar_id):
         service=service,
         calendar_id=calendar_id,
         display_timezone=cfg.display_timezone,
-        event_categories=DriveSettings().event_categories,
-        mls_teams=DriveSettings().mls_teams,
+        event_categories=cfg.event_categories,
     )
 
     # TODO: Should actually probably pull events <=24 hours ago start time so we don't drop events right after they start....
@@ -54,12 +87,11 @@ class Event(object):
         raw_event,
         display_timezone,
         categories_by_color_id,
-        mls_team_abbrs_by_name,
     ) -> None:
         self._event = raw_event
         self.display_timezone = display_timezone
         self.categories_by_color_id = categories_by_color_id
-        self.mls_team_abbrs_by_name = mls_team_abbrs_by_name
+        self.mls_team_abbrs_by_name = TeamColors().team_abbrs_by_name()
 
     def get(self, key, default=None):
         try:
@@ -194,18 +226,17 @@ class Calendar(object):
     today = datetime.today()
 
     def __init__(
-        self, service, calendar_id, display_timezone, event_categories, mls_teams
+        self, service, calendar_id, display_timezone, event_categories
     ) -> None:
         self._service = service
         self.calendar_id = calendar_id
         self.display_timezone = display_timezone
         self.event_categories = event_categories
-        self.mls_teams = mls_teams
         self.cid = self.get_cid_from_id(self.calendar_id)
         self.categories_by_color_id = {}
         for name, event_category in event_categories.items():
             event_category["category_name"] = name
-            color_id = event_category["gcal_color"]["id"]
+            color_id = Colors.get_id_by_name(event_category["gcal_color_name"])
             self.categories_by_color_id[color_id] = event_category
         # logger.debug(f"{self.categories_by_color_id=}")
 
@@ -265,8 +296,6 @@ class Calendar(object):
         self.events_time_min = time_min
         self.events_time_max = time_max
         self.last_refresh = datetime.now(tz=ZoneInfo(cfg.display_timezone))
-
-        mls_team_abbrs_by_name = {v["name"]: k for k, v in self.mls_teams.items()}
         logger.info(f"Getting the all events from {time_min} to {time_max}...")
 
         events_result = (
@@ -288,7 +317,6 @@ class Calendar(object):
             Event,
             categories_by_color_id=self.categories_by_color_id,
             display_timezone=self.display_timezone,
-            mls_team_abbrs_by_name=mls_team_abbrs_by_name,
         )
         self.events = [new_event(e) for e in events]
         return self.events

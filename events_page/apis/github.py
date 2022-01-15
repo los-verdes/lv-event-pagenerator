@@ -4,7 +4,9 @@ from fastcore.net import ExceptionsHTTP
 from ghapi.all import GhApi
 from github3 import GitHub, session
 from logzero import logger
-from tenacity import retry, stop_after_attempt, wait_fixed
+from tenacity import retry
+from tenacity.stop import stop_after_attempt
+from tenacity.wait import wait_fixed
 
 
 def get_github_client(owner, repo, app_id, app_key, install_id):
