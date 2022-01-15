@@ -16,6 +16,8 @@ jobs:
     name: Build and Publish Site
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    outputs:
+      site_url: ${{ steps.build-and-publish.outputs.site_url }}
     environment:
       name: prod-site
       url: ${{ steps.build-and-publish.outputs.site_url }}
@@ -55,10 +57,11 @@ jobs:
           echo "site_url output: ${{ steps.build-and-publish.outputs.site_url }}"
 
   run-browserstack-tests:
-    name: Run BrowserStack Tests
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/reusable-workflow.yml@main
     if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
     needs: build-and-publish-site
+    with:
+      site_url: ${{ needs.build-and-publish-site.outputs.site_url }}
     permissions:
       contents: "read"
       id-token: "write"

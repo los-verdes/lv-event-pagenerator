@@ -34,6 +34,8 @@ jobs:
   publish-test-site-prefix:
     name: Publish Test Site Prefix
     runs-on: ubuntu-latest
+    outputs:
+      site_url: ${{ steps.build-and-publish-test-site.outputs.site_url }}
     environment:
       name: ${{ format('tests/pr-{0}', github.event.number) }}
       url: ${{ steps.build-and-publish-test-site.outputs.site_url }}
@@ -79,9 +81,10 @@ jobs:
           echo "site_url output: ${{ steps.build-and-publish-test-site.outputs.site_url }}"
 
   run-browserstack-tests:
-    name: Run BrowserStack Tests
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/run_browserstack_tests.yml@main
     needs: publish-test-site-prefix
+    with:
+      site_url: ${{ needs.publish-test-site-prefix.outputs.site_url }}
     permissions:
       contents: "read"
       id-token: "write"
