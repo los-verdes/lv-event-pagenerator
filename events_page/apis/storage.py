@@ -15,12 +15,21 @@ def get_client(credentials=None):
     return storage.Client()
 
 
-def upload_build_to_gcs(client, bucket_id, subpath=""):
+def upload_build_to_gcs(client, bucket_id, prefix):
+    if prefix is None:
+        prefix = ""
     bucket = client.get_bucket(bucket_id)
     build_dir_path = os.path.abspath(os.path.join(BASE_DIR, "..", "build/"))
-    logger.info(f"Uploading {build_dir_path=} to {bucket=} ({subpath=})")
-    upload_local_directory_to_gcs(client, build_dir_path, bucket, subpath)
-    logger.info(f"{build_dir_path=} upload to {bucket=} ({subpath=}) completed!")
+    logger.info(f"Uploading {build_dir_path=} to {bucket=} ({prefix=})")
+    upload_local_directory_to_gcs(client, build_dir_path, bucket, prefix)
+    logger.info(f"{build_dir_path=} upload to {bucket=} ({prefix=}) completed!")
+
+
+def remove_subpath_from_gcs(client, bucket_id, prefix):
+    bucket = client.get_bucket(bucket_id)
+    blobs_to_delete = bucket.list_blobs(prefix=prefix)
+    bucket.delete_blobs(blobs_to_delete)
+    logger.info(f"{len(blobs_to_delete)=} deleted from gs://{bucket_id}/{prefix}")
 
 
 def upload_local_directory_to_gcs(client, local_path, bucket, gcs_path):

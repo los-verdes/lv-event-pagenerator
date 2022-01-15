@@ -21,11 +21,11 @@ event_categories = {
   misc = {
     gcal_color_name = "unset"
 
-    cover_color     = "#000000"
+    cover_color = "#000000"
   }
 
   los-verdes = {
-    gcal_color_name         = "lavender"
+    gcal_color_name = "lavender"
 
     always_shown_in_filters = true
     bg_color                = "#000000"
@@ -35,21 +35,21 @@ event_categories = {
   }
 
   la-murga = {
-    gcal_color_name         = "sage"
+    gcal_color_name = "sage"
 
     always_shown_in_filters = true
     cover_color             = "#000000"
   }
 
   home-games = {
-    gcal_color_name         = "grape"
+    gcal_color_name = "grape"
 
     always_shown_in_filters = true
     cover_color             = "#dbadff"
   }
 
   away-games = {
-    gcal_color_name         = "flamingo"
+    gcal_color_name = "flamingo"
 
     always_shown_in_filters = true
     cover_color             = "#000000"

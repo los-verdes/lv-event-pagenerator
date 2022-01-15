@@ -30,6 +30,10 @@ output "static_site_bucket_url" {
   value = google_storage_bucket.static_site.url
 }
 
+output "test_site_publisher_sa_email" {
+  value = google_service_account.test_site_publisher.email
+}
+
 output "webhook_function_sa_email" {
   value = google_service_account.webhook_function.email
 }

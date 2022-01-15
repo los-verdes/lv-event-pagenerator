@@ -10,6 +10,7 @@ module "github_oidc" {
   provider_id = local.oidc_pool_id
   attribute_mapping = {
     "google.subject"        = "assertion.sub"
+    "attribute.sub"         = "assertion.sub"
     "attribute.actor"       = "assertion.actor"
     "attribute.repository"  = "assertion.repository"
     "attribute.ref"         = "assertion.ref"
@@ -17,6 +18,10 @@ module "github_oidc" {
   }
   attribute_condition = "assertion.repository=='${var.github_repo}'"
   sa_mapping = {
+    "gh-test-site-publisher" = {
+      sa_name   = google_service_account.test_site_publisher.name
+      attribute = "attribute.sub/repo:${var.github_repo}:pull_request"
+    }
     "gh-site-publisher" = {
       sa_name   = google_service_account.site_publisher.name
       attribute = "attribute.ref/refs/heads/main"
@@ -28,15 +33,24 @@ module "github_oidc" {
   }
 }
 
+resource "google_service_account" "test_site_publisher" {
+  account_id   = "test-site-publisher"
+  display_name = var.page_description
+}
+
 resource "google_service_account" "site_publisher" {
   account_id   = "site-publisher"
   display_name = var.page_description
 }
 
-resource "google_project_iam_member" "site_publisher_viewer" {
+resource "google_project_iam_member" "site_publishers_viewer" {
+  for_each = toset([
+    google_service_account.test_site_publisher.email,
+    google_service_account.site_publisher.email,
+  ])
   project = google_project.events_page.id
   role    = "roles/viewer"
-  member  = "serviceAccount:${google_service_account.site_publisher.email}"
+  member  = "serviceAccount:${each.value}"
 }
 
 resource "google_service_account" "gh_terraform_applier" {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import os
 from time import sleep
 
 import requests
@@ -7,10 +7,10 @@ from CloudFlare import CloudFlare
 from flask_frozen import Freezer
 from logzero import logger
 
-from app import create_app
 from apis import calendar as gcal
 from apis import drive, storage
 from apis.secrets import get_cloudflare_api_token
+from app import create_app
 from render_templated_styles import render_templated_styles
 
 
@@ -64,12 +64,20 @@ def build_static_site():
     return freeze_result
 
 
-def publish_static_site(
-    static_site_files, site_hostname, cloudflare_zone, purge_delay_secs
-):
+def build_and_publish_site(site_hostname, cloudflare_zone, purge_delay_secs):
+    render_templated_styles(
+        app=create_app(),
+        gcal_service=gcal.build_service(),
+        drive_service=drive.build_service(),
+    )
+
+    static_site_files = build_static_site()
+    logger.debug(f"{static_site_files=}")
+
     storage.upload_build_to_gcs(
         client=storage.get_client(),
         bucket_id=site_hostname,
+        prefix=cfg.gcs_bucket_prefix,
     )
     if cloudflare_zone is not None:
         purge_cache(
@@ -80,6 +88,7 @@ def publish_static_site(
         sleep(purge_delay_secs)
     else:
         logger.warning(f"Skipping cache purge bits as {cloudflare_zone} is unset...")
+
     logger.warning(
         '"priming" the cache may be causing more issues than it is worth, skipping for now...'
     )
@@ -87,10 +96,6 @@ def publish_static_site(
 
 
 if __name__ == "__main__":
-    import logging
-
-    import logzero
-
     import cli
     from config import cfg
 
@@ -117,22 +122,14 @@ if __name__ == "__main__":
     )
     args = cli.parse_args(parser)
 
-    if args.quiet:
-        logzero.loglevel(logging.INFO)
-
-    render_templated_styles(
-        app=create_app(),
-        gcal_service=gcal.build_service(),
-        drive_service=drive.build_service(),
-    )
-
-    static_site_files = build_static_site()
-
-    publish_static_site(
-        static_site_files=static_site_files,
+    build_and_publish_site(
         site_hostname=args.site_hostname,
         cloudflare_zone=args.cloudflare_zone,
         purge_delay_secs=args.purge_delay_secs,
     )
+    if os.getenv('CI'):
+        output_name = 'site_url'
+        logger.info(f"In CI, setting GitHub Actions output: {output_name}={args.site_hostname}")
+        print("::set-output name={output_name}::{args.site_hostname}")
 
     logger.info(f"Publication of site to {args.site_hostname} completed! 🎉")

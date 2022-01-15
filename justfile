@@ -32,6 +32,9 @@ dispatch-build-run: install-python-reqs
 build-and-publish: install-python-reqs
   just run-py './build_and_publish_site.py --quiet'
 
+cleanup-test-site-prefix: install-python-reqs
+  just run-py './remove_subpath_from_gcs.py --quiet'
+
 serve:
   just run-py './render_templated_styles.py'
   just run-py './app.py'

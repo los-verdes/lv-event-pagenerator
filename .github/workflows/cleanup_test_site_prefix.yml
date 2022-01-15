@@ -1,24 +1,22 @@
-name: Build and Publish Site
-
-concurrency:
-  group: "build-and-publish"
-  cancel-in-progress: false
+name: Cleanup Test Site Prefix
 
 on:
-  workflow_dispatch: {}
-  workflow_run:
-    workflows: [Deploy Infrastructure]
-    types:
-      - "completed"
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      gcs_prefix:
+        default: "test"
+        description: "GCS prefix/subpath the static site contents will be stagged under."
+        type: string
+        required: true
 
 jobs:
-  build-and-publish-site:
-    name: Build and Publish Site
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+  cleanup-test-site-prefix:
+    name: Cleanup Test Site Prefix
     runs-on: ubuntu-latest
     environment:
-      name: prod-site
-      url: ${{ steps.build-and-publish.outputs.site_url }}
+      name:  ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}
     permissions:
       contents: "read"
       id-token: "write"
@@ -44,8 +42,10 @@ jobs:
         uses: "google-github-actions/auth@v0"
         with:
           workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
-          service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
+          service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
-      - name: Build and Publish Site
-        id: build-and-publish
-        run: just build-and-publish
+      - name: Cleanup Test Site Prefix
+        id: cleanup-test-site-prefix
+        run: just cleanup-test-site-prefix
+        env:
+          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ jobs.publish-test-site.environment.name }}

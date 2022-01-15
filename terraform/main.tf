@@ -40,7 +40,7 @@ locals {
     githubapp_id         = var.githubapp_id
     githubapp_install_id = var.githubapp_install_id
   }
-  
+
   function_name = "push-webhook-receiver"
   webhook_url   = "https://${var.gcp_region}-${var.gcp_project_id}.cloudfunctions.net/${local.function_name}"
 }
