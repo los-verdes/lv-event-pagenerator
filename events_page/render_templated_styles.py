@@ -5,9 +5,12 @@ import flask
 from logzero import logger
 
 from apis import calendar as gcal
-from apis.drive import (add_category_image_file_metadata,
-                        build_service, download_all_images_in_folder,
-                        download_category_images)
+from apis.drive import (
+    add_category_image_file_metadata,
+    build_service,
+    download_all_images_in_folder,
+    download_category_images,
+)
 from apis.mls import TeamColors
 from config import cfg
 
@@ -77,6 +80,8 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
 def download_all_remote_images(drive_service, event_categories):
     downloaded_images = download_all_images_in_folder(drive_service, cfg.folder_name)
     downloaded_images += download_category_images(drive_service, event_categories)
+    downloaded_file_names = {f["name"]: f["mimeType"] for f in downloaded_images}
+    logger.debug(f"download_all_remote_images() => {downloaded_file_names=}")
     return downloaded_images
 
 

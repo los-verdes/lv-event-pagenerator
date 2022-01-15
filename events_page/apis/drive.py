@@ -106,16 +106,13 @@ def download_all_images_in_folder(service, folder_name):
     image_files = [
         f for f in files_in_folder.values() if f["mimeType"].startswith("image/")
     ]
-    print(f"download_images_from_drive(): {image_files=}")
     for image_file in image_files:
         download_image(service, image_file)
-
     logger.debug(f"download_all_images_in_folder() => {image_files=}")
     return image_files
 
 
 def download_image(service, image_file):
-
     image_file["local_path"] = get_local_path_for_file(
         image_file["id"], image_file["mimeType"]
     )
