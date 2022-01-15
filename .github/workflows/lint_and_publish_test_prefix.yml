@@ -80,7 +80,7 @@ jobs:
 
   run-browserstack-tests:
     name: Run BrowserStack Tests
-    uses: jeffwecan/lv-event-pagenerator/.github/workflows/run_browserstack_tests.yml@browser_based_tests
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/run_browserstack_tests.yml@main
     needs: publish-test-site-prefix
     permissions:
       contents: "read"
