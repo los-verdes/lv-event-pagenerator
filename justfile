@@ -40,7 +40,7 @@ cleanup-test-site-prefix:
   just --set export_tf_vars "{{ export_tf_vars }}" run-py './remove_subpath_from_gcs.py --quiet'
 
 test: install-python-reqs
-  just --set export_tf_vars "{{ export_tf_vars }}" run-py run_webdriver_tests
+  just --set export_tf_vars "{{ export_tf_vars }}" run-py './run_webdriver_tests.py'
 
 serve:
   just run-py './render_templated_styles.py'
