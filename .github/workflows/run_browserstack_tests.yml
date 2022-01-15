@@ -1,7 +1,12 @@
 name: Run BrowserStack Tests
 
 on:
-  workflow_call: {}
+  workflow_call:
+    secrets:
+      BROWSERSTACK_USERNAME:
+        required: true
+      BROWSERSTACK_ACCESS_KEY:
+        required: true
 
 jobs:
   run-browserstack-tests:
