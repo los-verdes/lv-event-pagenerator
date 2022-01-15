@@ -56,8 +56,8 @@ jobs:
         run: |
           echo "site_url output: ${{ steps.build-and-publish.outputs.site_url }}"
 
-  main-browserstack-tests:
-    uses: jeffwecan/lv-event-pagenerator/.github/workflows/reusable-workflow.yml@release/v0-RC1
+  run-browserstack-tests:
+    uses: jeffwecan/lv-event-pagenerator/.github/workflows/reusable-workflow.yml@main
     if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
     needs: build-and-publish-site
     with:
