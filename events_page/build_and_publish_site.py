@@ -75,7 +75,7 @@ def build_and_publish_site(
         app=create_app(),
         gcal_service=gcal.build_service(),
         drive_service=drive.build_service(),
-        gdrive_folder_name=cfg.gdrive_folder_name,
+        gdrive_folder_name=gdrive_folder_name,
     )
 
     static_site_files = build_static_site()
