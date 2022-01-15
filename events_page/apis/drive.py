@@ -111,7 +111,9 @@ def download_all_images_in_folder(service, folder_name):
     ]
     for image_file in image_files:
         download_image(service, image_file)
-        downloaded_images[image_file["name"]] = os.path.basename(image_file["local_path"])
+        downloaded_images[image_file["name"]] = os.path.basename(
+            image_file["local_path"]
+        )
     logger.debug(f"download_all_images_in_folder() => {image_files=}")
     return downloaded_images
 
@@ -232,7 +234,9 @@ def download_category_images(drive_service, event_categories):
 
         local_path = os.path.basename(image_file["local_path"])
         downloaded_images[image_file["name"]] = local_path
-        event_category["cover_image_filename"] = local_path
+        event_category["cover_image_filename"] = os.path.join(
+            str(cfg.gcs_bucket_prefix), local_path
+        )
 
     logger.debug(f"download_category_images() => {downloaded_images=}")
     return downloaded_images

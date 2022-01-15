@@ -10,7 +10,7 @@ from logzero import logger
 from apis import calendar as gcal
 from apis import drive, storage
 from apis.secrets import get_cloudflare_api_token
-from app import create_app
+from app import create_app, get_base_url
 from render_templated_styles import render_templated_styles
 
 
@@ -137,7 +137,7 @@ if __name__ == "__main__":
         logger.info(
             f"In CI, setting GitHub Actions output: {output_name}={args.site_hostname}"
         )
-        print(f"::set-output name={output_name}::{args.site_hostname}")
+        print(f"::set-output name={output_name}::{get_base_url()}")
 
     build_and_publish_site(
         site_hostname=args.site_hostname,

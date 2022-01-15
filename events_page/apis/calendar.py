@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import base64
+import os
 import re
 import time
 from datetime import datetime, timedelta
@@ -14,9 +15,9 @@ from googleapiclient.discovery import build
 from logzero import setup_logger
 
 from apis import load_credentials
+from apis.constants import CalendarColors
 from apis.drive import get_local_path_for_file
 from apis.mls import TeamColors
-from apis.constants import CalendarColors
 
 logger = setup_logger(name=__name__)
 
@@ -155,11 +156,12 @@ class Event(object):
                 if attachment["mimeType"].startswith("image/"):
                     # logger.debug(f"{attachment['title']=} {attachment['mimeType']=}")
                     # TOOD: also ensure these files are downloaded at one point or another?
-                    return basename(
+                    local_path = basename(
                         get_local_path_for_file(
                             attachment["fileId"], attachment["mimeType"]
                         )
                     )
+                    return os.path.join(str(cfg.gcs_bucket_prefix), local_path)
 
     @property
     def is_match(self):

@@ -83,8 +83,8 @@ def create_app():
         FREEZER_RELATIVE_URLS=True,
         FREEZER_REMOVE_EXTRA_FILES=True,
     )
+    logger.info(f"create_app() => {default_app_config=}")
     app.config.update(default_app_config)
-    logger.info(f"create_app() => {app.config=}")
     return app
 
 
