@@ -78,6 +78,9 @@ jobs:
         run: |
           echo "site_url output: ${{ steps.build-and-publish-test-site.outputs.site_url }}"
 
+
+  # call-tests-workflow:
+  #   uses: jeffwecan/lv-event-pagenerator/.github/workflows/reusable-workflow.yml@main
   run-browserstack-tests:
     name: Run BrowserStack Tests
     needs: publish-test-site-prefix
@@ -107,12 +110,6 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ env.pythonLocation }}-${{ hashFiles('events_page/requirements.txt') }}
-
-      - name: "Authenticate to Google Cloud"
-        uses: "google-github-actions/auth@v0"
-        with:
-          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
-          service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Run Tests
         id: build-and-publish-test-site
