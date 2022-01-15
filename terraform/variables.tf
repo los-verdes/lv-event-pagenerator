@@ -6,7 +6,7 @@ variable "cloudflare_zone" {
 }
 
 
-variable "site_publisher_github_pat" {
+variable "site_publisher_gh_app_key" {
   sensitive = true
 }
 

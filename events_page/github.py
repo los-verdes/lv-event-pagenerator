@@ -1,18 +1,26 @@
 #!/usr/bin/env python
+import flask
 from fastcore.basics import AttrDict
 from fastcore.net import ExceptionsHTTP
+from flask_githubapp import GitHubApp
 from ghapi.all import GhApi
 from logzero import logger
 from tenacity import retry, stop_after_attempt, wait_fixed
 
+from github3 import GitHub
 
-def get_github_client(owner, repo, token):
-    github_client = GhApi(
+
+def get_github_client(owner, repo, app_id, app_key, install_id):
+    gh3 = GitHub()
+    gh3.login_as_app_installation(
+        app_key.encode("utf-8"), app_id, install_id, expire_in=300
+    )
+    logger.debug(f"{gh3.session.auth}")
+    return GhApi(
         owner=owner,
         repo=repo,
-        token=token,
+        token=gh3.session.auth.token,
     )
-    return github_client
 
 
 def dispatch_build_workflow_run(

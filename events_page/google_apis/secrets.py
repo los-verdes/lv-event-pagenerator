@@ -43,8 +43,8 @@ def get_cloudflare_api_token():
     return cloudflare_api_token
 
 
-def get_github_pat():
-    return Secrets().site_publisher_github_pat
+def get_gh_app_key():
+    return Secrets().site_publisher_gh_app_key
 
 
 def get_webhook_token():

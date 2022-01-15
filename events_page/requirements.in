@@ -2,6 +2,7 @@ Flask-Assets
 Frozen-Flask
 cloudflare
 flask
+flask-githubapp
 ghapi
 google-api-python-client
 google-auth-httplib2
@@ -13,7 +14,6 @@ gunicorn
 libsass
 logzero
 python-dateutil
-# python-dotenv
 requests
 ruamel.yaml
 tenacity

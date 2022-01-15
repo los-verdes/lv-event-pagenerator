@@ -42,5 +42,5 @@ Terraform:
 
 ```shellsession
 export TF_VAR_cloudflare_api_token="..."
-export TF_VAR_site_publisher_github_pat="..."
+export TF_VAR_site_publisher_gh_app_key="..."
 ```

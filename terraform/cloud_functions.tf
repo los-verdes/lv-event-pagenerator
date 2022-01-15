@@ -4,6 +4,9 @@ locals {
 
   events_page_env = {
     EVENTS_PAGE_SECRET_NAME = google_secret_manager_secret_version.events_page.name
+    # TODO: get these some other way...
+    GITHUBAPP_ID         = "164885"
+    GITHUBAPP_INSTALL_ID = "22283839"
   }
 }
 

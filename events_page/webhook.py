@@ -8,7 +8,7 @@ from logzero import logger
 
 from config import cfg
 from dispatch_build_workflow_run import dispatch_build_workflow_run, get_github_client
-from google_apis.secrets import get_github_pat, get_webhook_token
+from google_apis.secrets import get_gh_app_key, get_webhook_token
 
 uri_regexp = re.compile(
     r"https://www.googleapis.com/drive/v3/files/(?P<file_id>[^?]+).*"
@@ -44,7 +44,9 @@ def dispatch_build():
     github_client = get_github_client(
         owner=github_org,
         repo=repo_name,
-        token=get_github_pat(),
+        app_id=os.environ['GITHUBAPP_ID'],
+        app_key=get_gh_app_key(),
+        install_id=os.environ['GITHUBAPP_INSTALL_ID'],
     )
 
     workflow_run = dispatch_build_workflow_run(

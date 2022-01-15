@@ -55,7 +55,9 @@ if __name__ == "__main__":
     github_client = get_github_client(
         owner=args.github_org,
         repo=args.repo_name,
-        token=os.environ["GITHUB_PAT"],
+        app_id=int(os.environ['GITHUBAPP_ID']),
+        app_key='\n'.join(os.environ["GITHUBAPP_KEY"].split('\\n')),
+        install_id=os.environ['GITHUBAPP_INSTALL_ID'],
     )
 
     logger.info(
