@@ -15,12 +15,13 @@ module "github_oidc" {
     "attribute.repository"  = "assertion.repository"
     "attribute.ref"         = "assertion.ref"
     "attribute.environment" = "assertion.environment"
+    "attribute.workflow" = "assertion.workflow"
   }
   attribute_condition = "assertion.repository=='${var.github_repo}'"
   sa_mapping = {
     "gh-test-site-publisher" = {
       sa_name   = google_service_account.test_site_publisher.name
-      attribute = "attribute.sub/repo:${var.github_repo}:pull_request"
+      attribute = "attribute.workflow/pull-request-tests"
     }
     "gh-site-publisher" = {
       sa_name   = google_service_account.site_publisher.name

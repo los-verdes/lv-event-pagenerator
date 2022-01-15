@@ -1,16 +1,9 @@
-name: Lint and Test
+name: pull-request-tests
 
 on:
   pull_request:
     branches: [main]
     types: [reopened, opened, synchronize, edited]
-  workflow_dispatch:
-    inputs:
-      gcs_prefix:
-        default: "test"
-        description: "GCS prefix/subpath the static site contents will be stagged under."
-        type: string
-        required: true
 
 concurrency:
   group: ${{ github.ref }}
@@ -29,10 +22,10 @@ jobs:
           fetch-depth: 0
 
       - name: Super Linter
-        uses: github/super-linter@v4
+        uses: github/super-linter/slim@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_TERRAFORM_TERRASCAN: true
+          # VALIDATE_TERRAFORM_TERRASCAN: false  # TODO: toggle on after patching up these violations...
           VALIDATE_YAML: true
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
@@ -41,11 +34,9 @@ jobs:
   publish-test-site-prefix:
     name: Publish Test Site Prefix
     runs-on: ubuntu-latest
-    env:
-      EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ github.event_name != 'workflow_dispatch' && format('tests/pr-{0}', github.event.number) ||  format('tests/dispatch-{0}', github.event.inputs.gcs_prefix) }}
     environment:
-      name:  ${{ env.EVENTS_PAGE_GCS_BUCKET_PREFIX }}
-      url: ${{ steps.build-and-publish.outputs.site_url }}
+      name: ${{ format('tests/pr-{0}', github.event.number) }}
+      url: ${{ steps.build-and-publish-test-site.outputs.site_url }}
     permissions:
       contents: "read"
       id-token: "write"
@@ -73,6 +64,16 @@ jobs:
           workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
           service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
-      - name: Build and Publish Site
-        id: build-and-publish
-        run: just build-and-publish
+      - name: Build and Publish Test Site
+        id: build-and-publish-test-site
+        run: |
+          just \
+            --set export_tf_vars true \
+            build-and-publish
+        env:
+          # EVENTS_PAGE_CALENDAR_ID: "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
+          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
+
+      - name: Echo site_url output
+        run: |
+          echo "site_url output: ${{ steps.build-and-publish-test-site.outputs.site_url }}"

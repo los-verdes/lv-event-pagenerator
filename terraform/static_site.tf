@@ -35,6 +35,7 @@ resource "google_storage_bucket_iam_member" "test_site_publisher_sa_obj_admin" {
   #     expression
   # }
 }
+
 data "cloudflare_zone" "static_site" {
   name = var.cloudflare_zone
 }

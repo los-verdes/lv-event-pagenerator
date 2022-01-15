@@ -2,6 +2,10 @@
 
 ## Deployment
 
+[![Deploy Infrastructure](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml/badge.svg)](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml)
+[![Build and Publish Site](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/build_and_publish_site.yml/badge.svg)](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/build_and_publish_site.yml)
+
+
 ### Pre-requisites
 
 - GCP account / project?

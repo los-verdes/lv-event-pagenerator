@@ -10,7 +10,7 @@ from logzero import logger
 from apis import calendar as gcal
 from apis import drive, storage
 from apis.secrets import get_cloudflare_api_token
-from app import create_app
+from app import create_app, get_base_url
 from render_templated_styles import render_templated_styles
 
 
@@ -64,7 +64,9 @@ def build_static_site():
     return freeze_result
 
 
-def build_and_publish_site(site_hostname, cloudflare_zone, purge_delay_secs):
+def build_and_publish_site(
+    site_hostname, cloudflare_zone, purge_delay_secs, gcs_bucket_prefix
+):
     render_templated_styles(
         app=create_app(),
         gcal_service=gcal.build_service(),
@@ -77,9 +79,9 @@ def build_and_publish_site(site_hostname, cloudflare_zone, purge_delay_secs):
     storage.upload_build_to_gcs(
         client=storage.get_client(),
         bucket_id=site_hostname,
-        prefix=cfg.gcs_bucket_prefix,
+        prefix=gcs_bucket_prefix,
     )
-    if cloudflare_zone is not None:
+    if cloudflare_zone is not None and not gcs_bucket_prefix:
         purge_cache(
             CloudFlare(token=get_cloudflare_api_token()),
             cloudflare_zone=cloudflare_zone,
@@ -87,7 +89,9 @@ def build_and_publish_site(site_hostname, cloudflare_zone, purge_delay_secs):
         logger.info(f"Waiting for {purge_delay_secs=} before proceeding...")
         sleep(purge_delay_secs)
     else:
-        logger.warning(f"Skipping cache purge bits as {cloudflare_zone} is unset...")
+        logger.warning(
+            f"Skipping cache purge bits as {cloudflare_zone} is unset and/or we're deploying to a prefix {gcs_bucket_prefix=}..."
+        )
 
     logger.warning(
         '"priming" the cache may be causing more issues than it is worth, skipping for now...'
@@ -102,6 +106,12 @@ if __name__ == "__main__":
     cfg.load()
     parser = cli.build_parser()
     args = cli.parse_args(parser)
+    parser.add_argument(
+        "-g",
+        "--gcs-bucket-prefix",
+        default=cfg.gcs_bucket_prefix,
+        help="The GCS bucket prefix to publish the static site under.",
+    )
     parser.add_argument(
         "-s",
         "--site-hostname",
@@ -122,14 +132,18 @@ if __name__ == "__main__":
     )
     args = cli.parse_args(parser)
 
+    if os.getenv("CI"):
+        output_name = "site_url"
+        logger.info(
+            f"In CI, setting GitHub Actions output: {output_name}={args.site_hostname}"
+        )
+        print(f"::set-output name={output_name}::{get_base_url()}")
+
     build_and_publish_site(
         site_hostname=args.site_hostname,
         cloudflare_zone=args.cloudflare_zone,
         purge_delay_secs=args.purge_delay_secs,
+        gcs_bucket_prefix=args.gcs_bucket_prefix,
     )
-    if os.getenv('CI'):
-        output_name = 'site_url'
-        logger.info(f"In CI, setting GitHub Actions output: {output_name}={args.site_hostname}")
-        print("::set-output name={output_name}::{args.site_hostname}")
 
     logger.info(f"Publication of site to {args.site_hostname} completed! 🎉")

@@ -56,3 +56,9 @@ resource "google_service_account_iam_binding" "allow_sa_impersonation" {
   role               = "roles/iam.serviceAccountUser"
   members            = [for u in concat(var.gcp_project_owners, var.gcp_project_editors) : "user:${u}"]
 }
+
+resource "google_service_account_iam_binding" "allow_sa_impersonation_test" {
+  service_account_id = google_service_account.test_site_publisher.name
+  role               = "roles/iam.serviceAccountUser"
+  members            = [for u in concat(var.gcp_project_owners, var.gcp_project_editors) : "user:${u}"]
+}
