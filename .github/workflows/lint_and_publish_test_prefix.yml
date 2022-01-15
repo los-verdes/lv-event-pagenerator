@@ -80,8 +80,7 @@ jobs:
         run: |
           echo "site_url output: ${{ steps.build-and-publish-test-site.outputs.site_url }}"
 
-  run-browserstack-tests:
-    name: Run BrowserStack Tests
+  pr-browserstack-tests:
     uses: jeffwecan/lv-event-pagenerator/.github/workflows/run_browserstack_tests.yml@release/v0-RC1
     needs: publish-test-site-prefix
     with:

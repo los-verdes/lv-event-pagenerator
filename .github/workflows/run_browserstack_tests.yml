@@ -84,7 +84,7 @@ jobs:
           MESSAGE: |
             ### Build / Run ID `${{ github.run_id }}` Results
 
-            - Published to: [${{ inputs.site_url }}](${{ inputs.username }})
+            - Published to: [${{ inputs.site_url }}](${{ inputs.site_url }})
 
             #### Screenshot
 
