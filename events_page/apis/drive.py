@@ -53,6 +53,8 @@ def download_event_images(service, events):
 
 
 def download_image(service, image_file):
+    if file_id := image_file.get("fileId"):
+        image_file["id"] = file_id
     image_file["local_path"] = get_local_path_for_file(
         image_file["id"], image_file["mimeType"]
     )
