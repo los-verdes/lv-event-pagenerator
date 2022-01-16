@@ -24,7 +24,7 @@ class Config(object):
 
     github_repo = DEFAULT_GITHUB_REPO
     display_timezone = DEFAULT_DISPLAY_TIMEZONE
-
+    overrides = dict()
     defaults = dict(
         calendar_id=DEFAULT_CALENDAR_ID,
         display_timezone=DEFAULT_DISPLAY_TIMEZONE,
@@ -74,11 +74,13 @@ class Config(object):
             with open(tfvars_path) as f:
                 tfvars = hcl.load(f)
                 if not isinstance(tfvars, dict):
-                    logger.info(f"Config after defaults loaded from {tfvars_path=}: {cfg.to_dict()=}")
                     raise Exception(f"Unable to use {tfvars=} in Config defaults; not a map...")
-                cfg.defaults.update(tfvars)
+                logger.info(f"Config after overrides loaded from {tfvars_path=}: {cfg.to_dict()=}")
+                cfg.overrides.update(tfvars)
 
     def __getattr__(self, key):
+        if key in self.overrides:
+            return self.overrides[key]
         environ_key = f"EVENTS_PAGE_{key.upper()}"
         if environ_value := os.getenv(environ_key):
             return environ_value
