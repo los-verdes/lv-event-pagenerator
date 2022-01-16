@@ -45,7 +45,7 @@ jobs:
       - name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v0"
         with:
-          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
+          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/los-verdes-lv-event-pagenerator/providers/los-verdes-lv-event-pagenerator"
           service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Build and Publish Site
