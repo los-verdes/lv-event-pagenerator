@@ -44,7 +44,9 @@ event_categories = {
     gcal_color_name = "grape"
 
     always_shown_in_filters = true
-    bg_color                = "#dbadff"
+    bg_color                = "#00b140"
+    text_bg_color           = "#000000"
+    text_fg_color           = "#FFFFFF"
   }
 
   away-games = {
