@@ -59,21 +59,6 @@ def ensure_events_watch(
     )
 
 
-def ensure_drive_watch(
-    web_hook_address, webhook_token, settings_file_id, expiration_in_days
-):
-    ensure_watch(
-        api_module=drive,
-        channel_id=f"events-page-{settings_file_id}-watch",
-        web_hook_address=web_hook_address,
-        webhook_token=webhook_token,
-        expiration_in_days=expiration_in_days,
-        watch_kwargs=dict(
-            file_id=settings_file_id,
-        ),
-    )
-
-
 if __name__ == "__main__":
     import logging
 
@@ -89,11 +74,6 @@ if __name__ == "__main__":
         "-c",
         "--calendar-id",
         default=cfg.calendar_id,
-    )
-    parser.add_argument(
-        "-s",
-        "--settings-file-name",
-        default=cfg.gdrive_settings_file_name,
     )
     parser.add_argument(
         "-e",

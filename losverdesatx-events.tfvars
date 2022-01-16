@@ -1,19 +1,18 @@
 # calendar_id               = "information@losverdesatx.org"
 # gcp_billing_account_name = "Los Verdes"
-calendar_id               = "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
-cloudflare_zone           = "asfasfsafsasfa.org"
-gcp_billing_account_id    = "019767-2A54C9-AE07C6"
-gcp_project_editors       = []
-gcp_project_id            = "losverdesatx-events"
-gcp_project_name          = "Los Verdes events page!"
-gcp_project_owners        = ["Jeff.hogan1@gmail.com"]
-gcp_region                = "us-central1"
-gdrive_settings_file_name = "event_page_settings.yaml"
-githubapp_id              = "164885"
-githubapp_install_id      = "22283839"
-github_repo               = "jeffwecan/lv-event-pagenerator"
-page_description          = "Los Verdes Event Page"
-static_site_hostname      = "los-verdes-events.asfasfsafsasfa.org"
+calendar_id            = "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
+cloudflare_zone        = "asfasfsafsasfa.org"
+gcp_billing_account_id = "019767-2A54C9-AE07C6"
+gcp_project_editors    = []
+gcp_project_id         = "losverdesatx-events"
+gcp_project_name       = "Los Verdes events page!"
+gcp_project_owners     = ["Jeff.hogan1@gmail.com"]
+gcp_region             = "us-central1"
+githubapp_id           = "164885"
+githubapp_install_id   = "22283839"
+github_repo            = "jeffwecan/lv-event-pagenerator"
+page_description       = "Los Verdes Event Page"
+static_site_hostname   = "los-verdes-events.asfasfsafsasfa.org"
 
 event_categories = {
   # Default category (what is used if no explicit color is set for the matching calendar event)

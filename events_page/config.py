@@ -14,7 +14,6 @@ DEFAULT_FOLDER_NAME = "calendar-event-images"
 DEFAULT_GITHUB_REPO = "jeffwecan/lv-event-pagenerator"
 DEFAULT_HOSTNAME = "localhost"
 DEFAULT_PURGE_DELAY_SECS = 30
-DEFAULT_SETTINGS_FILE_NAME = "event_page_settings.yaml"
 # DEFAULT_WATCH_EXPIRATION_IN_DAYS = 1
 DEFAULT_WATCH_EXPIRATION_IN_DAYS = "0.1"
 
@@ -31,7 +30,6 @@ class Config(object):
         gcs_bucket_prefix="",
         hostname=DEFAULT_HOSTNAME,
         purge_delay_secs=DEFAULT_PURGE_DELAY_SECS,
-        gdrive_settings_file_name=DEFAULT_SETTINGS_FILE_NAME,
         watch_expiration_in_days=DEFAULT_WATCH_EXPIRATION_IN_DAYS,
     )
     _secretsmanager_config = dict()
