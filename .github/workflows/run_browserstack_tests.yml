@@ -76,7 +76,7 @@ jobs:
           client_id: ${{ secrets.IMGUR_CLIENT_ID }}
 
       - name: Comment on the PR about the result
-        if: github.event_name == 'pull_request'
+        if: github.ref != 'refs/heads/master'
         uses: marocchino/sticky-pull-request-comment@v2
         env:
           # recall that this action returns a JSON.stringified array
