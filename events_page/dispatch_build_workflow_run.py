@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--workflow_filename",
-        default="build_and_publish_site.yml",
+        default=cfg.build_workflow_filename,
         help=dedent(
             """\
             Filename of the build workflow. E.g., 'some-workflow.yml'.

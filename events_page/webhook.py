@@ -52,7 +52,7 @@ def dispatch_build():
     workflow_run = dispatch_build_workflow_run(
         github_client=github_client,
         github_ref="main",
-        workflow_filename="trigger_site_build.yml",
+        workflow_filename=cfg.build_workflow_filename,
     )
     return workflow_run
 
