@@ -13,7 +13,7 @@ from apis.constants import CalendarColors
 DEFAULT_CALENDAR_ID = "ht3jlfaac5lfd6263ulfh4tql8@group.calendar.google.com"
 DEFAULT_DISPLAY_TIMEZONE = "US/Central"
 DEFAULT_FOLDER_NAME = "calendar-event-images"
-DEFAULT_GITHUB_REPO = "jeffwecan/lv-event-pagenerator"
+DEFAULT_GITHUB_REPO = "los-verdes/lv-event-pagenerator"
 DEFAULT_HOSTNAME = "localhost"
 DEFAULT_PURGE_DELAY_SECS = 30
 DEFAULT_WATCH_EXPIRATION_IN_DAYS = 1
@@ -70,12 +70,16 @@ class Config(object):
             self._secretsmanager_config = get_secretsmanager_config(
                 credentials=load_credentials()
             )
-        if tfvars_path := os.getenv('EVENTS_PAGE_LOAD_LOCAL_TF_VARS'):
+        if tfvars_path := os.getenv("EVENTS_PAGE_LOAD_LOCAL_TF_VARS"):
             with open(tfvars_path) as f:
                 tfvars = hcl.load(f)
                 if not isinstance(tfvars, dict):
-                    raise Exception(f"Unable to use {tfvars=} in Config defaults; not a map...")
-                logger.info(f"Config after overrides loaded from {tfvars_path=}: {cfg.to_dict()=}")
+                    raise Exception(
+                        f"Unable to use {tfvars=} in Config defaults; not a map..."
+                    )
+                logger.info(
+                    f"Config after overrides loaded from {tfvars_path=}: {cfg.to_dict()=}"
+                )
                 cfg.overrides.update(tfvars)
 
     def __getattr__(self, key):

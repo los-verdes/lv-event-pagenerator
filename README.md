@@ -1,7 +1,7 @@
 # lv-event-pagenerator
 
-[![Deploy Infrastructure](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml/badge.svg)](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml)
-[![Build and Publish Site](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/build_and_publish_site.yml/badge.svg)](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/build_and_publish_site.yml)
+[![Deploy Infrastructure](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml/badge.svg)](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml)
+[![Build and Publish Site](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/build_and_publish_site.yml/badge.svg)](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/build_and_publish_site.yml)
 
 Production of GCS-housed static site listing events retrieved from a given public Google calendar.
 
@@ -125,4 +125,4 @@ Site builds expected to be performed within a GitHub Actions workflow for access
 
 ## Deployment
 
-Outside of this repository, all infrastructure resources are housed in an associated GCP project. Management of this project is handled by Terraform and the [Deploy Infrastructure](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) GitHub actions workflow. DNS / CDN needs are handled by a Cloudflare free plan. Site builds are performed following the successful conclusion of a [Deploy Infrastructure](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) workflow run and/or changes made to the source Google calendar.
+Outside of this repository, all infrastructure resources are housed in an associated GCP project. Management of this project is handled by Terraform and the [Deploy Infrastructure](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) GitHub actions workflow. DNS / CDN needs are handled by a Cloudflare free plan. Site builds are performed following the successful conclusion of a [Deploy Infrastructure](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) workflow run and/or changes made to the source Google calendar.
