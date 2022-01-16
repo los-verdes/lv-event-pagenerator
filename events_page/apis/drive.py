@@ -44,6 +44,7 @@ def download_event_images(service, events):
         e.cover_image_attachment for e in events if e.cover_image_attachment is not None
     ]
     for image_file in image_files:
+        image_file.update(service.files().get(fileId=image_file["fileId"]).execute())
         download_image(service, image_file)
         downloaded_images[image_file["name"]] = os.path.basename(
             image_file["local_path"]
@@ -53,14 +54,12 @@ def download_event_images(service, events):
 
 
 def download_image(service, image_file):
-    if file_id := image_file.get("fileId"):
-        image_file["id"] = file_id
     image_file["local_path"] = get_local_path_for_file(
         image_file["id"], image_file["mimeType"]
     )
     if os.path.exists(image_file["local_path"]):
         logger.debug(
-            f"{image_file} already present on disk! Skipping download..."
+            f"{image_file['name']} already present on disk ({image_file['local_path']=}! Skipping download..."
         )
         return image_file
 
