@@ -53,12 +53,10 @@ jobs:
 
       - name: Run Tests
         id: build-and-publish-test-site
-        run: |
-          just \
-            --set export_tf_vars true \
-            test
+        run: just test
         env:
           # EVENTS_PAGE_CALENDAR_ID: "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
+          EVENTS_PAGE_LOAD_LOCAL_TF_VARS: "${{ github.workspace }}/losverdesatx-events.tfvars"
           EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
 
       - name: Upload screenshot as artifact
