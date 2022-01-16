@@ -10,7 +10,7 @@ from apis import load_credentials
 # phases of the 🌙
 DEFAULT_CALENDAR_ID = "ht3jlfaac5lfd6263ulfh4tql8@group.calendar.google.com"
 DEFAULT_DISPLAY_TIMEZONE = "US/Central"
-DEFAULT_FOLDER_NAME = "event-cover-images"
+DEFAULT_FOLDER_NAME = "calendar-event-images"
 DEFAULT_GITHUB_REPO = "jeffwecan/lv-event-pagenerator"
 DEFAULT_HOSTNAME = "localhost"
 DEFAULT_PURGE_DELAY_SECS = 30
