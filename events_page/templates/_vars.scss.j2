@@ -5,7 +5,7 @@ $team_colors: (
 );
 
 $category_names: (
-{%- for category_name in category_name_filters %}
+{%- for category_name in category_name_filters | sort %}
   "{{ category_name }}",
 {%- endfor %}
 );

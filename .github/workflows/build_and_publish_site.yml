@@ -45,7 +45,7 @@ jobs:
       - name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v0"
         with:
-          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/jeffwecan-lv-event-pagenerator/providers/jeffwecan-lv-event-pagenerator"
+          workload_identity_provider: "projects/538480189659/locations/global/workloadIdentityPools/los-verdes-lv-event-pagenerator/providers/los-verdes-lv-event-pagenerator"
           service_account: "site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Build and Publish Site
@@ -57,7 +57,7 @@ jobs:
           echo "site_url output: ${{ steps.build-and-publish.outputs.site_url }}"
 
   run-browserstack-tests:
-    uses: jeffwecan/lv-event-pagenerator/.github/workflows/run_browserstack_tests.yml@main
+    uses: los-verdes/lv-event-pagenerator/.github/workflows/run_browserstack_tests.yml@main
     if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
     needs: build-and-publish-site
     with:

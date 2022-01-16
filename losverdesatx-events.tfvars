@@ -10,7 +10,7 @@ gcp_project_owners     = ["Jeff.hogan1@gmail.com"]
 gcp_region             = "us-central1"
 githubapp_id           = "164885"
 githubapp_install_id   = "22283839"
-github_repo            = "jeffwecan/lv-event-pagenerator"
+github_repo            = "los-verdes/lv-event-pagenerator"
 page_description       = "Los Verdes Event Page"
 static_site_hostname   = "los-verdes-events.asfasfsafsasfa.org"
 
