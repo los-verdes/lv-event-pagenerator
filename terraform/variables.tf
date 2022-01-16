@@ -57,9 +57,6 @@ variable "gcp_project_editors" {
 variable "gcp_region" {
 }
 
-variable "gdrive_folder_name" {
-}
-
 variable "gdrive_settings_file_name" {
 }
 

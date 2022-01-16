@@ -32,7 +32,6 @@ locals {
     cloudflare_zone           = var.cloudflare_zone
     calendar_id               = var.calendar_id
     event_categories          = jsonencode(var.event_categories)
-    gdrive_folder_name        = var.gdrive_folder_name
     gdrive_settings_file_name = var.gdrive_settings_file_name
     github_repo               = var.github_repo
     hostname                  = google_storage_bucket.static_site.name

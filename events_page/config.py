@@ -28,7 +28,6 @@ class Config(object):
     defaults = dict(
         calendar_id=DEFAULT_CALENDAR_ID,
         display_timezone=DEFAULT_DISPLAY_TIMEZONE,
-        gdrive_folder_name=DEFAULT_FOLDER_NAME,
         gcs_bucket_prefix="",
         hostname=DEFAULT_HOSTNAME,
         purge_delay_secs=DEFAULT_PURGE_DELAY_SECS,

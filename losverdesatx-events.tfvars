@@ -8,7 +8,6 @@ gcp_project_id            = "losverdesatx-events"
 gcp_project_name          = "Los Verdes events page!"
 gcp_project_owners        = ["Jeff.hogan1@gmail.com"]
 gcp_region                = "us-central1"
-gdrive_folder_name        = "calendar-event-images"
 gdrive_settings_file_name = "event_page_settings.yaml"
 githubapp_id              = "164885"
 githubapp_install_id      = "22283839"
