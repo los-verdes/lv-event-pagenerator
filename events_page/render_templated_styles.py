@@ -43,6 +43,7 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
 
     for event_category in event_categories.values():
         class_name = f"category-{event_category['gcal_color']['id']}"
+        logger.debug(f"{class_name=} {event_category.get('cover_image_filename')}")
 
         if cover_image_filename := event_category.get("cover_image_filename"):
             event_category_background_images[class_name] = cover_image_filename
@@ -55,7 +56,7 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
 
     for event in calendar.events:
         class_name = event.event_specific_css_class
-        # logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
+        logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
         if cover_image_filename := event.cover_image_filename:
             event_category_background_images[class_name] = cover_image_filename
 
@@ -95,16 +96,16 @@ def render_templated_styles(app, gcal_service, drive_service):
         service=gcal_service,
         calendar_id=cfg.calendar_id,
     )
+    download_all_remote_images(
+        drive_service=drive_service,
+        calendar=calendar,
+        event_categories=event_categories,
+    )
     render_scss_vars_template(
         app=app,
         calendar=calendar,
         event_categories=event_categories,
         team_colors=TeamColors(),
-    )
-    download_all_remote_images(
-        drive_service=drive_service,
-        calendar=calendar,
-        event_categories=event_categories,
     )
 
 
