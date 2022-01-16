@@ -139,7 +139,7 @@ input[type="radio"] {
 }
 
 @each $class_name, $background_color in $category_background_colors {
-  .#{$class_name}.event-card.mdl-card {
+  .#{$class_name} {
     > .mdl-card__title {
       background-color: $background_color;
     }
@@ -147,7 +147,7 @@ input[type="radio"] {
 }
 
 @each $class_name, $fg_color in $category_text_fg_colors {
-  .#{$class_name}.event-card.mdl-card {
+  .#{$class_name} {
     mark {
       color: $fg_color;
     }
@@ -155,7 +155,7 @@ input[type="radio"] {
 }
 
 @each $class_name, $bg_color in $category_text_bg_colors {
-  .#{$class_name}.event-card.mdl-card {
+  .#{$class_name} {
     mark {
       background-color: $bg_color;
     }
