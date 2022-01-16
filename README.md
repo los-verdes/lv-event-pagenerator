@@ -5,17 +5,6 @@
 
 Production of GCS-housed static site listing events retrieved from a given public Google calendar.
 
-## Service Accounts
-
-For the production Los Verdes events page app, there are two GCP service accounts involved:
-
-- `site-publisher@losverdesatx-events.iam.gserviceaccount.com`:
-
-  This is the account used for production (i.e., `main` branch) runs. Available in the `site_publisher_sa_email` Terraform output.
-- `test-site-publisher@losverdesatx-events.iam.gserviceaccount.com`
-
-  This is the account used for test (i.e., pull request) runs. Available he `test_site_publisher_sa_email` Terraform output.
-
 ## Usage
 
 1. Add the application service accounts to the source public calendar with "Manage events" access. (Manage events access required for viewing event colors which are used to map to event "categories".)
@@ -44,6 +33,27 @@ All cover images must be shared with the application's service account; either b
     <iframe id="lv-events-embed" width="100%" src="https://los-verdes-events.asfasfsafsasfa.org/" scrolling="no"></iframe>
   </div>
   ```
+
+## Application Architecture
+
+### System Diagram
+
+![overall lv-event-pagenerator system diagram](docs/system_diagram.png)
+
+### Deployment
+
+Outside of this repository, all infrastructure resources are housed in an associated GCP project. Management of this project is handled by Terraform and the [Deploy Infrastructure](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) GitHub actions workflow. DNS / CDN needs are handled by a Cloudflare free plan. Site builds are performed following the successful conclusion of a [Deploy Infrastructure](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) workflow run and/or changes made to the source Google calendar.
+
+### Service Accounts
+
+For the production Los Verdes events page app, there are two GCP service accounts involved:
+
+- `site-publisher@losverdesatx-events.iam.gserviceaccount.com`:
+
+  This is the account used for production (i.e., `main` branch) runs. Available in the `site_publisher_sa_email` Terraform output.
+- `test-site-publisher@losverdesatx-events.iam.gserviceaccount.com`
+
+  This is the account used for test (i.e., pull request) runs. Available he `test_site_publisher_sa_email` Terraform output.
 
 ## Development
 
@@ -122,7 +132,3 @@ Site builds expected to be performed within a GitHub Actions workflow for access
     * Restarting with stat
     [D 220116 08:29:34 config:104] Config loaded from en...
     ```
-
-## Deployment
-
-Outside of this repository, all infrastructure resources are housed in an associated GCP project. Management of this project is handled by Terraform and the [Deploy Infrastructure](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) GitHub actions workflow. DNS / CDN needs are handled by a Cloudflare free plan. Site builds are performed following the successful conclusion of a [Deploy Infrastructure](https://github.com/los-verdes/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) workflow run and/or changes made to the source Google calendar.
