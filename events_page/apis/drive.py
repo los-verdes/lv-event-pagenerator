@@ -3,17 +3,14 @@ import io
 import mimetypes
 import os
 import re
-import time
-from datetime import datetime
 
 from config import cfg
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
 from logzero import logger
-from ruamel import yaml
 
-from apis import Singleton, load_credentials
+from apis import load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -22,65 +19,6 @@ def build_service(credentials=None):
     if credentials is None:
         credentials = load_credentials()
     return build("drive", "v3", credentials=credentials)
-
-
-class DriveSettings(metaclass=Singleton):
-    _settings = dict()
-    _drive_service = None
-
-    def __init__(self, drive_service=None) -> None:
-        self._drive_service = drive_service
-        if self._drive_service is None:
-            self._drive_service = build_service()
-        if not self._settings:
-            self.refresh()
-
-    def refresh(self):
-        logger.warning("DriveSettings refresh!")
-        self._settings = load_settings(
-            self._drive_service, cfg.gdrive_folder_name, cfg.gdrive_settings_file_name
-        )
-
-    @property
-    def settings(self):
-        return self._settings
-
-    def __getattr__(self, key):
-        return self.settings.get(key)
-
-
-def get_settings_file_id(service, folder_name, file_name):
-    files_in_folder = list_files_in_event_page_folder(
-        service=service,
-        folder_name=folder_name,
-    )
-    if file_name not in files_in_folder:
-        return None
-
-    settings_file_id = files_in_folder[file_name]["id"]
-    return settings_file_id
-
-
-def load_setting(service, key, folder_name, file_name):
-    return load_settings(service, folder_name, file_name).get(key)
-
-
-def load_settings(service, folder_name, file_name):
-    settings_file_id = get_settings_file_id(service, folder_name, file_name)
-    if settings_file_id is None:
-        logger.warning(
-            f"Unable to find file of id of {folder_name}/{file_name}. Using default settings!"
-        )
-        return dict()
-    print(f"load_settings_from_drive(): {settings_file_id=}")
-    settings_fd = download_file_id(
-        service=service,
-        file_id=settings_file_id,
-    )
-    settings_fd.seek(0)
-    settings = yaml.load(settings_fd, Loader=yaml.Loader)
-    # print(f"load_settings_from_drive(): {settings=}")
-    return settings
 
 
 def get_local_path_from_file_id(service, file_id):
@@ -100,16 +38,13 @@ def get_local_path_for_file(file_id, mime_type=None):
     )
 
 
-def download_all_images_in_folder(service, folder_name):
+def download_event_images(service, events):
     downloaded_images = {}
-    files_in_folder = list_files_in_event_page_folder(
-        service=service,
-        folder_name=folder_name,
-    )
     image_files = [
-        f for f in files_in_folder.values() if f["mimeType"].startswith("image/")
+        e.cover_image_attachment for e in events if e.cover_image_attachment is not None
     ]
     for image_file in image_files:
+        image_file.update(service.files().get(fileId=image_file["fileId"]).execute())
         download_image(service, image_file)
         downloaded_images[image_file["name"]] = os.path.basename(
             image_file["local_path"]
@@ -124,15 +59,12 @@ def download_image(service, image_file):
     )
     if os.path.exists(image_file["local_path"]):
         logger.debug(
-            f"{image_file['name']} already present on disk: {image_file['local_path']}. Skipping download..."
+            f"{image_file['name']} already present on disk ({image_file['local_path']=}! Skipping download..."
         )
         return image_file
 
     try:
         fh = download_file_id(service=service, file_id=image_file["id"])
-        logger.debug(
-            f"{image_file['name']} already present on disk: {image_file['local_path']}. Skipping download..."
-        )
         with open(image_file["local_path"], "wb") as f:
             f.write(fh.getbuffer())
     except HttpError as error:
@@ -151,40 +83,6 @@ def download_file_id(service, file_id):
         status, done = downloader.next_chunk()
         logger.debug(f"{file_id=} download progress: {int(status.progress() * 100)}%")
     return fd
-
-
-def get_event_page_folder(service, folder_name):
-    get_parent_folder_q = (
-        f"name = '{folder_name}' and mimeType = 'application/vnd.google-apps.folder'"
-    )
-    list_resp = list_files(service, get_parent_folder_q)
-    assert len(list_resp.get("files", [])) == 1
-    event_page_folder = list_resp["files"][0]
-    # logger.debug(f"get_event_page_folder(): {event_page_folder=}")
-    return event_page_folder
-
-
-def list_files_in_event_page_folder(service, folder_name):
-    try:
-        event_page_folder = get_event_page_folder(
-            service=service,
-            folder_name=folder_name,
-        )
-
-    except HttpError as err:
-        if err.status_code != 404:
-            raise
-        logger.warning(
-            f"Unable to list event page folders, no files / relying on defaults and such: {err=}"
-        )
-        return dict()
-
-    files = list_files(
-        service=service, q=f"'{event_page_folder['id']}' in parents"
-    ).get("files", [])
-    files_by_name = {f["name"]: f for f in files}
-    logger.debug(f"list_files_in_event_page_folder(): {files_by_name=}")
-    return files_by_name
 
 
 def list_files(service, q):
@@ -240,38 +138,3 @@ def download_category_images(drive_service, event_categories):
 
     logger.debug(f"download_category_images() => {downloaded_images=}")
     return downloaded_images
-
-
-def ensure_watch(
-    service, channel_id, web_hook_address, webhook_token, file_id, expiration_in_days=1
-):
-    current_seconds = time.time()
-    added_seconds = expiration_in_days * 24 * 60 * 60
-    expiration_seconds = current_seconds + added_seconds
-    expiration = round(expiration_seconds * 1000)
-    file = service.files().get(fileId=file_id).execute()
-    logger.info(
-        f"Ensuring GDrive watch for {file=} and with {expiration=} is in-place..."
-    )
-    page_token_resp = service.changes().getStartPageToken().execute()
-    logger.debug(f"{page_token_resp=}")
-    request = service.changes().watch(
-        pageToken=page_token_resp["startPageToken"],
-        includeItemsFromAllDrives=True,
-        supportsAllDrives=True,
-        body=dict(
-            kind="api#channel",
-            type="web_hook",
-            token=webhook_token,
-            id=channel_id,
-            address=web_hook_address,
-            expiration=expiration,
-        ),
-    )
-    response = request.execute()
-    resp_expiration_dt = datetime.fromtimestamp(int(response["expiration"]) // 1000)
-    logger.info(
-        f"Drive file watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
-    )
-
-    return response

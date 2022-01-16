@@ -2,10 +2,12 @@
 import json
 import os
 import re
-from apis.constants import CalendarColors
+
+import hcl
 from logzero import logger
 
 from apis import load_credentials
+from apis.constants import CalendarColors
 
 # phases of the 🌙
 DEFAULT_CALENDAR_ID = "ht3jlfaac5lfd6263ulfh4tql8@group.calendar.google.com"
@@ -14,9 +16,7 @@ DEFAULT_FOLDER_NAME = "calendar-event-images"
 DEFAULT_GITHUB_REPO = "jeffwecan/lv-event-pagenerator"
 DEFAULT_HOSTNAME = "localhost"
 DEFAULT_PURGE_DELAY_SECS = 30
-DEFAULT_SETTINGS_FILE_NAME = "event_page_settings.yaml"
-# DEFAULT_WATCH_EXPIRATION_IN_DAYS = 1
-DEFAULT_WATCH_EXPIRATION_IN_DAYS = "0.1"
+DEFAULT_WATCH_EXPIRATION_IN_DAYS = 1
 
 
 class Config(object):
@@ -28,11 +28,9 @@ class Config(object):
     defaults = dict(
         calendar_id=DEFAULT_CALENDAR_ID,
         display_timezone=DEFAULT_DISPLAY_TIMEZONE,
-        gdrive_folder_name=DEFAULT_FOLDER_NAME,
         gcs_bucket_prefix="",
         hostname=DEFAULT_HOSTNAME,
         purge_delay_secs=DEFAULT_PURGE_DELAY_SECS,
-        gdrive_settings_file_name=DEFAULT_SETTINGS_FILE_NAME,
         watch_expiration_in_days=DEFAULT_WATCH_EXPIRATION_IN_DAYS,
     )
     _secretsmanager_config = dict()
@@ -68,6 +66,13 @@ class Config(object):
             self._secretsmanager_config = get_secretsmanager_config(
                 credentials=load_credentials()
             )
+        if tfvars_path := os.getenv('EVENTS_PAGE_LOAD_LOCAL_TF_VARS'):
+            with open(tfvars_path) as f:
+                tfvars = hcl.load(f)
+                if not isinstance(tfvars, dict):
+                    logger.info(f"Config after defaults loaded from {tfvars_path=}: {cfg.to_dict()=}")
+                    raise Exception(f"Unable to use {tfvars=} in Config defaults; not a map...")
+                cfg.defaults.update(tfvars)
 
     def __getattr__(self, key):
         environ_key = f"EVENTS_PAGE_{key.upper()}"

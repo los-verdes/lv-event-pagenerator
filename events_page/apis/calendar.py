@@ -62,6 +62,12 @@ class Event(object):
         self.categories_by_color_id = categories_by_color_id
         self.mls_team_abbrs_by_name = TeamColors().team_abbrs_by_name()
 
+        self.cover_image_attachment = None
+        for attachment in self._event.get("attachments", []):
+            if attachment["mimeType"].startswith("image/"):
+                self.cover_image_attachment = attachment
+                break
+
     def get(self, key, default=None):
         try:
             return getattr(self, key)
@@ -151,17 +157,16 @@ class Event(object):
 
     @property
     def cover_image_filename(self):
-        if attachments := self._event.get("attachments"):
-            for attachment in attachments:
-                if attachment["mimeType"].startswith("image/"):
-                    # logger.debug(f"{attachment['title']=} {attachment['mimeType']=}")
-                    # TOOD: also ensure these files are downloaded at one point or another?
-                    local_path = basename(
-                        get_local_path_for_file(
-                            attachment["fileId"], attachment["mimeType"]
-                        )
-                    )
-                    return os.path.join(str(cfg.gcs_bucket_prefix), local_path)
+        if not self.cover_image_attachment:
+            return None
+
+        local_path = basename(
+            get_local_path_for_file(
+                file_id=self.cover_image_attachment["fileId"],
+                mime_type=self.cover_image_attachment["mimeType"],
+            )
+        )
+        return os.path.join(str(cfg.gcs_bucket_prefix), local_path)
 
     @property
     def is_match(self):

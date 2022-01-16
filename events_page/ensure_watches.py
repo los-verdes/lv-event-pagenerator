@@ -5,28 +5,10 @@ import logzero
 from googleapiclient.errors import HttpError
 from logzero import logger
 
-from apis import calendar, drive
+from apis import calendar
 from apis.secrets import get_webhook_token
 
 logzero.loglevel(logging.INFO)
-
-
-def ensure_watches(
-    web_hook_address, webhook_token, calendar_id, settings_file_id, expiration_in_days
-):
-    ensure_events_watch(
-        web_hook_address=web_hook_address,
-        webhook_token=webhook_token,
-        calendar_id=calendar_id,
-        expiration_in_days=expiration_in_days,
-    )
-    # TODO: maybe we don't want to complciate things with a settings file in gdrive...
-    # ensure_drive_watch(
-    #     web_hook_address=web_hook_address,
-    #     webhook_token=webhook_token,
-    #     settings_file_id=settings_file_id,
-    #     expiration_in_days=expiration_in_days,
-    # )
 
 
 def ensure_watch(
@@ -77,21 +59,6 @@ def ensure_events_watch(
     )
 
 
-def ensure_drive_watch(
-    web_hook_address, webhook_token, settings_file_id, expiration_in_days
-):
-    ensure_watch(
-        api_module=drive,
-        channel_id=f"events-page-{settings_file_id}-watch",
-        web_hook_address=web_hook_address,
-        webhook_token=webhook_token,
-        expiration_in_days=expiration_in_days,
-        watch_kwargs=dict(
-            file_id=settings_file_id,
-        ),
-    )
-
-
 if __name__ == "__main__":
     import logging
 
@@ -109,16 +76,6 @@ if __name__ == "__main__":
         default=cfg.calendar_id,
     )
     parser.add_argument(
-        "-s",
-        "--settings-file-name",
-        default=cfg.gdrive_settings_file_name,
-    )
-    parser.add_argument(
-        "-g",
-        "--gdrive-folder-name",
-        default=cfg.gdrive_folder_name,
-    )
-    parser.add_argument(
         "-e",
         "--expiration-in-days",
         default=cfg.watch_expiration_in_days,
@@ -130,15 +87,9 @@ if __name__ == "__main__":
     )
     args = cli.parse_args(parser)
 
-    settings_file_id = drive.get_settings_file_id(
-        service=drive.build_service(),
-        folder_name=args.gdrive_folder_name,
-        file_name=args.settings_file_name,
-    )
-    ensure_watches(
+    ensure_events_watch(
         web_hook_address=args.web_hook_address,
         webhook_token=get_webhook_token(),
         calendar_id=args.calendar_id,
-        settings_file_id=settings_file_id,
         expiration_in_days=float(args.expiration_in_days),
     )

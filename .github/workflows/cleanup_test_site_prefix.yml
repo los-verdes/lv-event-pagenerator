@@ -38,9 +38,7 @@ jobs:
           service_account: "test-site-publisher@losverdesatx-events.iam.gserviceaccount.com"
 
       - name: Cleanup Test Site Prefix
-        run: |
-          just \
-            --set export_tf_vars true \
-            cleanup-test-site-prefix
+        run: just cleanup-test-site-prefix
         env:
+          EVENTS_PAGE_LOAD_LOCAL_TF_VARS: "${{ github.workspace }}/losverdesatx-events.tfvars"
           EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}

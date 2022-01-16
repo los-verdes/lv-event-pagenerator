@@ -8,7 +8,7 @@ from apis import calendar as gcal
 from apis.drive import (
     add_category_image_file_metadata,
     build_service,
-    download_all_images_in_folder,
+    download_event_images,
     download_category_images,
 )
 from apis.mls import TeamColors
@@ -77,30 +77,35 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
         f.write(rendered_scss)
 
 
-def download_all_remote_images(drive_service, event_categories, folder_name):
+def download_all_remote_images(drive_service, calendar, event_categories):
     downloaded_images = dict()
-    downloaded_images.update(download_all_images_in_folder(drive_service, folder_name))
+    downloaded_images.update(download_event_images(drive_service, calendar.events))
     downloaded_images.update(download_category_images(drive_service, event_categories))
     logger.info(f"download_all_remote_images() => {downloaded_images=}")
     return downloaded_images
 
 
-def render_templated_styles(app, gcal_service, drive_service, gdrive_folder_name):
+def render_templated_styles(app, gcal_service, drive_service):
     logger.info("Rendering templated styles...")
     event_categories = cfg.event_categories
     event_categories = add_category_image_file_metadata(
         drive_service=drive_service, event_categories=event_categories
     )
+    calendar = gcal.load_calendar(
+        service=gcal_service,
+        calendar_id=cfg.calendar_id,
+    )
     render_scss_vars_template(
         app=app,
-        calendar=gcal.load_calendar(
-            service=gcal_service,
-            calendar_id=cfg.calendar_id,
-        ),
+        calendar=calendar,
         event_categories=event_categories,
         team_colors=TeamColors(),
     )
-    download_all_remote_images(drive_service, event_categories, gdrive_folder_name)
+    download_all_remote_images(
+        drive_service=drive_service,
+        calendar=calendar,
+        event_categories=event_categories,
+    )
 
 
 if __name__ == "__main__":
@@ -114,5 +119,4 @@ if __name__ == "__main__":
         app=create_app(),
         gcal_service=gcal.build_service(),
         drive_service=build_service(),
-        gdrive_folder_name=cfg.gdrive_folder_name,
     )
