@@ -40,6 +40,10 @@ class Config(object):
         return self.static_site_hostname
 
     @property
+    def build_workflow_filename(self):
+        return "build_and_publish_site.yml"
+
+    @property
     def event_categories(self):
         event_categories = self.get("event_categories", "")
         if isinstance(event_categories, str):

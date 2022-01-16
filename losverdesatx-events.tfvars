@@ -1,6 +1,6 @@
 # calendar_id               = "information@losverdesatx.org"
 # gcp_billing_account_name = "Los Verdes"
-calendar_id            = "2urei2qv0edsscn71iamri0ok4@group.calendar.google.com"
+calendar_id            = "tnf6pf0ucprlk8hr9loas1vp74@group.calendar.google.com"
 cloudflare_zone        = "asfasfsafsasfa.org"
 gcp_billing_account_id = "019767-2A54C9-AE07C6"
 gcp_project_editors    = []
@@ -19,37 +19,38 @@ event_categories = {
   misc = {
     gcal_color_name = "unset"
 
-    cover_color = "#000000"
+    bg_color = "#000000"
   }
 
   los-verdes = {
-    gcal_color_name = "lavender"
+    gcal_color_name = "sage"
 
     always_shown_in_filters = true
     bg_color                = "#000000"
-    default_cover_image     = "https://drive.google.com/file/d/1dv2K9ep6wldSqYbhH8nizRQW2PTPwdLW/view?usp=sharing"
+    default_cover_image     = "https://drive.google.com/file/d/1AATD3ehu6HS-q49rso0jC8P6ZoKaGsjN/view?usp=sharing"
     text_bg_color           = "#00b140"
     text_fg_color           = "#FFFFFF"
   }
 
   la-murga = {
-    gcal_color_name = "sage"
+    gcal_color_name = "graphite"
 
     always_shown_in_filters = true
-    cover_color             = "#000000"
+    default_cover_image     = "https://drive.google.com/file/d/1abvwXtd4ipJWtidsYzwKvNjzqh-HJFGd/view?usp=sharing"
+    bg_color                = "#000000"
   }
 
   home-games = {
     gcal_color_name = "grape"
 
     always_shown_in_filters = true
-    cover_color             = "#dbadff"
+    bg_color                = "#dbadff"
   }
 
   away-games = {
     gcal_color_name = "flamingo"
 
     always_shown_in_filters = true
-    cover_color             = "#000000"
+    bg_color                = "#000000"
   }
 }
