@@ -5,7 +5,7 @@ import logzero
 from googleapiclient.errors import HttpError
 from logzero import logger
 
-from apis import calendar, drive
+from apis import calendar
 from apis.secrets import get_webhook_token
 
 logzero.loglevel(logging.INFO)

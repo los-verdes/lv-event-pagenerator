@@ -192,10 +192,6 @@ requests-oauthlib==1.3.0
     # via google-auth-oauthlib
 rsa==4.8
     # via google-auth
-ruamel.yaml==0.17.20
-    # via -r requirements.in
-ruamel.yaml.clib==0.2.6
-    # via ruamel.yaml
 selenium==4.1.0
     # via appium-python-client
 six==1.16.0

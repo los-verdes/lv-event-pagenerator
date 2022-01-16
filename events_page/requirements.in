@@ -17,5 +17,4 @@ logzero
 pyhcl
 python-dateutil
 requests
-ruamel.yaml
 tenacity

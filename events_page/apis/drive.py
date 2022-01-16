@@ -3,17 +3,14 @@ import io
 import mimetypes
 import os
 import re
-import time
-from datetime import datetime
 
 from config import cfg
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
 from logzero import logger
-from ruamel import yaml
 
-from apis import Singleton, load_credentials
+from apis import load_credentials
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -143,38 +140,3 @@ def download_category_images(drive_service, event_categories):
 
     logger.debug(f"download_category_images() => {downloaded_images=}")
     return downloaded_images
-
-
-def ensure_watch(
-    service, channel_id, web_hook_address, webhook_token, file_id, expiration_in_days=1
-):
-    current_seconds = time.time()
-    added_seconds = expiration_in_days * 24 * 60 * 60
-    expiration_seconds = current_seconds + added_seconds
-    expiration = round(expiration_seconds * 1000)
-    file = service.files().get(fileId=file_id).execute()
-    logger.info(
-        f"Ensuring GDrive watch for {file=} and with {expiration=} is in-place..."
-    )
-    page_token_resp = service.changes().getStartPageToken().execute()
-    logger.debug(f"{page_token_resp=}")
-    request = service.changes().watch(
-        pageToken=page_token_resp["startPageToken"],
-        includeItemsFromAllDrives=True,
-        supportsAllDrives=True,
-        body=dict(
-            kind="api#channel",
-            type="web_hook",
-            token=webhook_token,
-            id=channel_id,
-            address=web_hook_address,
-            expiration=expiration,
-        ),
-    )
-    response = request.execute()
-    resp_expiration_dt = datetime.fromtimestamp(int(response["expiration"]) // 1000)
-    logger.info(
-        f"Drive file watch (id: {response['id']}) created! Expires: {resp_expiration_dt.strftime('%x %X')}"
-    )
-
-    return response
