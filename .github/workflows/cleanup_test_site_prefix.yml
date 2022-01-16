@@ -9,7 +9,7 @@ jobs:
     name: Cleanup Test Site Prefix
     runs-on: ubuntu-latest
     environment:
-      name: ${{ format('tests/pr-{0}', github.event.number) }}
+      name: test-sites
     permissions:
       contents: "read"
       id-token: "write"

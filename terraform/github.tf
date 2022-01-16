@@ -26,7 +26,7 @@ module "github_oidc" {
     }
     "gh-test-site-publisher" = {
       sa_name   = google_service_account.test_site_publisher.name
-      attribute = "attribute.workflow/pull-request-tests"
+      attribute = "attribute.environment/test-sites"
     }
     "gh-site-publisher" = {
       sa_name   = google_service_account.site_publisher.name

@@ -37,7 +37,7 @@ jobs:
     outputs:
       site_url: ${{ steps.build-and-publish-test-site.outputs.site_url }}
     environment:
-      name: ${{ format('tests/pr-{0}', github.event.number) }}
+      name: test-sites
       url: ${{ steps.build-and-publish-test-site.outputs.site_url }}
     permissions:
       contents: "read"
