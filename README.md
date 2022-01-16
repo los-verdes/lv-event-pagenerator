@@ -3,28 +3,47 @@
 [![Deploy Infrastructure](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml/badge.svg)](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml)
 [![Build and Publish Site](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/build_and_publish_site.yml/badge.svg)](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/build_and_publish_site.yml)
 
+Production of GCS-housed static site listing events retrieved from a given public Google calendar.
+
+## Service Accounts
+
+For the production Los Verdes events page app, there are two GCP service accounts involved:
+
+- `site-publisher@losverdesatx-events.iam.gserviceaccount.com`:
+
+  This is the account used for production (i.e., `main` branch) runs. Available in the `site_publisher_sa_email` Terraform output.
+- `test-site-publisher@losverdesatx-events.iam.gserviceaccount.com`
+
+  This is the account used for test (i.e., pull request) runs. Available he `test_site_publisher_sa_email` Terraform output.
+
 ## Usage
 
-1. Add an [embed block](https://support.squarespace.com/hc/en-us/articles/206543617-Embed-blocks) on the desired Squarespace page.
-2. Set the block's code contents to:
+1. Add the application service accounts to the source public calendar with "Manage events" access. (Manage events access required for viewing event colors which are used to map to event "categories".)
+1. Update calendar event colors to match the desired categories. E.g.,
+    - `los-verdes` category -> `Sage`
+    - `la-murga` category -> `Graphite`
+    - `home-games` category -> `Grape`
+    - `away-games` category -> `Flamingo`
 
-    ```html
-    <!-- This bit should be placed within an "embed" block over on ye 'ole Squarespace -->
-    <div>
-      <iframe id="lv-events-embed" width="100%" src="https://pagenerator-w7r57drkgq-uk.a.run.app/events" scrolling="no"></iframe>
-    </div>
-    ```
+### Styling
 
-3. ???
+Event card covers have shims available for setting the overall background color as well as the text foreground/background color. To modify styles, edit the `event_categories` map within [losverdesatx-events.tfvars](losverdesatx-events.tfvars).
 
-```hcl
-# Suppose we needed this function scheduled daily or whatnot as well...
-# > Notifications are not 100% reliable.
-# > Expect a small percentage of messages to get dropped under normal working conditions.
-# > Make sure to handle these missing messages gracefully, so that the application still
-# > syncs even if no push messages are received.
-# Reference: https://developers.google.com/calendar/api/guides/push#special-considerations
-```
+#### Cover Images
+
+All cover images must be shared with the application's service account; either by being placed in a GDrive folder shared with those accounts or shared directly. There are two options for setting these images.
+
+- Event card cover images can be set on a category-scope via the `default_cover_image` key contained in the `event_categories` map within [losverdesatx-events.tfvars](losverdesatx-events.tfvars). Category image URL's should be the value shown when opening the "Get Link" dialog for a file within Google Drive.
+- Alternatively, attaching any Google Drive-housed image to a Google calendar event will see that image used as the event card cover. The attachment can have any filename and the application will use the first image attachment it discovers (regardless of how many images are attached(!)).
+
+### Page Embedding
+
+  ```html
+  <!-- This bit should be placed within an "embed" block over on ye 'ole Squarespace -->
+  <div>
+    <iframe id="lv-events-embed" width="100%" src="https://los-verdes-events.asfasfsafsasfa.org/" scrolling="no"></iframe>
+  </div>
+  ```
 
 ## Development
 
@@ -105,3 +124,5 @@ Site builds expected to be performed within a GitHub Actions workflow for access
     ```
 
 ## Deployment
+
+Outside of this repository, all infrastructure resources are housed in an associated GCP project. Management of this project is handled by Terraform and the [Deploy Infrastructure](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) GitHub actions workflow. DNS / CDN needs are handled by a Cloudflare free plan. Site builds are performed following the successful conclusion of a [Deploy Infrastructure](https://github.com/jeffwecan/lv-event-pagenerator/actions/workflows/deploy_infrastrcture.yml) workflow run and/or changes made to the source Google calendar.
