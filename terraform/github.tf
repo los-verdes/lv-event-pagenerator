@@ -9,13 +9,14 @@ module "github_oidc" {
   pool_id     = local.oidc_pool_id
   provider_id = local.oidc_pool_id
   attribute_mapping = {
-    "google.subject"        = "assertion.sub"
-    "attribute.sub"         = "assertion.sub"
-    "attribute.actor"       = "assertion.actor"
-    "attribute.repository"  = "assertion.repository"
-    "attribute.ref"         = "assertion.ref"
-    "attribute.environment" = "assertion.environment"
-    "attribute.workflow"    = "assertion.workflow"
+    "google.subject"             = "assertion.sub"
+    "attribute.sub"              = "assertion.sub"
+    "attribute.actor"            = "assertion.actor"
+    "attribute.repository"       = "assertion.repository"
+    "attribute.ref"              = "assertion.ref"
+    "attribute.environment"      = "assertion.environment"
+    "attribute.workflow"         = "assertion.workflow"
+    "attribute.job_workflow_ref" = "assertion.job_workflow_ref"
   }
   attribute_condition = "assertion.repository=='${var.github_repo}'"
   sa_mapping = {
