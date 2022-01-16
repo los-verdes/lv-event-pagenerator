@@ -60,15 +60,12 @@ def download_image(service, image_file):
     )
     if os.path.exists(image_file["local_path"]):
         logger.debug(
-            f"{image_file['name']} already present on disk: {image_file['local_path']}. Skipping download..."
+            f"{image_file} already present on disk! Skipping download..."
         )
         return image_file
 
     try:
         fh = download_file_id(service=service, file_id=image_file["id"])
-        logger.debug(
-            f"{image_file['name']} already present on disk: {image_file['local_path']}. Skipping download..."
-        )
         with open(image_file["local_path"], "wb") as f:
             f.write(fh.getbuffer())
     except HttpError as error:
