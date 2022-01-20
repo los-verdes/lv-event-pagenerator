@@ -1,7 +1,7 @@
 # calendar_id               = "information@losverdesatx.org"
 # gcp_billing_account_name = "Los Verdes"
 calendar_id            = "tnf6pf0ucprlk8hr9loas1vp74@group.calendar.google.com"
-cloudflare_zone        = "asfasfsafsasfa.org"
+cloudflare_zone        = "losverd.es"
 gcp_billing_account_id = "019767-2A54C9-AE07C6"
 gcp_project_editors    = []
 gcp_project_id         = "losverdesatx-events"
@@ -12,7 +12,7 @@ githubapp_id           = "164885"
 githubapp_install_id   = "22283839"
 github_repo            = "los-verdes/lv-event-pagenerator"
 page_description       = "Los Verdes Event Page"
-static_site_hostname   = "los-verdes-events.asfasfsafsasfa.org"
+static_site_hostname   = "events.losverd.es"
 
 event_categories = {
   # Default category (what is used if no explicit color is set for the matching calendar event)

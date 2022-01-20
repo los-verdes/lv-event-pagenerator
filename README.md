@@ -5,6 +5,8 @@
 
 Production of GCS-housed static site listing events retrieved from a given public Google calendar.
 
+Example deployments of this site can be seen under the [prod-site environment's deployment history](https://github.com/los-verdes/lv-event-pagenerator/deployments/activity_log?environment=prod-site) and specifically at: [events.losverd.es](https://events.losverd.es/).
+
 ## Usage
 
 1. Add the application service accounts to the source public calendar with "Manage events" access. (Manage events access required for viewing event colors which are used to map to event "categories".)
@@ -30,7 +32,7 @@ All cover images must be shared with the application's service account; either b
   ```html
   <!-- This bit should be placed within an "embed" block over on ye 'ole Squarespace -->
   <div>
-    <iframe id="lv-events-embed" width="100%" src="https://los-verdes-events.asfasfsafsasfa.org/" scrolling="no"></iframe>
+    <iframe id="lv-events-embed" width="100%" src="https://los-verdes-events.losverd.es/" scrolling="no"></iframe>
   </div>
   ```
 
