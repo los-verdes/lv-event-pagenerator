@@ -32,7 +32,7 @@ All cover images must be shared with the application's service account; either b
   ```html
   <!-- This bit should be placed within an "embed" block over on ye 'ole Squarespace -->
   <div>
-    <iframe id="lv-events-embed" width="100%" src="https://events.losverd.es/" scrolling="no"></iframe>
+    <iframe id="lv-events-embed" height="800px" width="100%" src="https://events.losverd.es/" scrolling="no"></iframe>
   </div>
   ```
 
