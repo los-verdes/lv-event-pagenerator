@@ -57,7 +57,7 @@ jobs:
         env:
           # EVENTS_PAGE_CALENDAR_ID: "tnf6pf0ucprlk8hr9loas1vp74@group.calendar.google.com"
           EVENTS_PAGE_LOAD_LOCAL_TF_VARS: "${{ github.workspace }}/losverdesatx-events.tfvars"
-          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ format('tests/pr-{0}', github.event.number) }}
+          EVENTS_PAGE_GCS_BUCKET_PREFIX: ${{ github.ref != 'refs/heads/master' && format('tests/pr-{0}', github.event.number) || '' }}
 
       - name: Upload screenshot as artifact
         uses: actions/upload-artifact@v2
