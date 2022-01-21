@@ -21,7 +21,7 @@ module "github_oidc" {
   attribute_condition = "assertion.repository=='${var.github_repo}'"
   sa_mapping = {
     "gh-test-runner" = {
-      sa_name   = google_service_account.test_site_publisher.name
+      sa_name = google_service_account.test_site_publisher.name
       # TODO: figure out how to cover our pr test, etc. workflwos without being this broad
       attribute = "*"
     }
