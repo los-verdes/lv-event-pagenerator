@@ -6,10 +6,11 @@ $bright-verde: #0bac44;
   padding-right: 4px;
 }
 
-// mark {
-//   background-color: rgba(0, 0, 0, 0);
-// }
-
+.lv-header.mdl-layout--fixed-header {
+  > header {
+    background-color: $bright-verde;
+  }
+}
 
 .event-card.mdl-card {
   width: 100%;
