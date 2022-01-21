@@ -18,6 +18,10 @@ $bright-verde: #0bac44;
     height: 176px;
   }
 
+  .event-date {
+    padding-left: 10px;
+  }
+
   .expandable-content {
     display: none;
     overflow: hidden;
@@ -30,11 +34,6 @@ $bright-verde: #0bac44;
   mark {
     background-color: rgba(0, 0, 0, 0.5);
     color: rgb(255, 255, 255);
-  }
-
-  small {
-    opacity: 1;
-    font-size: medium;
   }
 
   summary {
