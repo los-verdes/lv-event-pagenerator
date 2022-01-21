@@ -10,7 +10,7 @@ from apis import load_credentials
 from apis.constants import CalendarColors
 
 # phases of the 🌙
-DEFAULT_CALENDAR_ID = "ht3jlfaac5lfd6263ulfh4tql8@group.calendar.google.com"
+DEFAULT_CALENDAR_ID = "information@losverdesatx.org"
 DEFAULT_DISPLAY_TIMEZONE = "US/Central"
 DEFAULT_FOLDER_NAME = "calendar-event-images"
 DEFAULT_GITHUB_REPO = "los-verdes/lv-event-pagenerator"
