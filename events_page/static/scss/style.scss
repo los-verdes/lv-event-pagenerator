@@ -135,7 +135,9 @@ input[type="radio"] {
 @each $class_name, $background_image in $category_background_images {
   .#{$class_name} {
     > .mdl-card__title {
-      background-image: url($background_image); background-position: center; background-size: cover;
+      background-image: url($background_image);
+      background-position: center;
+      background-size: cover;
     }
   }
 }
