@@ -54,6 +54,8 @@ def replace_tz(datetime_obj):
 @app.template_filter()
 def hex2rgb(hex, alpha=None):
     """Convert a string to all caps."""
+    if not hex.startswith("#"):
+        return hex
     h = hex.lstrip("#")
     try:
         rgb = tuple(int(h[i : i + 2], 16) for i in (0, 2, 4))  # noqa

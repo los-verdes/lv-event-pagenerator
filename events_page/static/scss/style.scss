@@ -1,5 +1,9 @@
 $bright-verde: #0bac44;
 
+a {
+  color: $bright-verde;
+}
+
 .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
   // Sort out better formatting (large width?) side nav stuff here:
   padding-left: 4px;
@@ -22,10 +26,11 @@ $bright-verde: #0bac44;
 
   > .mdl-card__title {
     height: 176px;
+    padding-right: 5px;
   }
 
   .event-date {
-    padding-left: 10px;
+    margin-left: 15px;
   }
 
   .expandable-content {
@@ -113,7 +118,7 @@ input[type="radio"] {
 
     mark {
       padding: 2px;
-      color: white;
+      color: $bright-verde;
       background-color: rgba($bright-verde, 0.75);
     }
   }
@@ -133,9 +138,9 @@ input[type="radio"] {
 }
 
 @each $class_name, $background_image in $category_background_images {
-  .#{$class_name} {
+  .#{$class_name}.event-card {
     > .mdl-card__title {
-      background-image: url($background_image);
+      background-image: $background_image;
       background-position: center;
       background-size: cover;
     }
@@ -143,7 +148,7 @@ input[type="radio"] {
 }
 
 @each $class_name, $background_color in $category_background_colors {
-  .#{$class_name} {
+  .#{$class_name}.event-card {
     > .mdl-card__title {
       background-color: $background_color;
     }
@@ -151,7 +156,7 @@ input[type="radio"] {
 }
 
 @each $class_name, $fg_color in $category_text_fg_colors {
-  .#{$class_name} {
+  .#{$class_name}.event-card {
     mark {
       color: $fg_color;
     }
@@ -159,7 +164,7 @@ input[type="radio"] {
 }
 
 @each $class_name, $bg_color in $category_text_bg_colors {
-  .#{$class_name} {
+  .#{$class_name}.event-card {
     mark {
       background-color: $bg_color;
     }

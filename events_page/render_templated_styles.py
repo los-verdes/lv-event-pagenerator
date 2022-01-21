@@ -46,7 +46,11 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
         logger.debug(f"{class_name=} {event_category.get('cover_image_filename')}")
 
         if cover_image_filename := event_category.get("cover_image_filename"):
-            event_category_background_images[class_name] = cover_image_filename
+            event_category_background_images[class_name] = f"url({cover_image_filename})"
+        elif default_cover_image := event_category.get("default_cover_image"):
+            if default_cover_image.startswith("linear-gradient"):
+                event_category_background_images[class_name] = event_category["default_cover_image"]
+
         if bg_color := event_category.get("bg_color"):
             event_category_background_colors[class_name] = bg_color
         if text_fg_color := event_category.get("text_fg_color"):
