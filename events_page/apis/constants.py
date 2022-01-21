@@ -6,14 +6,14 @@ class CalendarColors(metaclass=Singleton):
     _event_colors = {
         "unset": {"background": None, "id": "0"},
         "banana": {"background": "#f6c026", "id": "5"},
-        "sage": {"background": "#0b8043", "id": "10"},
+        "sage": {"background": "#0b8043", "id": "2"},
         "blueberry": {"background": "#3f51b5", "id": "9"},
         "flamingo": {"background": "#e67c73", "id": "4"},
         "grape": {"background": "#8e24aa", "id": "3"},
         "graphite": {"background": "#616161", "id": "8"},
         "lavender": {"background": "#a4bdfc", "id": "1"},
         "peacock": {"background": "#039be5", "id": "7"},
-        "basil": {"background": "#33b679", "id": "2"},
+        "basil": {"background": "#33b679", "id": "10"},
         "tangerine": {"background": "#f5511d", "id": "6"},
         "tomato": {"background": "#d60000", "id": "11"},
     }
