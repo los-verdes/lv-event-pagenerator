@@ -99,6 +99,7 @@ input[type="radio"] {
   }
   [value="#{$category_name}"]:disabled ~ .filters [for="#{$category_name}"] {
     color: gray;
+    cursor: no-drop;
   }
 }
 
