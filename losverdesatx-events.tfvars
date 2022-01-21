@@ -18,7 +18,9 @@ event_categories = {
   misc = {
     gcal_color_name = "unset"
 
-    bg_color = "#000000"
+    bg_color            = "#000000"
+    default_cover_image = "linear-gradient(230deg, #202020, #0bac44)"
+    text_fg_color       = "#FFFFFF"
   }
 
   los-verdes = {
@@ -44,7 +46,7 @@ event_categories = {
 
     always_shown_in_filters = true
     bg_color                = "#00b140"
-    text_bg_color           = "#000000"
+    text_bg_color           = "rgba(0, 0, 0, 0.5)"
     text_fg_color           = "#FFFFFF"
   }
 
