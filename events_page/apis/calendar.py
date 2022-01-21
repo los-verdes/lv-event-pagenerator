@@ -90,9 +90,9 @@ class Event(object):
 
     @property
     def category(self):
-        logger.debug(
-            f"{self.summary} ===>\n{self.color_id=} => {self.categories_by_color_id.get(self.color_id)=}"
-        )
+        # logger.debug(
+        #     f"{self.summary} ===>\n{self.color_id=} => {self.categories_by_color_id.get(self.color_id)=}"
+        # )
         if category := self.categories_by_color_id.get(self.color_id):
             return category
 
