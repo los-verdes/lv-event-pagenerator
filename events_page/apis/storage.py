@@ -48,6 +48,7 @@ def upload_local_directory_to_gcs(client, local_path, bucket, gcs_path):
         else:
             remote_path = os.path.join(gcs_path, os.path.basename(local_file))
             blob = bucket.blob(remote_path)
+            blob.cache_control = "no-cache"
             logger.debug(f"Uploading {local_file=}) to {remote_path=}")
             # logger.debug(f"Uploading {blob=} ({local_file=}) to: {bucket=}")
             blob.upload_from_filename(local_file)
