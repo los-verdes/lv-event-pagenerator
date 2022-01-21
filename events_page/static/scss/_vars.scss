@@ -23,32 +23,32 @@ $team_colors: (
 );
 
 $category_names: (
-  "los-verdes",
-  "la-murga",
-  "misc",
-  "home-games",
   "away-games",
+  "home-games",
+  "la-murga",
+  "los-verdes",
+  "misc",
 );
 
 $category_background_images: (
-  "category-10": "1AATD3ehu6HS-q49rso0jC8P6ZoKaGsjN.png",
   "category-8": "1abvwXtd4ipJWtidsYzwKvNjzqh-HJFGd.png",
+  "category-2": "1AATD3ehu6HS-q49rso0jC8P6ZoKaGsjN.png",
 );
 
 $category_background_colors: (
-  "category-0": rgb(0, 0, 0),
-  "category-10": rgb(0, 0, 0),
-  "category-8": rgb(0, 0, 0),
-  "category-3": rgb(0, 177, 64),
   "category-4": rgb(0, 0, 0),
+  "category-3": rgb(0, 177, 64),
+  "category-8": rgb(0, 0, 0),
+  "category-2": rgb(0, 0, 0),
+  "category-0": rgb(0, 0, 0),
 );
 
 $category_text_fg_colors: (
-  "category-10": rgba(255, 255, 255, 0.9),
   "category-3": rgba(255, 255, 255, 0.9),
+  "category-2": rgba(255, 255, 255, 0.9),
 );
 
 $category_text_bg_colors: (
-  "category-10": rgb(0, 177, 64),
   "category-3": rgb(0, 0, 0),
+  "category-2": rgb(0, 177, 64),
 );
