@@ -12,6 +12,11 @@ $bright-verde: #0bac44;
   }
 }
 
+.mdl-tooltip {
+  font-size: 24px;
+  line-height: 24px;
+}
+
 .event-card.mdl-card {
   width: 100%;
 
@@ -77,15 +82,8 @@ input[type="radio"] {
   display: block;
 }
 
-[value="all"]:checked ~ .empty-cards [data-category] {
-  display: none;
-}
-
 @each $category_name in $category_names {
   [value="#{$category_name}"]:checked ~ .event-cards .mdl-cell:not([data-category~="#{$category_name}"]) {
-    display: none;
-  }
-  [value="#{$category_name}"]:checked ~ .empty-cards .mdl-cell:not([data-category~="#{$category_name}"]) {
     display: none;
   }
 }
@@ -98,6 +96,9 @@ input[type="radio"] {
   [value="#{$category_name}"]:checked ~ .filters [for="#{$category_name}"] {
     background: $bright-verde;
     color: white;
+  }
+  [value="#{$category_name}"]:disabled ~ .filters [for="#{$category_name}"] {
+    color: gray;
   }
 }
 

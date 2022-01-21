@@ -72,9 +72,11 @@
     </div>
     <main class="mdl-layout__content">
       <div class="page-content">
+
         <input type="radio" id="all" name="categories" value="all" checked>
         {% for category in calendar.default_category_names + calendar.additional_category_names %}
-        <input type="radio" id="{{ category }}" name="categories" value="{{ category }}">
+        <input type="radio" id="{{ category }}" name="categories" value="{{ category }}" {% if category in
+          calendar.empty_category_names %}disabled{% endif %}>
         {% endfor %}
         <ol class="filters">
           <li>
@@ -84,9 +86,17 @@
           </li>
           {% for category in calendar.default_category_names + calendar.additional_category_names %}
           <li>
-            <label class="mdl-chip" for="{{ category }}">
+            <label id="{{ category }}-label" class="mdl-chip" for="{{ category }}">
               <span class="mdl-chip__text">{{ category }}</span>
             </label>
+            {% if category in calendar.empty_category_names %}
+            <div class="mdl-tooltip" data-mdl-for="{{ category }}-label">
+              No events currently on the calendar for:
+              <pre>{{ category }}</pre>
+              <br>
+              Please check back later! 🖤💚
+            </div>
+            {% endif %}
           </li>
           {% endfor %}
         </ol>
@@ -95,26 +105,10 @@
           {{ macro.event_card(event) }}
           {% endfor %}
         </div>
-
-        <div class="mdl-grid empty-cards">
-          <!-- <div class="mdl-layout-spacer"></div> -->
-          {% for empty_category in calendar.empty_category_names %}
-          <div class="mdl-cell mdl-cell--12-col empty-category" data-category="{{ empty_category }}">
-            <div class="empty-event-card mdl-card mdl-shadow--2dp">
-              <div class="mdl-card__title mdl-card--expand">
-                <h4>
-                  No upcoming calendar events for <b>{{ empty_category }}</b>...
-                </h4>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
       </div>
-    </main>
-    <!-- <footer class="mdl-mega-footer">
-      {% block footer %}{% endblock %}
-    </footer> -->
+
+  </div>
+  </main>
   </div>
 </body>
 
