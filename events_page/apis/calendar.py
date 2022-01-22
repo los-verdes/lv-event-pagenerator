@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import base64
-import os
 import re
 import time
 from datetime import datetime, timedelta
@@ -166,7 +165,7 @@ class Event(object):
                 mime_type=self.cover_image_attachment["mimeType"],
             )
         )
-        return os.path.join(str(cfg.gcs_bucket_prefix), local_path)
+        return local_path
 
     @property
     def is_match(self):

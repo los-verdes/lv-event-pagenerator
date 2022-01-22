@@ -137,9 +137,7 @@ def download_category_images(drive_service, event_categories):
 
         local_path = os.path.basename(image_file["local_path"])
         downloaded_images[image_file["name"]] = local_path
-        event_category["cover_image_filename"] = os.path.join(
-            str(cfg.gcs_bucket_prefix), local_path
-        )
+        event_category["cover_image_filename"] = local_path
 
     logger.debug(f"download_category_images() => {downloaded_images=}")
     return downloaded_images
