@@ -3,7 +3,11 @@ from textwrap import dedent
 
 from logzero import logger
 
-from apis.github import dispatch_build_workflow_run, get_github_client
+from apis.github import (
+    dispatch_build_workflow_run,
+    get_github_client,
+    SuperfluousDispatchException,
+)
 from apis.secrets import get_gh_app_key
 
 if __name__ == "__main__":
@@ -50,10 +54,13 @@ if __name__ == "__main__":
     logger.info(
         f"Dispatching {args.workflow_filename} for {args.github_org}/{args.repo_name}..."
     )
-    dispatched_workflow_run = dispatch_build_workflow_run(
-        github_client=github_client,
-        github_ref=args.github_ref,
-        workflow_filename=args.workflow_filename,
-    )
-    logger.debug(f"result: {dispatched_workflow_run=}")
-    logger.info(f"{dispatched_workflow_run.id=}: {dispatched_workflow_run.status=}")
+    try:
+        dispatched_workflow_run = dispatch_build_workflow_run(
+            github_client=github_client,
+            github_ref=args.github_ref,
+            workflow_filename=args.workflow_filename,
+        )
+        logger.debug(f"result: {dispatched_workflow_run=}")
+        logger.info(f"{dispatched_workflow_run.id=}: {dispatched_workflow_run.status=}")
+    except SuperfluousDispatchException as err:
+        logger.warning(f"SuperfluousDispatchException: {err=}")
