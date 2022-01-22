@@ -16,7 +16,7 @@ DEFAULT_FOLDER_NAME = "calendar-event-images"
 DEFAULT_GITHUB_REPO = "los-verdes/lv-event-pagenerator"
 DEFAULT_HOSTNAME = "localhost"
 DEFAULT_PURGE_DELAY_SECS = 30
-DEFAULT_WATCH_EXPIRATION_IN_DAYS = 1
+DEFAULT_WATCH_EXPIRATION_IN_DAYS = 7
 
 
 class Config(object):
