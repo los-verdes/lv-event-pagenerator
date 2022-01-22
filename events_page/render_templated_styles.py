@@ -46,7 +46,7 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
         logger.debug(f"{class_name=} {event_category.get('cover_image_filename')}")
 
         if cover_image_filename := event_category.get("cover_image_filename"):
-            event_category_background_images[class_name] = f"url({cover_image_filename})"
+            event_category_background_images[class_name] = f"url({app.config['FREEZER_BASE_URL']}/static/{cover_image_filename})"
         elif default_cover_image := event_category.get("default_cover_image"):
             if default_cover_image.startswith("linear-gradient"):
                 event_category_background_images[class_name] = event_category["default_cover_image"]
@@ -62,7 +62,7 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
         class_name = event.event_specific_css_class
         logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
         if cover_image_filename := event.cover_image_filename:
-            event_category_background_images[class_name] = cover_image_filename
+            event_category_background_images[class_name] = f"url({app.config['FREEZER_BASE_URL']}/static/{cover_image_filename})"
 
     with app.app_context():
         rendered_scss = flask.render_template(

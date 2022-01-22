@@ -9,6 +9,10 @@ from tenacity.stop import stop_after_attempt
 from tenacity.wait import wait_fixed
 
 
+class SuperfluousDispatchException(Exception):
+    pass
+
+
 def get_github_client(owner, repo, app_id, app_key, install_id):
     logger.info(f"get_github_client() => {app_id=}, {app_key[-8:]=}, {install_id=}")
     gh3 = GitHub()
@@ -39,12 +43,33 @@ def dispatch_build_workflow_run(
             workflow_id=workflow_filename
         )
         logger.debug(f"{list_runs_resp.total_count=}")
-        extant_workflow_run_ids = [r.id for r in list_runs_resp.workflow_runs]
     except ExceptionsHTTP[404] as err:
         logger.error(
             f"HTTP404NotFoundError encountered ({err})! No workflow runs present?"
         )
-        extant_workflow_run_ids = []
+        list_runs_resp = AttrDict(workflow_runs=list())
+
+    extant_workflow_run_ids = [r.id for r in list_runs_resp.workflow_runs]
+    pending_workflows = [
+        r
+        for r in list_runs_resp.workflow_runs
+        if r.conclusion is None and r.head_branch == "main"
+    ]
+    if num_pending_workflows := len(pending_workflows):
+        pending_workflow_run_ids = [r.id for r in pending_workflows]
+        pending_run_base_url = (
+            "https://github.com/los-verdes/lv-event-pagenerator/actions/runs"
+        )
+        pending_run_urls = [
+            f"{pending_run_base_url}/{i}" for i in pending_workflow_run_ids
+        ]
+        logger.warning(
+            f"Already {num_pending_workflows} pending {workflow_filename} workflow runs present: {pending_workflow_run_ids=}"
+        )
+        logger.debug(f"{pending_run_urls=}")
+        raise SuperfluousDispatchException(
+            "Skipping additional workflow dispatch and exiting early..."
+        )
 
     dispatch_inputs = {}
 

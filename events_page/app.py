@@ -82,7 +82,7 @@ def create_app():
         display_timezone=cfg.display_timezone,
         FREEZER_BASE_URL=get_base_url(),
         FREEZER_STATIC_IGNORE=["*.scss", ".webassets-cache/*", ".DS_Store"],
-        FREEZER_RELATIVE_URLS=True,
+        FREEZER_RELATIVE_URLS=False,
         FREEZER_REMOVE_EXTRA_FILES=True,
     )
     logger.info(f"create_app() => {default_app_config=}")
