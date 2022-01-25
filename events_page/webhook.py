@@ -1,20 +1,23 @@
 #!/usr/bin/env python
 import logging
-import os
 import re
 
 import logzero
 from logzero import logger
 
+from apis.secrets import get_gh_app_key, get_webhook_token
 from config import cfg
 from dispatch_build_workflow_run import dispatch_build_workflow_run, get_github_client
-from apis.secrets import get_gh_app_key, get_webhook_token
 
 uri_regexp = re.compile(
     r"https://www.googleapis.com/drive/v3/files/(?P<file_id>[^?]+).*"
 )
 
 logzero.loglevel(logging.INFO)
+
+
+class UnauthorizedChannelTokenException(Exception):
+    pass
 
 
 def process_push_notification(request):
@@ -27,9 +30,12 @@ def process_push_notification(request):
         `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
     """
     cfg.load()
-    push = parse_push(req_headers=request.headers)
+    try:
+        push = parse_push(req_headers=request.headers)
+    except UnauthorizedChannelTokenException as err:
+        logger.error(err)
+        return "Provided channel token is not authorized", 401
     logger.info(f"push received: {push=}")
-    logger.info(f"{request.url=} {os.getenv('FUNCTION_NAME')=}")
 
     if push["resource_uri"].startswith("https://www.googleapis.com/calendar"):
         logger.debug("calendar push!")
@@ -71,7 +77,8 @@ def parse_push(req_headers):
         f"{push['resource_id']=} {push['resource_state']=} {push['resource_uri']=}"
     )
     logger.debug(f"{bool(push.get('channel_token') == webhook_token)=}")
-    assert push.get("channel_token") == webhook_token, "channel token mismatch 💥🚨"
+    if push.get("channel_token") != webhook_token:
+        raise UnauthorizedChannelTokenException("channel token mismatch 💥🚨")
     return push
 
 
