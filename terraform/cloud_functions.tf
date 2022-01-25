@@ -25,7 +25,7 @@ resource "google_cloudfunctions_function" "webhook" {
   description = "Listens for calendar-event-related drive changes"
   runtime     = "python39"
 
-  available_memory_mb   = 128
+  available_memory_mb   = 512
   max_instances         = 5
   timeout               = 300 # Nice five (5) minute timeout to give GitHub time to pick up our build workflow dispatch, etc.
   service_account_email = google_service_account.webhook_function.email
