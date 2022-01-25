@@ -17,6 +17,7 @@ DEFAULT_GITHUB_REPO = "los-verdes/lv-event-pagenerator"
 DEFAULT_HOSTNAME = "localhost"
 DEFAULT_PURGE_DELAY_SECS = 30
 DEFAULT_WATCH_EXPIRATION_IN_DAYS = 7
+DEFAULT_WEBHOOK_URL = "https://us-central1-losverdesatx-events.cloudfunctions.net/push-webhook-receiver"
 
 
 class Config(object):
@@ -32,6 +33,7 @@ class Config(object):
         hostname=DEFAULT_HOSTNAME,
         purge_delay_secs=DEFAULT_PURGE_DELAY_SECS,
         watch_expiration_in_days=DEFAULT_WATCH_EXPIRATION_IN_DAYS,
+        webhook_url=DEFAULT_WEBHOOK_URL,
     )
     _secretsmanager_config = dict()
 
