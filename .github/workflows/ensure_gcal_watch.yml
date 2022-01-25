@@ -2,7 +2,7 @@ name: Ensure GCal Watches
 
 on:
   schedule:
-    - cron: "41 9 */3 * *"
+    - cron: "0 0 * * *"
 
 jobs:
   ensure-watches:
