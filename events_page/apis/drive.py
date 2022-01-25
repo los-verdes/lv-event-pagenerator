@@ -4,7 +4,6 @@ import mimetypes
 import os
 import re
 
-from config import cfg
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
@@ -105,7 +104,7 @@ def add_category_image_file_metadata(drive_service, event_categories):
     parsed_categories = dict()
     uri_regexp = re.compile(r"https://drive.google.com/file/d/(?P<file_id>[^?]+)/.*")
     for name, event_category in event_categories.items():
-        default_cover_image = event_category.get("default_cover_image", "")
+        default_cover_image = event_category.get("styling", {}).get("cover_image")
         if default_cover_image is not None and uri_regexp.match(default_cover_image):
             if cover_image_uri_matches := uri_regexp.match(default_cover_image):
                 cover_image_file_id = cover_image_uri_matches.groupdict()["file_id"]
@@ -113,9 +112,7 @@ def add_category_image_file_metadata(drive_service, event_categories):
                     f"category {name}: downloading file metadata for {cover_image_file_id}"
                 )
                 event_category["file_metadata"] = (
-                    drive_service.files()
-                    .get(fileId=cover_image_file_id)
-                    .execute()
+                    drive_service.files().get(fileId=cover_image_file_id).execute()
                 )
         parsed_categories[name] = event_category
 
@@ -137,7 +134,7 @@ def download_category_images(drive_service, event_categories):
 
         local_path = os.path.basename(image_file["local_path"])
         downloaded_images[image_file["name"]] = local_path
-        event_category["cover_image_filename"] = local_path
+        event_category["styling"]["cover_image"] = local_path
 
     logger.debug(f"download_category_images() => {downloaded_images=}")
     return downloaded_images

@@ -106,6 +106,10 @@ class Event(object):
         return self._event.get("colorId", "0")
 
     @property
+    def color_name(self):
+        return self.category.get("gcal_color_name")
+
+    @property
     def start_dt(self):
         return self.parse_event_timestamp(self._event, "start")
 
@@ -122,7 +126,7 @@ class Event(object):
     @property
     def css_classes(self):
         return [
-            f"category-{self.color_id}",
+            f"category-{self.color_name}",
             self.event_specific_css_class,
         ]
 

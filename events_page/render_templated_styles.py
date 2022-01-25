@@ -5,12 +5,8 @@ import flask
 from logzero import logger
 
 from apis import calendar as gcal
-from apis.drive import (
-    add_category_image_file_metadata,
-    build_service,
-    download_event_images,
-    download_category_images,
-)
+from apis.drive import (add_category_image_file_metadata, build_service,
+                        download_category_images, download_event_images)
 from apis.mls import TeamColors
 from config import cfg
 
@@ -36,42 +32,33 @@ def render_scss_vars_template(app, calendar, event_categories, team_colors):
 
     logger.info(f"render_scss_vars_template() => {category_name_filters=}")
 
-    event_category_background_images = {}
-    event_category_background_colors = {}
-    event_category_text_fg_colors = {}
-    event_category_text_bg_colors = {}
+    category_styling_by_name = {}
 
     for event_category in event_categories.values():
-        class_name = f"category-{event_category['gcal_color']['id']}"
+        class_name = f"category-{event_category['gcal_color_name']}"
         logger.debug(f"{class_name=} {event_category.get('cover_image_filename')}")
 
-        if cover_image_filename := event_category.get("cover_image_filename"):
-            event_category_background_images[class_name] = f"url({app.config['FREEZER_BASE_URL']}/static/{cover_image_filename})"
-        elif default_cover_image := event_category.get("default_cover_image"):
-            if default_cover_image.startswith("linear-gradient"):
-                event_category_background_images[class_name] = event_category["default_cover_image"]
-
-        if bg_color := event_category.get("bg_color"):
-            event_category_background_colors[class_name] = bg_color
-        if text_fg_color := event_category.get("text_fg_color"):
-            event_category_text_fg_colors[class_name] = text_fg_color
-        if text_bg_color := event_category.get("text_bg_color"):
-            event_category_text_bg_colors[class_name] = text_bg_color
+        # category_settings = default_category_settings.copy()
+        category_styling = event_category["styling"].copy()
+        if "file_metadata" in event_category and "cover_image" in category_styling:
+            category_styling['cover_image'] = f"url({app.config['FREEZER_BASE_URL']}/static/{category_styling['cover_image']})"
+        category_styling_by_name[class_name] = category_styling
 
     for event in calendar.events:
         class_name = event.event_specific_css_class
         logger.debug(f"{class_name=} {event.get('cover_image_filename')}")
+        category_styling = dict()
         if cover_image_filename := event.cover_image_filename:
-            event_category_background_images[class_name] = f"url({app.config['FREEZER_BASE_URL']}/static/{cover_image_filename})"
+            category_styling[
+                "cover_image"
+            ] = f"url({app.config['FREEZER_BASE_URL']}/static/{cover_image_filename})"
+            category_styling_by_name[class_name] = category_styling
 
     with app.app_context():
         rendered_scss = flask.render_template(
             "_vars.scss.j2",
             category_name_filters=category_name_filters,
-            event_category_background_images=event_category_background_images,
-            event_category_background_colors=event_category_background_colors,
-            event_category_text_fg_colors=event_category_text_fg_colors,
-            event_category_text_bg_colors=event_category_text_bg_colors,
+            category_styling_by_name=category_styling_by_name,
             team_colors=team_colors.to_dict(),
         )
 

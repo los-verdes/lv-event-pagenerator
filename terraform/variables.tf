@@ -11,10 +11,6 @@ variable "event_categories" {
     object({
       gcal_color_name         = string
       always_shown_in_filters = optional(bool)
-      bg_color                = optional(string)
-      default_cover_image     = optional(string)
-      text_bg_color           = optional(string)
-      text_fg_color           = optional(string)
     })
   )
   description = "Map of task group specifications for the consul-terraform-sync Nomad job."
