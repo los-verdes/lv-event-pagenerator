@@ -30,6 +30,9 @@ event_categories = {
     styling = {
       cover_image    = "https://drive.google.com/file/d/1AATD3ehu6HS-q49rso0jC8P6ZoKaGsjN/view?usp=sharing"
       cover_bg_color = "#000000"
+      cover_position = "right bottom"
+      cover_size     = "20%"
+      cover_repeat   = "no-repeat"
       text_bg_color  = "#00b140"
       text_fg_color  = "#FFFFFF"
     }
@@ -42,6 +45,9 @@ event_categories = {
     styling = {
       cover_image = "https://drive.google.com/file/d/1abvwXtd4ipJWtidsYzwKvNjzqh-HJFGd/view?usp=sharing"
       cover_bg_color = "#000000"
+      cover_position = "right bottom"
+      cover_size     = "20%"
+      cover_repeat   = "no-repeat"
     }
   }
 
