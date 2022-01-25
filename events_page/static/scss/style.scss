@@ -28,7 +28,7 @@ a {
 
   > .mdl-card__title {
     height: 176px;
-    padding-right: 5px;
+    // padding-right: 5px;
   }
 
   .event-date {
@@ -140,10 +140,13 @@ input[type="radio"] {
 }
 
 $default_category_styling: (
-  "cover_bg_color": "transparent",
+  "cover_bg_color": transparent,
   "cover_image": "none",
-  "text_bg_color": "inital",
-  "text_fg_color": "inital",
+  "cover_position": center,
+  "cover_size": cover,
+  "cover_repeat": no-repeat,
+  "text_bg_color": inital,
+  "text_fg_color": inital,
 );
 
 @each $category_name, $styling in $category_styling_by_name {
@@ -152,8 +155,15 @@ $default_category_styling: (
     > .mdl-card__title {
       background-color: map-get($merged_styling, "cover_bg_color");
       background-image: map-get($merged_styling, "cover_image");
-      background-position: center;
-      background-size: cover;
+      @if (str-index(map-get($merged_styling, "cover_image"), "url(")) {
+        background-position: map-get($merged_styling, "cover_position");
+        background-size: map-get($merged_styling, "cover_size");
+        background-repeat: map-get($merged_styling, "cover_repeat");
+        background-origin: content-box;
+      } @else {
+        background-position: center;
+        background-size: cover;
+      }
     }
 
     mark {
