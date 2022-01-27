@@ -19,6 +19,16 @@
   <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
   {% endassets %}
 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G91CWEMC2V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-G91CWEMC2V');
+  </script>
+
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
@@ -75,7 +85,7 @@
         <input type="radio" id="all" name="categories" value="all" checked>
         {% for category in calendar.default_category_names + calendar.additional_category_names %}
         <input type="radio" id="{{ category }}" name="categories" value="{{ category }}" {% if category in
-          calendar.empty_category_names %}disabled{% endif %}>
+               calendar.empty_category_names %}disabled{% endif %}>
         {% endfor %}
         <ol class="filters">
           <li>
