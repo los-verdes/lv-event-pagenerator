@@ -1,3 +1,4 @@
+export GCLOUD_PROJECT := "losverdesatx-events"
 py_dir         := "events_page"
 tf_subdir      := "./terraform"
 tfvars_file    := "losverdesatx-events.tfvars"

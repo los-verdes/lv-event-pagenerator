@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $bright-verde: #0bac44;
 
 a {
@@ -26,7 +28,7 @@ a {
 
   > .mdl-card__title {
     height: 176px;
-    padding-right: 5px;
+    // padding-right: 5px;
   }
 
   .event-date {
@@ -137,36 +139,36 @@ input[type="radio"] {
   }
 }
 
-@each $class_name, $background_image in $category_background_images {
-  .#{$class_name}.event-card {
+$default_category_styling: (
+  "cover_bg_color": transparent,
+  "cover_image": "none",
+  "cover_position": center,
+  "cover_size": cover,
+  "cover_repeat": no-repeat,
+  "text_bg_color": inital,
+  "text_fg_color": inital,
+);
+
+@each $category_name, $styling in $category_styling_by_name {
+  $merged_styling: map-merge($default_category_styling, $styling);
+  .#{$category_name}.event-card {
     > .mdl-card__title {
-      background-image: $background_image;
-      background-position: center;
-      background-size: cover;
+      background-color: map-get($merged_styling, "cover_bg_color");
+      background-image: map-get($merged_styling, "cover_image");
+      @if (str-index(map-get($merged_styling, "cover_image"), "url(")) {
+        background-position: map-get($merged_styling, "cover_position");
+        background-size: map-get($merged_styling, "cover_size");
+        background-repeat: map-get($merged_styling, "cover_repeat");
+        background-origin: content-box;
+      } @else {
+        background-position: center;
+        background-size: cover;
+      }
     }
-  }
-}
 
-@each $class_name, $background_color in $category_background_colors {
-  .#{$class_name}.event-card {
-    > .mdl-card__title {
-      background-color: $background_color;
-    }
-  }
-}
-
-@each $class_name, $fg_color in $category_text_fg_colors {
-  .#{$class_name}.event-card {
     mark {
-      color: $fg_color;
-    }
-  }
-}
-
-@each $class_name, $bg_color in $category_text_bg_colors {
-  .#{$class_name}.event-card {
-    mark {
-      background-color: $bg_color;
+      background-color: map-get($merged_styling, "text_bg_color");
+      color: map-get($merged_styling, "text_fg_color");
     }
   }
 }
